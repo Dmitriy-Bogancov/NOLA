@@ -14,32 +14,45 @@ import SignInPage from "./pages/SignInPage/SignInPage";
 import RecoverPasswordPage from "./pages/RecoverPasswordPage/RecoverPasswordPage";
 import RecoveryPage from "./pages/RecoveryPage/RecoveryPage";
 import AdvertiserPage from "./pages/AdvertiserPage/AdvertiserPage";
+import UpdatePassword from "./pages/UpdatePassword/UpdatePassword";
+import SavedPosts from "./pages/SavedPosts/SavedPosts";
+import SearchPage from "./pages/SearchPage/SearchPage";
+import SearchCategoriesPage from "./pages/SearchCategoriesPage/SearchCategoriesPage";
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<LoadingPage />} />
-        </Route>
+        <Route path="/" element={<LoadingPage />} />
 
-        <Route path="/entrance" element={<EntrancePage />} />
         <Route path="/welcome" element={<WelcomePage />} />
 
-        <Route path="/main" element={<MainPage />} />
+        <Route path="/entrance" element={<EntrancePage />} />
+
+        <Route path="/main" element={<Layout />}>
+          <Route index element={<MainPage />} />
+          <Route path="searchPage" element={<SearchPage />} />
+          <Route
+            path="searchPage/categories"
+            element={<SearchCategoriesPage />}
+          />
+          <Route path="authorization" element={<AuthorizationPage />}>
+            <Route path="registration" element={<RegistrationPage />} />
+            <Route index element={<SignInPage />} />
+          </Route>
+        </Route>
+
         <Route path="/main/:postId" element={<PostDetailsPage />} />
 
         <Route path="/:advertiserId" element={<AdvertiserDetailsPage />} />
 
-        <Route path="/authorization" element={<AuthorizationPage />} />
-
-        <Route path="registration" element={<RegistrationPage />} />
-        <Route path="signIn" element={<SignInPage />} />
-
         <Route path="/recoverPasswordPage" element={<RecoverPasswordPage />} />
         <Route path="/recovery" element={<RecoveryPage />} />
+        <Route path="/updatePassword" element={<UpdatePassword />} />
 
         <Route path="/advertiser" element={<AdvertiserPage />} />
+
+        <Route path="/savedPosts" element={<SavedPosts />} />
       </Routes>
     </div>
   );

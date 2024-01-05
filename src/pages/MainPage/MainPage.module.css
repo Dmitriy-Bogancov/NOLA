@@ -1,5 +1,6 @@
-.container {
+.item {
   margin-bottom: 25px;
+  border: solid 1px;
 }
 
 .link {

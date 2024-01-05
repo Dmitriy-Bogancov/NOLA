@@ -8,7 +8,7 @@ const RecoverPasswordPage = () => {
 
       <ul>
         <li>
-          <NavLink to="/signIn">
+          <NavLink to="/main/authorization">
             <button type="button">Cancel</button>
           </NavLink>
         </li>

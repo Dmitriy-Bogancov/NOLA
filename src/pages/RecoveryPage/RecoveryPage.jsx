@@ -8,7 +8,7 @@ const RecoveryPage = () => {
 
       <ul>
         <li>
-          <NavLink>
+          <NavLink to="/updatePassword">
             <button type="button">Confirm</button>
           </NavLink>
         </li>
@@ -19,7 +19,7 @@ const RecoveryPage = () => {
         </li>
 
         <li>
-          <NavLink to="/signIn">
+          <NavLink to="/main/authorization">
             <button type="button">Cancel</button>
           </NavLink>
         </li>

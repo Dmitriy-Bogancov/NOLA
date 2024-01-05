@@ -1,0 +1,19 @@
+.main {
+  margin-bottom: 80px;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0%;
+  z-index: 50;
+  background-color: cadetblue;
+}
+
+.list {
+  width: 100vw;
+}
+
+.item {
+  display: inline-block;
+  margin-left: 6%;
+}

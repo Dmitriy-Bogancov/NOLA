@@ -11,7 +11,7 @@ const AdvertiserPage = () => {
           <button type="button">Save</button>
         </li>
         <li>
-          <button type="button">Edit</button>
+          <NavLink to="/advertiser"><button type="button">Edit</button></NavLink>
         </li>
         <li>
           <NavLink to="/main">

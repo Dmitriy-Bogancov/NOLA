@@ -29,7 +29,6 @@ const advertiser = [
   },
 ];
 
-
 const PostDetailsPage = () => {
   const { postId } = useParams();
 

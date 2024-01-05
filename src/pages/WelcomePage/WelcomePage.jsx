@@ -1,22 +1,21 @@
 import { NavLink } from "react-router-dom";
 
+import css from "./WelcomePage.module.css";
+
 const WelcomePage = () => {
   return (
     <div>
-      <h1>WelcomePage</h1>
-      <ul>
-        <li>
-          <NavLink to="/main">
-            <button type="button">MainPage</button>
-          </NavLink>
-        </li>
+      <div className={css.container_welcome}>
+        <h1>Welcome to NOLA!</h1>
 
-        <li>
-          <NavLink to="/advertiser">
-            <button type="button">Edit AdvertiserPage</button>
-          </NavLink>
-        </li>
-      </ul>
+        <NavLink to="/main">
+          <button type="button">continue</button>
+        </NavLink>
+
+        <NavLink to="/advertiser">
+          <button type="button">Edit AdvertiserPage</button>
+        </NavLink>
+      </div>
     </div>
   );
 };

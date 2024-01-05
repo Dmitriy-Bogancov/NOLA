@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
 import css from "./MainPage.module.css";
+import SavedPosts from "../SavedPosts/SavedPosts";
+import { useState } from "react";
 
 const advertiser = [
   {
@@ -35,21 +37,22 @@ const MainPage = () => {
   //   }, [])
 
   return (
-    <div>
+    <div className={css.container}>
       <h1>MainPage</h1>
 
       {advertiser.map(({ banner, advertiser, id }) => (
-        <div key={banner} className={css.container}>
+        <div key={banner} className={css.item}>
           <NavLink to={`/${id}`}>{`Advertiser Header ${advertiser}`}</NavLink>
           <NavLink to={`${id}`} className={css.link}>
             {banner}
           </NavLink>
 
           <a href="/" className={css.link}>
-            Site/Profile
+            Link
           </a>
 
-          <button type="button">Save Button</button>
+          <button type="button">Learn more</button>
+          <button type="button">SAVE</button>
         </div>
       ))}
     </div>
