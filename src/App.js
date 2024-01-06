@@ -13,11 +13,11 @@ import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
 import SignInPage from "./pages/SignInPage/SignInPage";
 import RecoverPasswordPage from "./pages/RecoverPasswordPage/RecoverPasswordPage";
 import RecoveryPage from "./pages/RecoveryPage/RecoveryPage";
-import AdvertiserPage from "./pages/AdvertiserPage/AdvertiserPage";
-import UpdatePassword from "./pages/UpdatePassword/UpdatePassword";
-import SavedPosts from "./pages/SavedPosts/SavedPosts";
 import SearchPage from "./pages/SearchPage/SearchPage";
 import SearchCategoriesPage from "./pages/SearchCategoriesPage/SearchCategoriesPage";
+import SavedPostsPage from "./pages/SavedPostsPage/SavedPostsPage";
+import UpdatePasswordPage from "./pages/UpdatePasswordPage/UpdatePasswordPage";
+import AccountAdverticerPage from "./pages/AccountAdverticerPage/AccountAdverticerPage";
 
 function App() {
   return (
@@ -32,6 +32,7 @@ function App() {
         <Route path="/main" element={<Layout />}>
           <Route index element={<MainPage />} />
           <Route path="searchPage" element={<SearchPage />} />
+          <Route path="savedPosts" element={<SavedPostsPage />} />
           <Route
             path="searchPage/categories"
             element={<SearchCategoriesPage />}
@@ -48,11 +49,10 @@ function App() {
 
         <Route path="/recoverPasswordPage" element={<RecoverPasswordPage />} />
         <Route path="/recovery" element={<RecoveryPage />} />
-        <Route path="/updatePassword" element={<UpdatePassword />} />
+        <Route path="/updatePassword" element={<UpdatePasswordPage />} />
 
-        <Route path="/advertiser" element={<AdvertiserPage />} />
-
-        <Route path="/savedPosts" element={<SavedPosts />} />
+        {/* <Route path="/advertiser" element={<AdvertiserPage />} /> */}
+        <Route path="/accountAdverticer" element={<AccountAdverticerPage />} />
       </Routes>
     </div>
   );

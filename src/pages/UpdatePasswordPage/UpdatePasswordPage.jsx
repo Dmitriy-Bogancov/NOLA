@@ -1,4 +1,4 @@
-import css from "./UpdatePassword.module.css";
+import css from "./UpdatePasswordPage.module.css";
 
 const UpdatePassword = () => {
   return (

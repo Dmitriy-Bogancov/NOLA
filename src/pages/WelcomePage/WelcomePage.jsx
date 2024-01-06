@@ -11,10 +11,6 @@ const WelcomePage = () => {
         <NavLink to="/main">
           <button type="button">continue</button>
         </NavLink>
-
-        <NavLink to="/advertiser">
-          <button type="button">Edit AdvertiserPage</button>
-        </NavLink>
       </div>
     </div>
   );

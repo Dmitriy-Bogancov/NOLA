@@ -4,7 +4,7 @@ import css from "./AuthorizationPage.module.css";
 const AuthorizationPage = () => {
   return (
     <div>
-      <NavLink to="signIn">
+      <NavLink to="/main/authorization/">
         <button type="button">Sign In</button>
       </NavLink>
 

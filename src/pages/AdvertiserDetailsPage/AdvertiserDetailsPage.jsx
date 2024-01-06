@@ -1,4 +1,4 @@
-import { NavLink, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import css from "./AdvertiserDetailsPage.module.css";
 
 const AdvertiserDetailsPage = () => {
@@ -29,9 +29,6 @@ const AdvertiserDetailsPage = () => {
       </ul>
 
       <p>Description</p>
-
-      <button type="button">SAVE</button>
-      <NavLink to="/welcome">Enter data later</NavLink>
     </div>
   );
 };

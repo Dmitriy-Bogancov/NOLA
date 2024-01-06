@@ -15,7 +15,11 @@ const SearchPage = () => {
       <h1>SearchPage</h1>
       <form>
         <label>
-          <input type="text" value={search} onChange={handleChangeSearch} />
+          <input
+            type="text"
+            value={search || ""}
+            onChange={handleChangeSearch}
+          />
           <NavLink to="categories" state={location}>
             Categories
           </NavLink>

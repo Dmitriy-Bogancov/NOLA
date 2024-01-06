@@ -1,9 +1,10 @@
 import { NavLink } from "react-router-dom";
 import css from "./MainPage.module.css";
-import SavedPosts from "../SavedPosts/SavedPosts";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const advertiser = [
+const LOKAL_KEY = "savedPost";
+
+const data = [
   {
     id: "1",
     advertiser: "user-1",
@@ -32,15 +33,35 @@ const advertiser = [
 ];
 
 const MainPage = () => {
+  const [posts, setPost] = useState(() => {
+    return JSON.parse(localStorage.getItem(LOKAL_KEY)) ?? "";
+  });
+
   //  useEffect(() => {
-  //       http://
+  //   const data =  http://
   //   }, [])
+
+  useEffect(() => {
+    localStorage.setItem(LOKAL_KEY, JSON.stringify(posts));
+  }, [posts]);
+
+  const handleSavePost = (savedId) => {
+    const savedPost = data.filter(({ id }) => id === savedId);
+    if (posts) {
+      const savedValid = posts.find((post) => post.id === savedId);
+      if (savedValid) {
+        return;
+      }
+    }
+
+    setPost((prev) => [...prev, ...savedPost]);
+  };
 
   return (
     <div className={css.container}>
       <h1>MainPage</h1>
 
-      {advertiser.map(({ banner, advertiser, id }) => (
+      {data.map(({ banner, advertiser, id }) => (
         <div key={banner} className={css.item}>
           <NavLink to={`/${id}`}>{`Advertiser Header ${advertiser}`}</NavLink>
           <NavLink to={`${id}`} className={css.link}>
@@ -52,7 +73,9 @@ const MainPage = () => {
           </a>
 
           <button type="button">Learn more</button>
-          <button type="button">SAVE</button>
+          <button type="button" onClick={() => handleSavePost(id)}>
+            SAVE
+          </button>
         </div>
       ))}
     </div>

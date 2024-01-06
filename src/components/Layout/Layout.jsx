@@ -25,15 +25,11 @@ const Layout = () => {
               <NavLink>➕</NavLink>
             </li>
             <li className={css.item}>
-              <NavLink to="/savedPosts">🤍</NavLink>
+              <NavLink to="savedPosts">🤍</NavLink>
             </li>
             <li className={css.item}>
               <NavLink to="authorization">👩</NavLink>
             </li>
-
-            {/* <li>
-          <NavLink to="/entrance">entrance</NavLink>
-       </li> */}
           </ul>
         </nav>
       </footer>
