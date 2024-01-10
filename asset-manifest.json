@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/NOLA/static/css/main.31cd6901.css",
+    "main.js": "/NOLA/static/js/main.f58da87c.js",
+    "index.html": "/NOLA/index.html",
+    "main.31cd6901.css.map": "/NOLA/static/css/main.31cd6901.css.map",
+    "main.f58da87c.js.map": "/NOLA/static/js/main.f58da87c.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.31cd6901.css",
+    "static/js/main.f58da87c.js"
+  ]
+}
