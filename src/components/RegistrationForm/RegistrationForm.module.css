@@ -1,0 +1,38 @@
+.formContainer {
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+}
+
+.inputForm {
+  width: 327px;
+  border-radius: 12px;
+  border: 2px solid;
+  padding: 15px;
+  margin-bottom: 10px;
+  color: #9e9e9e;
+}
+
+.textInfo {
+  margin: auto;
+  width: 231px;
+  font-family: Manrope;
+  font-size: 8px;
+  font-weight: 400;
+  text-align: center;
+}
+.spanPolicy {
+  margin-left: 2px;
+  color: #435bd7;
+}
+.buttonForm {
+  background-color: #9e9e9e;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #fff;
+  width: 360px;
+  border-radius: 12px;
+  padding: 15px;
+  cursor: pointer;
+  border: none;
+}

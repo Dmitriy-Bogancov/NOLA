@@ -1,5 +1,5 @@
 import { NavLink, Outlet } from "react-router-dom";
-import css from "./AuthorizationPage.module.css";
+// import css from "./AuthorizationPage.module.css";
 
 const AuthorizationPage = () => {
   return (

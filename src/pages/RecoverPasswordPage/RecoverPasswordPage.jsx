@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import css from "./RecoverPasswordPage.module.css";
+// import css from "./RecoverPasswordPage.module.css";
 
 const RecoverPasswordPage = () => {
   return (
