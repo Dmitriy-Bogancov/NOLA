@@ -2,13 +2,6 @@ import { NavLink } from "react-router-dom";
 import css from "./MainPage.module.css";
 import { useEffect, useState } from "react";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/effect-coverflow";
-import "swiper/css/pagination";
-import "swiper/css/navigation";
-import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
-
 const LOKAL_KEY = "savedPost";
 
 const data = [
@@ -68,73 +61,36 @@ const MainPage = () => {
     <div>
       <h1>MainPage</h1>
 
-      <Swiper
-        effect={"coverflow"}
-        grabCursor={true}
-        centeredSlides={true}
-        loop={true}
-        slidesPerView={"auto"}
-        coverflowEffect={{
-          rotate: 0,
-          stretch: 0,
-          depth: 100,
-          modifier: 2.5,
-        }}
-        pagination={{ el: ".swiper-pagination", clickable: true }}
-        navigation={{
-          nextEl: ".swiper-button-next",
-          prevEl: ".swiper-button-prev",
-          clickable: true,
-        }}
-        modules={[EffectCoverflow, Pagination, Navigation]}
-        className={css.swiper_container}
-      >
-        {[...Array(6)].map((slide, idx) => (
-          <SwiperSlide
-            key={idx}
-            style={{
-              width: "80%",
-            }}
-            className={css.swiper_slide}
-          >
-            <img src={slide} alt="" className={css.img} />
-          </SwiperSlide>
-        ))}
-        <div className="slider-controler">
-          <div
-            className="swiper-button-prev slider-arrow"
-            style={{ color: "transparent" }}
-          ></div>
-          <div
-            className="swiper-button-next slider-arrow"
-            style={{ color: "transparent" }}
-          ></div>
-
-          <div
-            className="swiper-pagination"
-            style={{
-              position: "relative",
-              bottom: "2px",
-            }}
-          ></div>
-        </div>
-      </Swiper>
-
       {data.map(({ banner, advertiser, id }) => (
         <div key={banner} className={css.item}>
-          <NavLink to={`/${id}`}>{`Advertiser Header ${advertiser}`}</NavLink>
-          <NavLink to={`${id}`} className={css.link}>
-            {banner}
-          </NavLink>
+          <div className={css.post_header}>
+            <NavLink to={`${id}`} className={css.link}>
+              <img src="" alt="" className={css.img} />
+              <div className={css.description}>
+                {banner}
+                <h3>English for IT (B2 Level)</h3>
+                <p className={css.post_description}>
+                  Geringe finanzielle Bildung hält dich davon ab, den richtigen
+                  Plan für deine Finanzen zu...
+                </p>
+              </div>
+            </NavLink>
 
-          <a href="/" className={css.link}>
-            Link
-          </a>
+            <button
+              type="button"
+              onClick={() => handleSavePost(id)}
+              className={css.save_btn}
+            >
+              SAVE
+            </button>
+          </div>
 
-          <button type="button">Learn more</button>
-          <button type="button" onClick={() => handleSavePost(id)}>
-            SAVE
-          </button>
+          <div >
+<div className={css.post_footer}>
+              <p>Englishdom</p>
+              <NavLink to={`/${id}`}>{`${advertiser}`} Show all courses</NavLink>
+</div>
+          </div>
         </div>
       ))}
     </div>
