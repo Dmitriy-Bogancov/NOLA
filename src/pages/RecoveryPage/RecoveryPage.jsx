@@ -1,12 +1,15 @@
-import { NavLink } from "react-router-dom";
+// import { NavLink } from "react-router-dom";
+import RecoveryForm from "../../components/RecoveryForm";
+
 // import css from "./RecoveryPage.module.css";
 
 const RecoveryPage = () => {
   return (
     <div>
       <h1>RecoveryPage</h1>
+      <RecoveryForm />
 
-      <ul>
+      {/* <ul>
         <li>
           <NavLink to="/updatePassword">
             <button type="button">Confirm</button>
@@ -23,7 +26,7 @@ const RecoveryPage = () => {
             <button type="button">Cancel</button>
           </NavLink>
         </li>
-      </ul>
+      </ul> */}
     </div>
   );
 };

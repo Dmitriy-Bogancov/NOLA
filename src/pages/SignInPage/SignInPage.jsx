@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import LoginForm from "../../components/LoginForm";
 // import css from "./SignInPage.module.css";
 // import { useState } from "react";
 
@@ -10,7 +11,7 @@ const SignInPage = () => {
       <ul>
         <li>
           <NavLink to="/welcome">
-            <button type="button">Sing In</button>
+            <LoginForm />
           </NavLink>
         </li>
         <li>

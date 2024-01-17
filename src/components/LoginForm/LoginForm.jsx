@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import Button from "../Button";
 import css from "./LoginForm.module.css";
+import { Link } from "react-router-dom";
 import * as yup from "yup";
 
 const schema = yup.object().shape({
@@ -40,31 +42,30 @@ const LoginForm = () => {
   };
 
   return (
-    <div className={css.formContainer}>
-      <form onSubmit={handleSubmit}>
-        <input
-          className={css.inputForm}
-          type="email"
-          name="email"
-          placeholder="Username or Email"
-          value={formData.email}
-          onChange={handleInputChange}
-        />
+    <form className={css.formContainer} onSubmit={handleSubmit}>
+      <input
+        className={css.inputForm}
+        type="email"
+        name="email"
+        placeholder="Username or Email"
+        value={formData.email}
+        onChange={handleInputChange}
+      />
 
-        <input
-          className={css.inputForm}
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleInputChange}
-        />
+      <input
+        className={css.inputForm}
+        type="password"
+        name="password"
+        placeholder="Password"
+        value={formData.password}
+        onChange={handleInputChange}
+      />
 
-        <button className={css.buttonForm} type="submit">
-          Sign In
-        </button>
-      </form>
-    </div>
+      <div className={css.textForgot}>
+        <Link to="/recovery">Forgot password?</Link>
+      </div>
+      <Button label="Sing In" type="submit" />
+    </form>
   );
 };
 
