@@ -1,6 +1,6 @@
 body {
-  margin: 0;
- 
+  margin: 40px 0 0 0;
+  padding: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
@@ -12,6 +12,12 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
 }
 
 .container {
@@ -45,5 +51,5 @@ img {
 .swiper-horizontal > .swiper-pagination-bullets,
 .swiper-pagination-bullets.swiper-pagination-horizontal {
   position: relative;
-  margin-top: 40px;
+  margin-top: 32px;
 }

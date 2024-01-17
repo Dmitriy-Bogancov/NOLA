@@ -18,6 +18,7 @@ import SearchCategoriesPage from "./pages/SearchCategoriesPage/SearchCategoriesP
 import SavedPostsPage from "./pages/SavedPostsPage/SavedPostsPage";
 import UpdatePasswordPage from "./pages/UpdatePasswordPage/UpdatePasswordPage";
 import AccountAdverticerPage from "./pages/AccountAdverticerPage/AccountAdverticerPage";
+import SearchEngineResultsPage from "./pages/SearchEngineResultsPage/SearchEngineResultsPage";
 
 function App() {
   return (
@@ -31,11 +32,12 @@ function App() {
 
         <Route path="/main" element={<Layout />}>
           <Route index element={<MainPage />} />
-          <Route path="searchPage" element={<SearchPage />} />
+          <Route path="search" element={<SearchPage />} />
           <Route path="savedPosts" element={<SavedPostsPage />} />
+          <Route path="search/categories" element={<SearchCategoriesPage />} />
           <Route
-            path="searchPage/categories"
-            element={<SearchCategoriesPage />}
+            path="search/categories/searchEngineResults"
+            element={<SearchEngineResultsPage />}
           />
           <Route path="authorization" element={<AuthorizationPage />}>
             <Route path="registration" element={<RegistrationPage />} />

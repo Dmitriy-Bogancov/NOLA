@@ -16,13 +16,9 @@
 .description,
 .specification {
   text-align: center;
+  margin: 16px 0;
 }
 
-.btn {
-  margin-top: 24px;
-  margin-bottom: 40px;
-  width: 100%;
-  padding: 10px;
-  border-radius: 12px;
-  border-color: transparent;
+.swiper_title {
+  margin: 40px 0 16px 0;
 }

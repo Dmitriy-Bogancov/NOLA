@@ -19,7 +19,7 @@ const Layout = () => {
               <NavLink to="">🏡</NavLink>
             </li>
             <li className={css.item}>
-              <NavLink to="searchPage">⚪</NavLink>
+              <NavLink to="search">⚪</NavLink>
             </li>
             <li className={css.item}>
               <NavLink>➕</NavLink>
