@@ -1,8 +1,56 @@
 .item {
+  position: relative;
   margin-bottom: 25px;
+  margin-top: 25px;
   border: solid 1px;
 }
 
 .link {
   display: block;
+}
+
+.img {
+  width: 100%;
+  height: 345px;
+  background-color: rgb(159, 231, 228);
+}
+
+.post_header {
+  position: relative;
+}
+
+.save_btn {
+  position: absolute;
+  top: 31px;
+  right: 24px;
+}
+
+.description {
+  position: absolute;
+  bottom: 80px;
+  padding: 0 20px;
+}
+
+.post_description {
+  margin: 12px 0 0 0;
+}
+
+.post_description::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  flex-shrink: 0;
+  background-color: rgba(255, 255, 255, 0.24);
+  margin-top: 16px;
+}
+
+.post_footer {
+  position: absolute;
+  bottom: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 92%;
+  padding: 16px 20px;
 }

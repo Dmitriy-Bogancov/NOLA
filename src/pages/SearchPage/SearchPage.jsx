@@ -12,21 +12,35 @@ const SearchPage = () => {
 
   return (
     <div>
-      <h1>SearchPage</h1>
       <form>
-        <label>
-          <input
-            type="text"
-            value={search || ""}
-            onChange={handleChangeSearch}
-          />
-          <NavLink to="categories" state={location}>
-            Categories
-          </NavLink>
-        </label>
-      </form>
+        <div className={css.input_container}>
+          <label>
+            <input
+              type="text"
+              value={search || ""}
+              placeholder="Searching"
+              onChange={handleChangeSearch}
+              className={css.input}
+            />
+          </label>
 
-      <p>Popular catehories</p>
+          <svg width="24" height="24" className={css.search_icon}>
+            <use></use>
+          </svg>
+        </div>
+      </form>
+      <h2>Categories</h2>
+
+      <ul className={css.list}>
+        {[...Array(5)].map((category, idx) => (
+          <li key={idx} className={css.item}>
+            <NavLink to="categories" state={location}>
+              <img src="" alt="" className={css.img} />
+              <p className={css.description}>Language</p>
+            </NavLink>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

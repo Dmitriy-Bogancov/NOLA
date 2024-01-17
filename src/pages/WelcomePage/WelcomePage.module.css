@@ -1,23 +1,24 @@
-.container_logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100vw;
-  height: 100vh;
+.swiper_slide {
+  flex-shrink: 0;
+  height: 100%;
+  position: relative;
+  transition-property: transform;
+  display: inline-block;
 }
 
-.logo {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background-color: cadetblue;
-  margin-bottom: 90px;
+.swiper_slide .img {
+  height: 210px;
+  width: 205px;
+  margin: 0 auto;
 }
 
-.container_welcome {
-  width: 100vw;
-  height: 100vh;
+.title,
+.description,
+.specification {
+  text-align: center;
+  margin: 16px 0;
+}
+
+.swiper_title {
+  margin: 40px 0 16px 0;
 }

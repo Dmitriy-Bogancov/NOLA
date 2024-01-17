@@ -58,24 +58,39 @@ const MainPage = () => {
   };
 
   return (
-    <div className={css.container}>
+    <div>
       <h1>MainPage</h1>
 
       {data.map(({ banner, advertiser, id }) => (
         <div key={banner} className={css.item}>
-          <NavLink to={`/${id}`}>{`Advertiser Header ${advertiser}`}</NavLink>
-          <NavLink to={`${id}`} className={css.link}>
-            {banner}
-          </NavLink>
+          <div className={css.post_header}>
+            <NavLink to={`${id}`} className={css.link}>
+              <img src="" alt="" className={css.img} />
+              <div className={css.description}>
+                {banner}
+                <h3>English for IT (B2 Level)</h3>
+                <p className={css.post_description}>
+                  Geringe finanzielle Bildung hält dich davon ab, den richtigen
+                  Plan für deine Finanzen zu...
+                </p>
+              </div>
+            </NavLink>
 
-          <a href="/" className={css.link}>
-            Link
-          </a>
+            <button
+              type="button"
+              onClick={() => handleSavePost(id)}
+              className={css.save_btn}
+            >
+              SAVE
+            </button>
+          </div>
 
-          <button type="button">Learn more</button>
-          <button type="button" onClick={() => handleSavePost(id)}>
-            SAVE
-          </button>
+          <div >
+<div className={css.post_footer}>
+              <p>Englishdom</p>
+              <NavLink to={`/${id}`}>{`${advertiser}`} Show all courses</NavLink>
+</div>
+          </div>
         </div>
       ))}
     </div>

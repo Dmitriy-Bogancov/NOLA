@@ -1,0 +1,25 @@
+.swiper_container {
+  position: relative;
+}
+
+.swiper_slide {
+  flex-shrink: 0;
+  height: 100%;
+  position: relative;
+  transition-property: transform;
+  display: inline-block;
+  margin: 0 20px 0 20px;
+}
+
+.swiper_slide .img {
+  height: 161px;
+  border-radius: 20px;
+  object-fit: cover;
+  background-color: darkgrey;
+}
+
+@media screen and (min-width: 410px) {
+  .swiper_slide {
+    margin: 0 25px 0 25px;
+  }
+}

@@ -7,8 +7,10 @@ import { BrowserRouter } from "react-router-dom";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter basename="/NOLA">
-      <App />
-    </BrowserRouter>
+    <div className="container">
+      <BrowserRouter basename="/NOLA">
+        <App />
+      </BrowserRouter>
+    </div>
   </React.StrictMode>
 );
