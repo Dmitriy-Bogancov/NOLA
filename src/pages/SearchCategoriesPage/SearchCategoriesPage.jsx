@@ -7,7 +7,17 @@ const SearchCategoriesPage = () => {
   return (
     <div>
       <NavLink to={location.state}>BACK</NavLink>
-      <h1>Categories</h1>
+      <h1>Subcategory</h1>
+
+      <ul className={css.list}>
+        {[...Array(5)].map((subcategory, idx) => (
+          <li key={idx} className={css.item}>
+            <NavLink to="searchEngineResults" state={location}>
+              <p>English</p>
+            </NavLink>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
