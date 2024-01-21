@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import Button from "../Button";
 import css from "./RecoveryForm.module.css";
 import * as yup from "yup";
-import email from "../../image/email.jpg";
+import email from "../../assets/images/email.jpg";
+import back from "../../assets/images/back.jpg";
+import GoBackButton from "../GoBackButton/GoBackButton";
 
 const schema = yup.object().shape({
   email: yup
@@ -14,6 +16,7 @@ const schema = yup.object().shape({
 });
 
 const RecoveryForm = () => {
+  const [dynamicMargin] = useState(50);
   const [formData, setFormData] = useState({
     email: "",
   });
@@ -33,7 +36,9 @@ const RecoveryForm = () => {
       .validate(formData, { abortEarly: false })
       .then(() => {
         console.log("Form submitted with data:", formData);
-        // Add your recovery logic here
+        setFormData({
+          email: "",
+        });
       })
       .catch((errors) => {
         console.error("Form validation errors:", errors);
@@ -42,10 +47,20 @@ const RecoveryForm = () => {
 
   return (
     <div className={css.formContainer}>
-      <h3>Password recovery</h3>
-      <img src={email} alt="Logo" />
-      <h3>Update your password</h3>
-      <p>Enter your username or email address and select Send Email</p>
+      <GoBackButton
+        to="/main/authorization/"
+        imgSrc={back}
+        imgAlt="Go back"
+        imgWidth="56px"
+        imgHeight="56px"
+        title="Password recovery"
+        dynamicMargin={dynamicMargin}
+      />
+      <img src={email} alt="Logo" className={css.imageForm} />
+      <h3 className={css.titleForm}>Update your password</h3>
+      <p className={css.infoForm}>
+        Enter your username or email address and select Send Email
+      </p>
 
       <form onSubmit={handleSubmit}>
         <input

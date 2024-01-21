@@ -1,5 +1,5 @@
 import { NavLink, useLocation, useSearchParams } from "react-router-dom";
-// import css from "./SearchPage.module.css";
+import css from "./SearchPage.module.css";
 
 const SearchPage = () => {
   const location = useLocation();

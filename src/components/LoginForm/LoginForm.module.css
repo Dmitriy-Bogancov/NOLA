@@ -3,9 +3,8 @@
   margin: auto;
   text-align: center;
 }
-
 .inputForm {
-  width: 327px;
+  width: calc(100% - 30px);
   border-radius: 12px;
   border: 2px solid;
   padding: 15px;
@@ -15,21 +14,9 @@
 }
 
 .textForgot {
-  display: inline-block;
-  margin-left: 230px;
+  display: flex;
+  justify-content: flex-end;
   color: #ba8e8e;
   cursor: pointer;
   text-decoration: underline;
-}
-
-.buttonForm {
-  background-color: #9e9e9e;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  color: #fff;
-  width: 360px;
-  border-radius: 12px;
-  padding: 15px;
-  cursor: pointer;
-  border: none;
 }

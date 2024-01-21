@@ -35,6 +35,10 @@ const LoginForm = () => {
       .validate(formData, { abortEarly: false })
       .then(() => {
         console.log("Form submitted with data:", formData);
+        setFormData({
+          email: "",
+          password: "",
+        });
       })
       .catch((errors) => {
         console.error("Form validation errors:", errors);
@@ -42,7 +46,7 @@ const LoginForm = () => {
   };
 
   return (
-    <form className={css.formContainer} onSubmit={handleSubmit}>
+    <div className={css.formContainer} onSubmit={handleSubmit}>
       <input
         className={css.inputForm}
         type="email"
@@ -61,11 +65,13 @@ const LoginForm = () => {
         onChange={handleInputChange}
       />
 
-      <div className={css.textForgot}>
-        <Link to="/recovery">Forgot password?</Link>
+      <div>
+        <Link to="/recovery">
+          <p className={css.textForgot}>Forgot password?</p>
+        </Link>
       </div>
       <Button label="Sing In" type="submit" />
-    </form>
+    </div>
   );
 };
 

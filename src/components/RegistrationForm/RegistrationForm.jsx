@@ -36,6 +36,10 @@ const RegistrationForm = () => {
       .validate(formData, { abortEarly: false })
       .then(() => {
         console.log("Form submitted with data:", formData);
+        setFormData({
+          email: "",
+          password: "",
+        });
       })
       .catch((errors) => {
         console.error("Form validation errors:", errors);

@@ -1,6 +1,4 @@
 import { NavLink } from "react-router-dom";
-import LoginForm from "../../components/LoginForm";
-import RegistrationForm from "../../components/RegistrationForm";
 
 import css from "./WelcomePage.module.css";
 
