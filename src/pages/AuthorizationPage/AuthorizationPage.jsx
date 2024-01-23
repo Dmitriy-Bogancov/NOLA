@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import back from "../../assets/images/back.jpg";
 import GoBackButton from "../../components/GoBackButton/GoBackButton";
 import css from "../AuthorizationPage/AuthorizationPage.module.css";
@@ -7,6 +7,13 @@ import css from "../AuthorizationPage/AuthorizationPage.module.css";
 const AuthorizationPage = () => {
   const [title, setTitle] = useState("Log In");
   const [dynamicMargin] = useState(100);
+
+  const location = useLocation();
+
+  const handleGoBack = () => {
+    setTitle("Log In");
+  };
+
   return (
     <div className="container">
       <GoBackButton
@@ -18,19 +25,26 @@ const AuthorizationPage = () => {
         title={title}
         setTitle={setTitle}
         dynamicMargin={dynamicMargin}
+        onClick={handleGoBack}
       />
 
       <div className={css.authContainer}>
         <NavLink
-          className={css.auth}
-          to="/main/authorization"
+          className={`${css.auth} ${
+            location.pathname === "/main/authorization/singIn" ? css.active : ""
+          }`}
+          to="/main/authorization/singIn"
           onClick={() => setTitle("Sign In")}
         >
           Sign In
         </NavLink>
 
         <NavLink
-          className={css.auth}
+          className={`${css.auth} ${
+            location.pathname === "/main/authorization/registration"
+              ? css.active
+              : ""
+          }`}
           to="registration"
           onClick={() => setTitle("Registration")}
         >

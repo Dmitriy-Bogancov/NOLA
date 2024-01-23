@@ -1,7 +1,7 @@
 .authContainer {
   display: flex;
   justify-content: center;
-  gap: 100px;
+  gap: 80px;
 }
 
 .auth {
@@ -14,9 +14,11 @@
   position: relative;
   margin-bottom: 20px;
   box-sizing: border-box;
+  background-color: transparent;
 }
 
-.auth:hover {
+.auth:hover,
+.auth.active {
   color: #858585;
 }
 
@@ -33,6 +35,7 @@
   border-radius: 2px;
 }
 
+.auth.active::after,
 .auth:hover::after {
   height: 4px;
   background-color: #858585;

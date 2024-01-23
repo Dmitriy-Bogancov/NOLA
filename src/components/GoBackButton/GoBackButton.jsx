@@ -10,10 +10,11 @@ const GoBackButton = ({
   imgWidth,
   imgHeight,
   dynamicMargin,
+  onClick,
 }) => {
   return (
     <div className={css.goBack}>
-      <Link to={to}>
+      <Link to={to} onClick={onClick}>
         <img src={imgSrc} alt={imgAlt} width={imgWidth} height={imgHeight} />
       </Link>
       <h3

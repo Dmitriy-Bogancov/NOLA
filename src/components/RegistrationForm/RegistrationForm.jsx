@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import css from "./RegistrationForm.module.css";
 import Button from "../Button";
-
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import * as yup from "yup";
 
 const schema = yup.object().shape({
@@ -21,6 +21,11 @@ const RegistrationForm = () => {
     password: "",
     confirmPassword: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -47,7 +52,7 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div className={css.formContainer}>
+    <div>
       <form onSubmit={handleSubmit}>
         <input
           className={css.inputForm}
@@ -59,25 +64,34 @@ const RegistrationForm = () => {
           required
         />
 
-        <input
-          className={css.inputForm}
-          type="password"
-          name="password"
-          placeholder="Enter Password"
-          value={formData.password}
-          onChange={handleInputChange}
-          required
-        />
+        <div className={css.passwordInputContainer}>
+          <input
+            className={`${css.inputForm} ${css.passwordInput}`}
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleInputChange}
+          />
+          <div className={css.eyeIcon} onClick={handleTogglePassword}>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </div>
+        </div>
+        <div className={css.passwordInputContainer}>
+          <input
+            className={`${css.inputForm} ${css.passwordInput}`}
+            type={showPassword ? "text" : "password"}
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            value={formData.confirmPassword}
+            onChange={handleInputChange}
+            required
+          />
+          <div className={css.eyeIcon} onClick={handleTogglePassword}>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </div>
+        </div>
 
-        <input
-          className={css.inputForm}
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          value={formData.confirmPassword}
-          onChange={handleInputChange}
-          required
-        />
         <p className={css.textInfo}>
           *By clicking the Register button, I agree to the
           <span className={css.spanPolicy}>Privacy Policy</span> and give my

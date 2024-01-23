@@ -1,9 +1,11 @@
 import RegistrationForm from "../../components/RegistrationForm";
+import GoogleAndAppleButton from "../../components/GoogleButton/GoogleAndAppleButton";
 
 const RegistrationPage = () => {
   return (
-    <div>
+    <div className="container">
       <RegistrationForm />
+      <GoogleAndAppleButton />
     </div>
   );
 };

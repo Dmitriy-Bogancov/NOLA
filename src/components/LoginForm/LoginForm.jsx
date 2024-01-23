@@ -3,6 +3,7 @@ import Button from "../Button";
 import css from "./LoginForm.module.css";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const schema = yup.object().shape({
   email: yup
@@ -20,12 +21,18 @@ const LoginForm = () => {
     password: "",
   });
 
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
     });
+  };
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = (e) => {
@@ -46,7 +53,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className={css.formContainer} onSubmit={handleSubmit}>
+    <div onSubmit={handleSubmit}>
       <input
         className={css.inputForm}
         type="email"
@@ -56,21 +63,26 @@ const LoginForm = () => {
         onChange={handleInputChange}
       />
 
-      <input
-        className={css.inputForm}
-        type="password"
-        name="password"
-        placeholder="Password"
-        value={formData.password}
-        onChange={handleInputChange}
-      />
+      <div className={css.passwordInputContainer}>
+        <input
+          className={`${css.inputForm} ${css.passwordInput}`}
+          type={showPassword ? "text" : "password"}
+          name="password"
+          placeholder="Password"
+          value={formData.password}
+          onChange={handleInputChange}
+        />
+        <div className={css.eyeIcon} onClick={handleTogglePassword}>
+          {showPassword ? <FaEyeSlash /> : <FaEye />}
+        </div>
+      </div>
 
       <div>
         <Link to="/recovery">
           <p className={css.textForgot}>Forgot password?</p>
         </Link>
       </div>
-      <Button label="Sing In" type="submit" />
+      <Button label="Sign In" type="submit" />
     </div>
   );
 };

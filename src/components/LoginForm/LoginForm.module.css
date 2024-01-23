@@ -1,8 +1,3 @@
-.formContainer {
-  max-width: 400px;
-  margin: auto;
-  text-align: center;
-}
 .inputForm {
   width: calc(100% - 30px);
   border-radius: 12px;
@@ -12,11 +7,23 @@
   color: #9e9e9e;
   display: inline-block;
 }
-
 .textForgot {
   display: flex;
   justify-content: flex-end;
   color: #ba8e8e;
   cursor: pointer;
   text-decoration: underline;
+}
+
+.passwordInputContainer {
+  position: relative;
+}
+
+.eyeIcon {
+  color: #9e9e9e;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  cursor: pointer;
 }
