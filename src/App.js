@@ -40,6 +40,7 @@ function App() {
             element={<SearchEngineResultsPage />}
           />
           <Route path="authorization" element={<AuthorizationPage />}>
+            <Route path="singIn" element={<SignInPage />} />
             <Route path="registration" element={<RegistrationPage />} />
             <Route index element={<SignInPage />} />
           </Route>

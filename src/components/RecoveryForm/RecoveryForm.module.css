@@ -1,0 +1,37 @@
+.formContainer {
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+}
+.imageForm {
+  margin: 20px auto;
+  width: 160px;
+  height: 160px;
+}
+.titleForm {
+  margin: 20px 0;
+  font-size: 18px;
+}
+.infoForm {
+  margin: auto;
+  width: 280px;
+  font-size: 12px;
+}
+
+.inputForm {
+  width: 360px;
+  border-radius: 12px;
+  border: 2px solid;
+  padding: 15px;
+  color: #9e9e9e;
+  display: inline-block;
+  margin: 30px 0 160px 0;
+}
+.goBack {
+  display: flex;
+  align-items: center;
+}
+.titleRecovery {
+  padding-left: 60px;
+  font-size: 20px;
+}

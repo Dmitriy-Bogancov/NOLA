@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-import css from "./AccountAdverticerPage.module.css";
+// import css from "./AccountAdverticerPage.module.css";
 
 const AccountAdverticerPage = () => {
   return (
