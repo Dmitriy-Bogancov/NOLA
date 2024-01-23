@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import css from "./EntrancePage.module.css";
+// import css from "./EntrancePage.module.css";
 const EntrancePage = () => {
   return (
     <div>

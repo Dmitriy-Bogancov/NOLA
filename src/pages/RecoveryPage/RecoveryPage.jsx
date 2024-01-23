@@ -1,29 +1,9 @@
-import { NavLink } from "react-router-dom";
-import css from "./RecoveryPage.module.css";
+import RecoveryForm from "../../components/RecoveryForm";
 
 const RecoveryPage = () => {
   return (
     <div>
-      <h1>RecoveryPage</h1>
-
-      <ul>
-        <li>
-          <NavLink to="/updatePassword">
-            <button type="button">Confirm</button>
-          </NavLink>
-        </li>
-        <li>
-          <NavLink>
-            <button type="button">Send a Code Again</button>
-          </NavLink>
-        </li>
-
-        <li>
-          <NavLink to="/main/authorization">
-            <button type="button">Cancel</button>
-          </NavLink>
-        </li>
-      </ul>
+      <RecoveryForm />
     </div>
   );
 };
