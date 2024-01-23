@@ -7,7 +7,7 @@ const SearchCategoriesPage = () => {
   return (
     <div>
       <NavLink to={location.state}>BACK</NavLink>
-      <h1>Subcategory</h1>
+      <h1 className={css.title}>Subcategory</h1>
 
       <ul className={css.list}>
         {[...Array(5)].map((subcategory, idx) => (
