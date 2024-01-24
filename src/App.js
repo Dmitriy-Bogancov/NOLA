@@ -19,6 +19,12 @@ import SavedPostsPage from "./pages/SavedPostsPage/SavedPostsPage";
 import UpdatePasswordPage from "./pages/UpdatePasswordPage/UpdatePasswordPage";
 import AccountAdverticerPage from "./pages/AccountAdverticerPage/AccountAdverticerPage";
 import SearchEngineResultsPage from "./pages/SearchEngineResultsPage/SearchEngineResultsPage";
+import RegistrationCheckPage from "./pages/RegistrationCheckPage/RegistrationCheckPage";
+import AdverticerEditPage from "./pages/AdverticerEditPage/AdverticerEditPage";
+import SettingPage from "./pages/SettingPage/SettingPage";
+
+import ThemePage from "./pages/ThemePage/ThemePage";
+import LanguagePage from "./pages/LanguagePage/LanguagePage";
 
 function App() {
   return (
@@ -32,18 +38,23 @@ function App() {
 
         <Route path="/main" element={<Layout />}>
           <Route index element={<MainPage />} />
-          <Route path="search" element={<SearchPage />} />
           <Route path="savedPosts" element={<SavedPostsPage />} />
+
+          <Route path="search" element={<SearchPage />} />
           <Route path="search/categories" element={<SearchCategoriesPage />} />
           <Route
             path="search/categories/searchEngineResults"
             element={<SearchEngineResultsPage />}
           />
+
           <Route path="authorization" element={<AuthorizationPage />}>
             <Route path="singIn" element={<SignInPage />} />
             <Route path="registration" element={<RegistrationPage />} />
             <Route index element={<SignInPage />} />
           </Route>
+
+          <Route path="registrationCheck" element={<RegistrationCheckPage />} />
+          <Route path="accountAdverticer" element={<AccountAdverticerPage />} /> 
         </Route>
 
         <Route path="/main/:postId" element={<PostDetailsPage />} />
@@ -54,8 +65,14 @@ function App() {
         <Route path="/recovery" element={<RecoveryPage />} />
         <Route path="/updatePassword" element={<UpdatePasswordPage />} />
 
-        {/* <Route path="/advertiser" element={<AdvertiserPage />} /> */}
-        <Route path="/accountAdverticer" element={<AccountAdverticerPage />} />
+         <Route path="/adverticerEdit" element={<AdverticerEditPage/>} />
+         {/* <Route path="/advertiser" element={<AdvertiserPage />} />  */}
+     
+
+        <Route path="/setting" element={<SettingPage/>} />
+        <Route path="/setting/language" element={<LanguagePage />} />
+         <Route path="/setting/theme" element={<ThemePage/>} />
+        
       </Routes>
     </div>
   );

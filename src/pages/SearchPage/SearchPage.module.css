@@ -40,6 +40,7 @@
   border-radius: 16px;
   object-fit: cover;
   background-color: rgb(219, 211, 211);
+  width: 100%;
 }
 
 .description {

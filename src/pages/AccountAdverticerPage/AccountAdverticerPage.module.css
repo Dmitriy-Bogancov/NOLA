@@ -1,0 +1,27 @@
+.accountAdverticer_container {
+  margin-top: 43px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+}
+
+.icon {
+  border: solid 2px #656565;
+  border-radius: 50%;
+  margin-bottom: 8px;
+}
+
+.account {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.description {
+  margin: 36px 0;
+}

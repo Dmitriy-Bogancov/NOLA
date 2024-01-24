@@ -1,8 +1,11 @@
 import { NavLink, Outlet } from "react-router-dom";
 
 import css from "./Layout.module.css";
+import { useState } from "react";
 
 const Layout = () => {
+  const [auth, setAuth] = useState(false)
+
   //  useEffect(() => {
   //       http://
   //   }, [])
@@ -22,13 +25,16 @@ const Layout = () => {
               <NavLink to="search">⚪</NavLink>
             </li>
             <li className={css.item}>
-              <NavLink>➕</NavLink>
+              <NavLink to ="registrationCheck">➕</NavLink>
             </li>
             <li className={css.item}>
               <NavLink to="savedPosts">🤍</NavLink>
             </li>
             <li className={css.item}>
-              <NavLink to="authorization">👩</NavLink>
+              {
+              auth ? <NavLink to="authorization">👩</NavLink> : <NavLink to="accountAdverticer">👩</NavLink>
+              }
+              
             </li>
           </ul>
         </nav>
