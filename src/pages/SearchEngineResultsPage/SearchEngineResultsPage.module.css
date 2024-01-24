@@ -16,6 +16,7 @@
   border-radius: 20px;
   object-fit: cover;
   background-color: darkgrey;
+  width: 100%;
 }
 
 @media screen and (min-width: 410px) {

@@ -29,7 +29,7 @@ const SearchPage = () => {
           </svg>
         </div>
       </form>
-      <h2>Categories</h2>
+      <h2 className={css.title}>Categories</h2>
 
       <ul className={css.list}>
         {[...Array(5)].map((category, idx) => (
