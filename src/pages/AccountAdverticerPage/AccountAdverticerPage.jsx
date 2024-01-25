@@ -1,13 +1,14 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 import css from "./AccountAdverticerPage.module.css";
+import { ScrollBar } from "../../components/ScrollBar/ScrollBar";
 
 const AccountAdverticerPage = () => {
   const location = useLocation();
   return (
     <div className={css.accountAdverticer_container}>
       <div className={css.nav}>
-        <NavLink to="/setting" state={location}>
+        <NavLink to="setting" state={location}>
           <button type="button">Setting</button>
         </NavLink>
 
@@ -30,6 +31,14 @@ const AccountAdverticerPage = () => {
         </p>
       </div>
 
+      <ScrollBar
+        labelOne="My publications"
+        pathnameOne="/main/accountAdverticer/adverticerPublications"
+        labelTwo="Saved"
+        pathnameTwo="/main/accountAdverticer/adverticerSaved"
+      />
+
+      <Outlet />
       {/* <NavLink to="/welcome">Enter data later</NavLink> */}
     </div>
   );

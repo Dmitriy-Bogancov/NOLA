@@ -25,6 +25,9 @@ import SettingPage from "./pages/SettingPage/SettingPage";
 
 import ThemePage from "./pages/ThemePage/ThemePage";
 import LanguagePage from "./pages/LanguagePage/LanguagePage";
+import AdverticerPublicationsPage from "./pages/AdverticerPublicationsPage/AdverticerPublicationsPage";
+import AdverticerSavedPage from "./pages/AdverticerSavedPage/AdverticerSavedPage";
+
 
 function App() {
   return (
@@ -54,7 +57,18 @@ function App() {
           </Route>
 
           <Route path="registrationCheck" element={<RegistrationCheckPage />} />
-          <Route path="accountAdverticer" element={<AccountAdverticerPage />} /> 
+
+          <Route path="accountAdverticer" element={<AccountAdverticerPage />}>
+            <Route
+              path="adverticerPublications"
+              element={<AdverticerPublicationsPage />}
+            />
+            <Route path="adverticerSaved" element={<AdverticerSavedPage/>} />
+          </Route>
+          <Route path="/main/setting" element={<SettingPage />}>
+            <Route path="language" element={<LanguagePage />} />
+            <Route path="theme" element={<ThemePage />} />
+          </Route>
         </Route>
 
         <Route path="/main/:postId" element={<PostDetailsPage />} />
@@ -65,14 +79,12 @@ function App() {
         <Route path="/recovery" element={<RecoveryPage />} />
         <Route path="/updatePassword" element={<UpdatePasswordPage />} />
 
-         <Route path="/adverticerEdit" element={<AdverticerEditPage/>} />
-         {/* <Route path="/advertiser" element={<AdvertiserPage />} />  */}
-     
+        <Route path="/adverticerEdit" element={<AdverticerEditPage />} />
 
-        <Route path="/setting" element={<SettingPage/>} />
-        <Route path="/setting/language" element={<LanguagePage />} />
-         <Route path="/setting/theme" element={<ThemePage/>} />
-        
+        <Route path="main/accountAdverticer/setting" element={<SettingPage />}>
+          <Route path="language" element={<LanguagePage />} />
+          <Route path="theme" element={<ThemePage />} />
+        </Route>
       </Routes>
     </div>
   );
