@@ -1,39 +1,20 @@
 import React, { useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
-import back from "../../assets/images/back.jpg";
-import GoBackButton from "../../components/GoBackButton/GoBackButton";
 import css from "../AuthorizationPage/AuthorizationPage.module.css";
 
 const AuthorizationPage = () => {
-  const [title, setTitle] = useState("Log In");
-  const [dynamicMargin] = useState(100);
+  const [setTitle] = useState("Log In");
 
   const location = useLocation();
 
-  const handleGoBack = () => {
-    setTitle("Log In");
-  };
-
   return (
     <div className="container">
-      <GoBackButton
-        to="/main/authorization"
-        imgSrc={back}
-        imgAlt="Go back"
-        imgWidth="50px"
-        imgHeight="50px"
-        title={title}
-        setTitle={setTitle}
-        dynamicMargin={dynamicMargin}
-        onClick={handleGoBack}
-      />
-
       <div className={css.authContainer}>
         <NavLink
           className={`${css.auth} ${
-            location.pathname === "/main/authorization/singIn" ? css.active : ""
+            location.pathname === "/main/authorization" ? css.active : ""
           }`}
-          to="/main/authorization/singIn"
+          to="/main/authorization"
           onClick={() => setTitle("Sign In")}
         >
           Sign In

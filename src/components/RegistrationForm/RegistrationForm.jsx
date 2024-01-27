@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import css from "./RegistrationForm.module.css";
 import Button from "../Button";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -12,20 +13,25 @@ const schema = yup.object().shape({
     .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
     .required(),
   password: yup.string().required().min(6),
-  confirmPassword: yup.string().required().min(6),
+  confirmPassword: yup
+    .string()
+    .required()
+    .min(6)
+    .oneOf([yup.ref("password"), null], "Passwords must match"),
 });
 
 const RegistrationForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
     confirmPassword: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [errors, setErrors] = useState({});
 
-  const handleTogglePassword = () => {
-    setShowPassword(!showPassword);
-  };
+  useEffect(() => {}, [errors]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -33,6 +39,33 @@ const RegistrationForm = () => {
       ...formData,
       [name]: value,
     });
+    setErrors({
+      ...errors,
+      [name]: "",
+    });
+  };
+
+  const handleTogglePassword = (field) => {
+    if (field === "password") {
+      setShowPassword(!showPassword);
+    } else if (field === "confirmPassword") {
+      setShowConfirmPassword(!showConfirmPassword);
+    }
+  };
+
+  const handleBlur = async (field) => {
+    try {
+      await schema.validateAt(field, formData);
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [field]: "",
+      }));
+    } catch (validationError) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [field]: validationError.message,
+      }));
+    }
   };
 
   const handleSubmit = (e) => {
@@ -44,62 +77,81 @@ const RegistrationForm = () => {
         setFormData({
           email: "",
           password: "",
+          confirmPassword: "",
         });
+        setErrors({});
+        navigate("/accountAdverticer");
       })
-      .catch((errors) => {
-        console.error("Form validation errors:", errors);
+      .catch((validationErrors) => {
+        const errorsMap = {};
+        validationErrors.inner.forEach((error) => {
+          errorsMap[error.path] = error.message;
+        });
+        setErrors(errorsMap);
       });
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
+      <input
+        className={css.inputForm}
+        type="email"
+        name="email"
+        placeholder="E-mail"
+        value={formData.email}
+        onChange={handleInputChange}
+        onBlur={() => handleBlur("email")}
+      />
+      {errors.email && <div className={css.errorText}>{errors.email}</div>}
+      <div className={css.passwordInputContainer}>
         <input
-          className={css.inputForm}
-          type="email"
-          name="email"
-          placeholder="E-mail"
-          value={formData.email}
+          className={`${css.inputForm} ${css.passwordInput}`}
+          type={showPassword ? "text" : "password"}
+          name="password"
+          placeholder="Password"
+          value={formData.password}
           onChange={handleInputChange}
-          required
+          onBlur={() => handleBlur("password")}
         />
 
-        <div className={css.passwordInputContainer}>
-          <input
-            className={`${css.inputForm} ${css.passwordInput}`}
-            type={showPassword ? "text" : "password"}
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleInputChange}
-          />
-          <div className={css.eyeIcon} onClick={handleTogglePassword}>
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
-          </div>
+        <div
+          className={css.eyeIcon}
+          onClick={() => handleTogglePassword("password")}
+        >
+          {showPassword ? <FaEyeSlash /> : <FaEye />}
         </div>
-        <div className={css.passwordInputContainer}>
-          <input
-            className={`${css.inputForm} ${css.passwordInput}`}
-            type={showPassword ? "text" : "password"}
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            value={formData.confirmPassword}
-            onChange={handleInputChange}
-            required
-          />
-          <div className={css.eyeIcon} onClick={handleTogglePassword}>
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
-          </div>
-        </div>
+      </div>{" "}
+      {errors.password && (
+        <div className={css.errorText}>{errors.password}</div>
+      )}
+      <div className={css.passwordInputContainer}>
+        <input
+          className={`${css.inputForm} ${css.passwordInput}`}
+          type={showConfirmPassword ? "text" : "password"}
+          name="confirmPassword"
+          placeholder="Confirm Password"
+          value={formData.confirmPassword}
+          onChange={handleInputChange}
+          onBlur={() => handleBlur("confirmPassword")}
+        />
 
-        <p className={css.textInfo}>
-          *By clicking the Register button, I agree to the
-          <span className={css.spanPolicy}>Privacy Policy</span> and give my
-          consent to data processing
-        </p>
-        <Button label="Register" type="submit" />
-      </form>
-    </div>
+        <div
+          className={css.eyeIcon}
+          onClick={() => handleTogglePassword("confirmPassword")}
+        >
+          {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+        </div>
+      </div>{" "}
+      {errors.confirmPassword && (
+        <div className={css.errorText}>{errors.confirmPassword}</div>
+      )}
+      <p className={css.textInfo}>
+        *By clicking the Register button, I agree to the
+        <span className={css.spanPolicy}>Privacy Policy</span> and give my
+        consent to data processing
+      </p>
+      <Button label="Register" type="submit" />
+    </form>
   );
 };
 

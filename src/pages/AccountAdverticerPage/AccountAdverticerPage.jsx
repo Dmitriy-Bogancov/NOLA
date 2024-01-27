@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import Button from "../../components/Button";
 
 // import css from "./AccountAdverticerPage.module.css";
 
@@ -21,7 +22,7 @@ const AccountAdverticerPage = () => {
 
       <p>Description</p>
 
-      <button type="button">SAVE</button>
+      <Button label="Save" type="submit" />
       <NavLink to="/accountAdverticer">
         <button type="button">Edit</button>
       </NavLink>
