@@ -4,7 +4,7 @@ import css from "./AccountAdverticerPage.module.css";
 import { ScrollBar } from "../../components/ScrollBar/ScrollBar";
 
 const AccountAdverticerPage = () => {
-  const location = useLocation();
+  // const location = useLocation();
   return (
     <div>
       <h2>AccountAdverticer</h2>

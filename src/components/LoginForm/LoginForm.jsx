@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 import css from "./LoginForm.module.css";
 import { Link } from "react-router-dom";
@@ -16,12 +17,14 @@ const schema = yup.object().shape({
 });
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
 
   const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -29,10 +32,29 @@ const LoginForm = () => {
       ...formData,
       [name]: value,
     });
+    setErrors({
+      ...errors,
+      [name]: "",
+    });
   };
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleBlur = async (field) => {
+    try {
+      await schema.validateAt(field, formData);
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [field]: "",
+      }));
+    } catch (validationError) {
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [field]: validationError.message,
+      }));
+    }
   };
 
   const handleSubmit = (e) => {
@@ -46,14 +68,20 @@ const LoginForm = () => {
           email: "",
           password: "",
         });
+        setErrors({});
+        navigate("/accountAdverticer");
       })
-      .catch((errors) => {
-        console.error("Form validation errors:", errors);
+      .catch((validationErrors) => {
+        const errorsMap = {};
+        validationErrors.inner.forEach((error) => {
+          errorsMap[error.path] = error.message;
+        });
+        setErrors(errorsMap);
       });
   };
 
   return (
-    <div onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <input
         className={css.inputForm}
         type="email"
@@ -61,7 +89,9 @@ const LoginForm = () => {
         placeholder="Username or Email"
         value={formData.email}
         onChange={handleInputChange}
+        onBlur={() => handleBlur("email")}
       />
+      {errors.email && <div className={css.errorText}>{errors.email}</div>}
 
       <div className={css.passwordInputContainer}>
         <input
@@ -71,11 +101,16 @@ const LoginForm = () => {
           placeholder="Password"
           value={formData.password}
           onChange={handleInputChange}
+          onBlur={() => handleBlur("password")}
         />
+
         <div className={css.eyeIcon} onClick={handleTogglePassword}>
           {showPassword ? <FaEyeSlash /> : <FaEye />}
         </div>
       </div>
+      {errors.password && (
+        <div className={css.errorText}>{errors.password}</div>
+      )}
 
       <div>
         <Link to="/recovery">
@@ -83,7 +118,7 @@ const LoginForm = () => {
         </Link>
       </div>
       <Button label="Sign In" type="submit" />
-    </div>
+    </form>
   );
 };
 
