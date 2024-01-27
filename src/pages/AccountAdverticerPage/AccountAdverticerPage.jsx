@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import css from "./AccountAdverticerPage.module.css";
 import { ScrollBar } from "../../components/ScrollBar/ScrollBar";
@@ -6,40 +6,28 @@ import { ScrollBar } from "../../components/ScrollBar/ScrollBar";
 const AccountAdverticerPage = () => {
   const location = useLocation();
   return (
-    <div className={css.accountAdverticer_container}>
-      <div className={css.nav}>
-        <NavLink to="setting" state={location}>
-          <button type="button">Setting</button>
-        </NavLink>
+    <div>
+      <h2>AccountAdverticer</h2>
+      <p>AVATAR</p>
+      <ul>
+        <li>
+          <a href="/">LINK</a>
+        </li>
+        <li>
+          <a href="/">LINK</a>
+        </li>
+        <li>
+          <a href="/">LINK</a>
+        </li>
+      </ul>
 
-        <NavLink to="/adverticerEdit">
-          <button type="button">Edit</button>
-        </NavLink>
-      </div>
+      <p>Description</p>
 
-      <div className={css.account}>
-        <svg width="72" height="72" className={css.icon}>
-          <use></use>
-        </svg>
-
-        <h3>English Study</h3>
-
-        <p className={css.description}>
-          We are the newest English language school for any age. Our school
-          provides both online and offline services. We are the on newest
-          English language scho...
-        </p>
-      </div>
-
-      <ScrollBar
-        labelOne="My publications"
-        pathnameOne="/main/accountAdverticer/adverticerPublications"
-        labelTwo="Saved"
-        pathnameTwo="/main/accountAdverticer/adverticerSaved"
-      />
-
-      <Outlet />
-      {/* <NavLink to="/welcome">Enter data later</NavLink> */}
+      <button type="button">SAVE</button>
+      <NavLink to="/accountAdverticer">
+        <button type="button">Edit</button>
+      </NavLink>
+      <NavLink to="/welcome">Enter data later</NavLink>
     </div>
   );
 };
