@@ -4,6 +4,7 @@ import css from "./RegistrationForm.module.css";
 import Button from "../Button";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import * as yup from "yup";
+import { useCustomContext } from "../../services/Context/Context";
 
 const schema = yup.object().shape({
   email: yup
@@ -80,7 +81,7 @@ const RegistrationForm = () => {
           confirmPassword: "",
         });
         setErrors({});
-        navigate("/accountAdverticer");
+        navigate("/main/accountAdverticer");
       })
       .catch((validationErrors) => {
         const errorsMap = {};

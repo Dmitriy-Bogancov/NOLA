@@ -1,0 +1,19 @@
+.input_container {
+  position: relative;
+}
+
+.input {
+  display: block;
+  border-radius: 12px;
+  border: 1px solid #9e9e9e;
+  width: 100%;
+  height: 48px;
+  margin-bottom: 8px;
+}
+
+.addLink {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+}

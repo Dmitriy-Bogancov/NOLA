@@ -2,36 +2,19 @@ import React, { useState } from "react";
 import { NavLink, Outlet, useLocation } from "react-router-dom";
 import css from "../AuthorizationPage/AuthorizationPage.module.css";
 
-const AuthorizationPage = () => {
-  const [setTitle] = useState("Log In");
+import { ScrollBar } from "../../components/ScrollBar/ScrollBar";
 
-  const location = useLocation();
+const AuthorizationPage = () => {
+  const [title, setTitle] = useState("Log In");
 
   return (
     <div className="container">
-      <div className={css.authContainer}>
-        <NavLink
-          className={`${css.auth} ${
-            location.pathname === "/main/authorization" ? css.active : ""
-          }`}
-          to="/main/authorization"
-          onClick={() => setTitle("Sign In")}
-        >
-          Sign In
-        </NavLink>
-
-        <NavLink
-          className={`${css.auth} ${
-            location.pathname === "/main/authorization/registration"
-              ? css.active
-              : ""
-          }`}
-          to="registration"
-          onClick={() => setTitle("Registration")}
-        >
-          Registration
-        </NavLink>
-      </div>
+      <ScrollBar
+        labelOne="Sign In"
+        pathnameOne="/main/authorization"
+        labelTwo="Registration"
+        pathnameTwo="/main/authorization/registration"
+      />
 
       <Outlet />
     </div>

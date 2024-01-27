@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import css from "./MainPage.module.css";
 import { useEffect, useState } from "react";
 
@@ -33,6 +33,7 @@ const data = [
 ];
 
 const MainPage = () => {
+  const location = useLocation();
   const [posts, setPost] = useState(() => {
     return JSON.parse(localStorage.getItem(LOKAL_KEY)) ?? "";
   });
@@ -59,7 +60,9 @@ const MainPage = () => {
 
   return (
     <div>
-      <h1>MainPage</h1>
+      <NavLink to="setting" state={location}>
+        <button type="button">Setting</button>
+      </NavLink>
 
       {data.map(({ banner, advertiser, id }) => (
         <div key={banner} className={css.item}>
@@ -85,11 +88,13 @@ const MainPage = () => {
             </button>
           </div>
 
-          <div >
-<div className={css.post_footer}>
+          <div>
+            <div className={css.post_footer}>
               <p>Englishdom</p>
-              <NavLink to={`/${id}`}>{`${advertiser}`} Show all courses</NavLink>
-</div>
+              <NavLink to={`/${id}`}>
+                {`${advertiser}`} Show all courses
+              </NavLink>
+            </div>
           </div>
         </div>
       ))}
