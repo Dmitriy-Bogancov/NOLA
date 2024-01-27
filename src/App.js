@@ -27,7 +27,9 @@ import ThemePage from "./pages/ThemePage/ThemePage";
 import LanguagePage from "./pages/LanguagePage/LanguagePage";
 import AdverticerPublicationsPage from "./pages/AdverticerPublicationsPage/AdverticerPublicationsPage";
 import AdverticerSavedPage from "./pages/AdverticerSavedPage/AdverticerSavedPage";
-
+import LinksPage from "./pages/LinksPage/LinksPage";
+import AddLinksPage from "./pages/AddLinksPage/AddLinksPage";
+import AddPostPage from "./pages/AddPostPage/AddPostPage";
 
 function App() {
   return (
@@ -59,11 +61,15 @@ function App() {
 
           <Route path="accountAdverticer" element={<AccountAdverticerPage />}>
             <Route
-              path="adverticerPublications"
+              // path="adverticerPublications"
+              index
               element={<AdverticerPublicationsPage />}
             />
-            <Route path="adverticerSaved" element={<AdverticerSavedPage/>} />
+            <Route path="adverticerSaved" element={<AdverticerSavedPage />} />
           </Route>
+
+          <Route path="addPost" element={<AddPostPage />} />
+
           <Route path="/main/setting" element={<SettingPage />}>
             <Route path="language" element={<LanguagePage />} />
             <Route path="theme" element={<ThemePage />} />
@@ -78,7 +84,19 @@ function App() {
         <Route path="/recovery" element={<RecoveryPage />} />
         <Route path="/updatePassword" element={<UpdatePasswordPage />} />
 
-        <Route path="/adverticerEdit" element={<AdverticerEditPage />} />
+        <Route
+          path="main/accountAdverticer/adverticerEdit"
+          element={<AdverticerEditPage />}
+        />
+
+        <Route
+          path="main/accountAdverticer/adverticerEdit/links"
+          element={<LinksPage />}
+        />
+        <Route
+          path="main/accountAdverticer/adverticerEdit/links/addLinks"
+          element={<AddLinksPage />}
+        />
 
         <Route path="main/accountAdverticer/setting" element={<SettingPage />}>
           <Route path="language" element={<LanguagePage />} />

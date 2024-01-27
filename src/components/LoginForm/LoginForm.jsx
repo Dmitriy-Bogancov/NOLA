@@ -5,6 +5,7 @@ import css from "./LoginForm.module.css";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useCustomContext } from "../../services/Context/Context";
 
 const schema = yup.object().shape({
   email: yup
@@ -69,7 +70,7 @@ const LoginForm = () => {
           password: "",
         });
         setErrors({});
-        navigate("/accountAdverticer");
+        navigate("/main/accountAdverticer");
       })
       .catch((validationErrors) => {
         const errorsMap = {};

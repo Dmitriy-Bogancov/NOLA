@@ -16,7 +16,7 @@ export const ScrollBar = ({ labelOne, pathnameOne, labelTwo, pathnameTwo }) => {
 
   return (
     <div className="container">
-      {pathnameOne === "/main/authorization/singIn" ||
+      {/* {pathnameOne === "/main/authorization/singIn" ||
       pathnameTwo === "/main/authorization/registration" ? (
         <GoBackButton
           to="/main/authorization"
@@ -31,7 +31,7 @@ export const ScrollBar = ({ labelOne, pathnameOne, labelTwo, pathnameTwo }) => {
         />
       ) : (
         ""
-      )}
+      )} */}
 
       <div className={css.authContainer}>
         <NavLink

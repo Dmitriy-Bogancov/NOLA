@@ -14,7 +14,7 @@ const RegistrationCheckPage = () => {
           Log in to your account using your phone or e-mail{" "}
         </p>
 
-        <NavLink to="/main/authorization/singIn" className={css.btn}>
+        <NavLink to="/main/authorization" className={css.btn}>
           <Button label="Login" type="button" />
         </NavLink>
 
