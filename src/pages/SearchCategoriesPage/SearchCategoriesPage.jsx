@@ -1,12 +1,13 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import css from "./SearchCategoriesPage.module.css";
 
 const SearchCategoriesPage = () => {
   const location = useLocation();
-
+  const navigate = useNavigate();
+  
   return (
     <div>
-      <NavLink to={location.state}>BACK</NavLink>
+      <NavLink onClick={() => navigate(-1)}>BACK</NavLink> 
       <h1 className={css.title}>Subcategory</h1>
 
       <ul className={css.list}>
