@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/NOLA/static/css/main.62fc5f80.css",
-    "main.js": "/NOLA/static/js/main.0645d8ad.js",
+    "main.js": "/NOLA/static/js/main.cbc1c29d.js",
     "static/media/learn.png": "/NOLA/static/media/learn.c6b513e418710ce09ccd.png",
     "static/media/create.png": "/NOLA/static/media/create.2c468c187a901618667b.png",
     "static/media/searching.png": "/NOLA/static/media/searching.02bf6190679ac5bbaee7.png",
     "index.html": "/NOLA/index.html",
     "main.62fc5f80.css.map": "/NOLA/static/css/main.62fc5f80.css.map",
-    "main.0645d8ad.js.map": "/NOLA/static/js/main.0645d8ad.js.map"
+    "main.cbc1c29d.js.map": "/NOLA/static/js/main.cbc1c29d.js.map"
   },
   "entrypoints": [
     "static/css/main.62fc5f80.css",
-    "static/js/main.0645d8ad.js"
+    "static/js/main.cbc1c29d.js"
   ]
 }
