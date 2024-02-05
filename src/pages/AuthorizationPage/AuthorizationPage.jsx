@@ -1,12 +1,10 @@
-import React, { useState } from "react";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
-import css from "../AuthorizationPage/AuthorizationPage.module.css";
+import React from "react";
+import { Outlet } from "react-router-dom";
+// import css from "../AuthorizationPage/AuthorizationPage.module.css";
 
 import { ScrollBar } from "../../components/ScrollBar/ScrollBar";
 
 const AuthorizationPage = () => {
-  const [title, setTitle] = useState("Log In");
-
   return (
     <div className="container">
       <ScrollBar
