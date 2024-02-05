@@ -5,16 +5,18 @@ import css from "./LoginForm.module.css";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useCustomContext } from "../../services/Context/Context";
 
 const schema = yup.object().shape({
   email: yup
     .string()
-    .matches(/^[^\s]*$/)
-    .matches(/^[^а-яА-ЯіІїЇєЄ]*$/)
-    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
-    .required(),
-  password: yup.string().required().min(6),
+    .matches(/^[^\s]*$/, "Please enter valid characters")
+    .matches(/^[^а-яА-ЯіІїЇєЄ]*$/, "Please enter valid characters")
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please enter a valid email address")
+    .required("Email is required"),
+  password: yup
+    .string()
+    .required("Password is required")
+    .min(6, "Password must be at least 6 characters"),
 });
 
 const LoginForm = () => {
@@ -58,6 +60,10 @@ const LoginForm = () => {
     }
   };
 
+  const getBorderColor = (field) => {
+    return errors[field] ? "#ff0000" : "#9e9e9e";
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -83,35 +89,38 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        className={css.inputForm}
-        type="email"
-        name="email"
-        placeholder="Username or Email"
-        value={formData.email}
-        onChange={handleInputChange}
-        onBlur={() => handleBlur("email")}
-      />
-      {errors.email && <div className={css.errorText}>{errors.email}</div>}
-
-      <div className={css.passwordInputContainer}>
+      <div className={css.inputContainer}>
+        <div className={css.errorText}>{errors.email}</div>
         <input
-          className={`${css.inputForm} ${css.passwordInput}`}
-          type={showPassword ? "text" : "password"}
-          name="password"
-          placeholder="Password"
-          value={formData.password}
+          className={css.inputForm}
+          type="email"
+          name="email"
+          placeholder="Username or Email"
+          value={formData.email}
           onChange={handleInputChange}
-          onBlur={() => handleBlur("password")}
+          onBlur={() => handleBlur("email")}
+          style={{ borderColor: getBorderColor("email") }}
         />
+      </div>
 
-        <div className={css.eyeIcon} onClick={handleTogglePassword}>
-          {showPassword ? <FaEyeSlash /> : <FaEye />}
+      <div className={css.inputContainer}>
+        <div className={css.errorText}>{errors.password}</div>
+        <div className={css.passwordInputContainer}>
+          <input
+            className={`${css.inputForm} ${css.passwordInput}`}
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleInputChange}
+            onBlur={() => handleBlur("password")}
+            style={{ borderColor: getBorderColor("password") }}
+          />
+          <div className={css.eyeIcon} onClick={handleTogglePassword}>
+            {showPassword ? <FaEyeSlash /> : <FaEye />}
+          </div>
         </div>
       </div>
-      {errors.password && (
-        <div className={css.errorText}>{errors.password}</div>
-      )}
 
       <div>
         <Link to="/recovery">

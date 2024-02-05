@@ -9,23 +9,28 @@ import GoBackButton from "../GoBackButton/GoBackButton";
 const schema = yup.object().shape({
   email: yup
     .string()
-    .matches(/^[^\s]*$/)
-    .matches(/^[^а-яА-ЯіІїЇєЄ]*$/)
-    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
-    .required(),
+    .matches(/^[^\s]*$/, "Please enter valid characters")
+    .matches(/^[^а-яА-ЯіІїЇєЄ]*$/, "Please enter valid characters")
+    .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please enter a valid email address")
+    .required("Email is required"),
 });
 
 const RecoveryForm = () => {
-  const [dynamicMargin] = useState(50);
   const [formData, setFormData] = useState({
     email: "",
   });
+
+  const [errors, setErrors] = useState({});
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value,
+    });
+    setErrors({
+      ...errors,
+      [name]: "",
     });
   };
 
@@ -40,9 +45,39 @@ const RecoveryForm = () => {
           email: "",
         });
       })
-      .catch((errors) => {
-        console.error("Form validation errors:", errors);
+      .catch((validationErrors) => {
+        const newErrors = {};
+        validationErrors.inner.forEach((error) => {
+          newErrors[error.path] = error.message;
+        });
+        setErrors(newErrors);
       });
+  };
+
+  const handleBlur = async (field) => {
+    try {
+      await schema.validateAt(field, formData);
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        [field]: "",
+      }));
+    } catch (validationError) {
+      if (!validationError.message) {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [field]: "Invalid value",
+        }));
+      } else {
+        setErrors((prevErrors) => ({
+          ...prevErrors,
+          [field]: validationError.message,
+        }));
+      }
+    }
+  };
+
+  const getBorderColor = (field) => {
+    return errors[field] ? "#ff0000" : "#9e9e9e";
   };
 
   return (
@@ -51,10 +86,9 @@ const RecoveryForm = () => {
         to="/main/authorization/"
         imgSrc={back}
         imgAlt="Go back"
-        imgWidth="56px"
-        imgHeight="56px"
+        imgWidth="50px"
+        imgHeight="50px"
         title="Password recovery"
-        dynamicMargin={dynamicMargin}
       />
       <img src={email} alt="Logo" className={css.imageForm} />
       <h3 className={css.titleForm}>Update your password</h3>
@@ -63,15 +97,19 @@ const RecoveryForm = () => {
       </p>
 
       <form onSubmit={handleSubmit}>
-        <input
-          className={css.inputForm}
-          type="email"
-          name="email"
-          placeholder="Enter your email"
-          value={formData.email}
-          onChange={handleInputChange}
-        />
-
+        <div className={css.inputContainer}>
+          {errors.email && <div className={css.errorText}>{errors.email}</div>}
+          <input
+            className={css.inputForm}
+            type="email"
+            name="email"
+            placeholder="Username or Email"
+            value={formData.email}
+            onChange={handleInputChange}
+            onBlur={() => handleBlur("email")}
+            style={{ borderColor: getBorderColor("email") }}
+          />
+        </div>
         <Button label="Send email" type="submit" />
       </form>
     </div>
