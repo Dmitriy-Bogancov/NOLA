@@ -3,8 +3,9 @@
   border-radius: 12px;
   border: 2px solid;
   padding: 15px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   color: #9e9e9e;
+  position: relative;
 }
 
 .textInfo {
@@ -20,6 +21,9 @@
   margin-left: 2px;
   color: #435bd7;
 }
+.inputContainer {
+  position: relative;
+}
 
 .passwordInputContainer {
   position: relative;
@@ -30,13 +34,18 @@
 .eyeIcon {
   color: #9e9e9e;
   cursor: pointer;
-  margin-left: auto;
   position: absolute;
-  right: 10px;
-  transform: translateX(-50%);
+  right: 20px;
+  top: 40%;
+  transform: translateY(-50%);
 }
 .errorText {
   color: #ff0000;
-  font-size: 14px;
-  margin-bottom: 5px;
+  font-size: 12px;
+  position: absolute;
+  top: -8px;
+  left: 15px;
+  background-color: white;
+  padding: 0 5px;
+  z-index: 1;
 }
