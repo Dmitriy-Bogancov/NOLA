@@ -1,17 +1,11 @@
 import GoBackButton from "../../components/GoBackButton/GoBackButton";
 import back from "../../assets/images/back.jpg";
 import Button from "../../components/Button";
-import { useEffect, useState } from "react";
-import { useCustomContext } from "../../services/Context/Context";
+import { postLinksApi } from "../../services/https/https";
+import { useState } from "react";
 
 const AddLinksPage = () => {
-  const { addLink, setAddLink } = useCustomContext([]);
-
-  const [formData, setFormData] = useState([]);
-
-  //     useEffect(() => {
-  // post --addLink
-  //   }, [addLink])
+  const [formData, setFormData] = useState({});
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -22,13 +16,15 @@ const AddLinksPage = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setAddLink((prev) => [...prev, formData]);
 
-    console.log(formData);
-    const form = e.currentTarget;
-    form.reset();
+    postLinksApi(formData);
+
+    setFormData({
+      links: "",
+      name: "",
+    });
   };
 
   return (
@@ -38,10 +34,23 @@ const AddLinksPage = () => {
         imgSrc={back}
       />
       <form onSubmit={handleSubmit}>
-        <input type="text" name="name" onChange={handleChange} />
-        <input type="text" name="links" onChange={handleChange} />
-
-        <Button label="Save" type="submit" />
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+        />
+        <input
+          type="text"
+          name="links"
+          value={formData.links}
+          onChange={handleChange}
+        />
+        {!formData?.links?.length || !formData?.name?.length ? (
+          <Button label="Save" type="submit" disabled />
+        ) : (
+          <Button label="Save" type="submit" />
+        )}
       </form>
     </div>
   );

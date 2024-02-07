@@ -2,46 +2,51 @@ import css from "./AdverticerEditPage.module.css";
 import GoBackButton from "../../components/GoBackButton/GoBackButton";
 import back from "../../assets/images/back.jpg";
 import { NavLink } from "react-router-dom";
+
 import Button from "../../components/Button";
-import { useState } from "react";
-import { useCustomContext } from "../../services/Context/Context";
+import { useEffect, useState } from "react";
+import {
+  getAccountApi,
+  postAccoutApi,
+  putAccoutApi,
+} from "../../services/https/https";
 
 const AdverticerEditPage = () => {
-  const { addLink, setAddLink } = useCustomContext(false);
-  const [formData, setFormData] = useState({
+  const [data, setData] = useState([]);
+
+  const [account, setAccount] = useState({
     name: "",
-    links: null,
     textarea: "",
   });
 
-  //     useEffect(() => {
-  // post --formData
-  //   }, [addLink])
-
-  //     useEffect(() => {
-  if (formData) {
-    // return get --formData
-  }
-
-  //   }, [ormData])
+  useEffect(() => {
+    const getData = (async () => {
+      const data = await getAccountApi();
+      setData(data)
+      setAccount(...data);
+      console.log("data", data);
+    })();
+  }, []);
 
   const handleForm = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      links: addLink,
+    setAccount((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormData({
-      name: formData.name,
-      links: addLink,
-      textarea: formData.textarea,
-    });
-    console.log(formData);
+
+    if (account.id) {
+      putAccoutApi(account.id, account);
+
+      return;
+    }
+    postAccoutApi(account);
   };
+
   return (
     <div className={css.adverticerEdit_container}>
       <GoBackButton
@@ -60,7 +65,7 @@ const AdverticerEditPage = () => {
         <input
           name="name"
           type="text"
-          value={formData.name}
+          value={account?.name}
           className={css.input}
           onChange={handleForm}
         />
@@ -68,11 +73,14 @@ const AdverticerEditPage = () => {
           <input
             name="links"
             type="text"
+            placeholder="Add link"
+            disabled
+            // value={data?.links}
             className={css.input}
             onChange={handleForm}
           />
           <NavLink to="links" className={css.addLink}>
-            {formData.links ? formData.links.length : <p>+</p>}
+            {data?.length > 0 ? data.length : <p>+</p>}
           </NavLink>
         </div>
         <textarea
@@ -80,11 +88,15 @@ const AdverticerEditPage = () => {
           id=""
           cols="30"
           rows="10"
-          value={formData.textarea}
+          value={account?.textarea}
           className={css.textarea}
           onChange={handleForm}
         ></textarea>
-        <Button label="Save" type="submit" />
+        {!account?.textarea?.length || !account?.name?.length ? (
+          <Button label="Save" type="submit" disabled />
+        ) : (
+          <Button label="Save" type="submit" />
+        )}
       </form>
 
       <NavLink to="/welcome">Enter data later</NavLink>
