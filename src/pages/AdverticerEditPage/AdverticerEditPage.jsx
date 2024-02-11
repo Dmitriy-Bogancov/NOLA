@@ -1,19 +1,21 @@
 import css from "./AdverticerEditPage.module.css";
 import GoBackButton from "../../components/GoBackButton/GoBackButton";
 import back from "../../assets/images/back.jpg";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import Button from "../../components/Button";
 import { useEffect, useState } from "react";
 import {
   getAccountApi,
+  patchAccoutApi,
   postAccoutApi,
-  putAccoutApi,
 } from "../../services/https/https";
+import { useCustomContext } from "../../services/Context/Context";
 
 const AdverticerEditPage = () => {
   const [data, setData] = useState([]);
-
+  const navigate = useNavigate();
+  const { token, setToken } = useCustomContext();
   const [account, setAccount] = useState({
     name: "",
     textarea: "",
@@ -21,12 +23,21 @@ const AdverticerEditPage = () => {
 
   useEffect(() => {
     const getData = (async () => {
-      const data = await getAccountApi();
-      setData(data)
-      setAccount(...data);
-      console.log("data", data);
+      try {
+        await getAccountApi(token)
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            setAccount(...data);
+            return data;
+          });
+        setData(data);
+      } catch (error) {
+        console.log(error);
+      }
     })();
-  }, []);
+  }, [data, token]);
 
   const handleForm = (e) => {
     const { name, value } = e.target;
@@ -36,15 +47,40 @@ const AdverticerEditPage = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleLogOut = () => {
+    setToken("");
+    sessionStorage.setItem("token", "");
+    navigate("/main", { replace: true });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (account.id) {
-      putAccoutApi(account.id, account);
-
+      try {
+        await patchAccoutApi(token, account.id, {
+          name: account.name,
+          textarea: account.textarea,
+        })
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+            // setData(data);
+            setAccount(data);
+            return data;
+          });
+      } catch (error) {
+        console.log(error);
+      }
       return;
     }
-    postAccoutApi(account);
+
+    try {
+      await postAccoutApi(token, account);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -56,6 +92,9 @@ const AdverticerEditPage = () => {
         imgWidth="50px"
         imgHeight="50px"
       />
+      <button type="button" onClick={handleLogOut}>
+        Log out
+      </button>
       <h2>Account</h2>
       <svg width="72" height="72" className={css.icon}>
         <use></use>
@@ -75,7 +114,6 @@ const AdverticerEditPage = () => {
             type="text"
             placeholder="Add link"
             disabled
-            // value={data?.links}
             className={css.input}
             onChange={handleForm}
           />
@@ -85,6 +123,7 @@ const AdverticerEditPage = () => {
         </div>
         <textarea
           name="textarea"
+          type="text"
           id=""
           cols="30"
           rows="10"

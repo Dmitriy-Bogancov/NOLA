@@ -1,16 +1,10 @@
 import { NavLink, Outlet } from "react-router-dom";
 
 import css from "./Layout.module.css";
-import { useState } from "react";
 import { useCustomContext } from "../../services/Context/Context";
 
 const Layout = () => {
-  const { auth, setAuth } = useCustomContext([]);
-  const [account, setAccount] = useState(false);
-
-  //  useEffect(() => {
-  //       http://
-  //   }, [])
+  const { token, setToken } = useCustomContext();
 
   return (
     <div className={css.container}>
@@ -27,7 +21,7 @@ const Layout = () => {
               <NavLink to="search">⚪</NavLink>
             </li>
             <li className={css.item}>
-              {!auth ? (
+              {!token ? (
                 <NavLink to="registrationCheck">➕</NavLink>
               ) : (
                 <NavLink to="addPost">➕</NavLink>
@@ -37,13 +31,16 @@ const Layout = () => {
               <NavLink to="savedPosts">🤍</NavLink>
             </li>
             <li className={css.item}>
-              {account ? (
-                <NavLink to="accountAdverticer">👩</NavLink>
-              ) : auth ? (
-                <NavLink to="accountAdverticer/adverticerEdit">👩</NavLink>
-              ) : (
-                <NavLink to="authorization">👩</NavLink>
-              )}
+              {
+                //   account ? (
+                //   <NavLink to="accountAdverticer">👩</NavLink>
+                // ) :
+                token ? (
+                  <NavLink to="accountAdverticer">👩</NavLink>
+                ) : (
+                  <NavLink to="authorization">👩</NavLink>
+                )
+              }
             </li>
           </ul>
         </nav>

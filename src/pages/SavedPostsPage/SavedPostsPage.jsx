@@ -22,7 +22,7 @@ const SavedPostsPage = () => {
       <h2>Saved Posts</h2>
 
       <div>
-        {posts.length > 0 ? (
+        {posts?.length > 0 ? (
           posts.map((post) => (
             <div key={post.id}>
               <NavLink to={`/main/${post.id}`}>

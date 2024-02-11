@@ -6,21 +6,23 @@ import back from "../../assets/images/back.jpg";
 import { useEffect, useState } from "react";
 
 import { deleteLinksApi, getLinksApi } from "../../services/https/https";
+import { useCustomContext } from "../../services/Context/Context";
 
 const LinksPage = () => {
   const [data, setData] = useState([]);
- 
+  const { token, setToken } = useCustomContext();
+
   useEffect(() => {
     const getData = (async () => {
-      const data = await getLinksApi();
+      const data = await getLinksApi(token);
 
       setData(data);
     })();
-  }, []);
+  }, [token]);
 
   const handleDelete = (id) => {
-    setData(data.filter(({ links }) => links.links !== id));
-    //  deleteLinksApi(id);   
+    setData(data.filter(({ links }) => links !== id));
+    //  deleteLinksApi(id);
   };
 
   return (
@@ -35,10 +37,10 @@ const LinksPage = () => {
             </NavLink>
           </div>
           <ul>
-            {data.map(({ links }) => (
-              <li key={links?.links}>
-                <p>{links?.name}</p>
-                <a href={links?.links}>{links?.links}</a>
+            {/* {data?.map(({ links, name }) => (
+              <li key={links}>
+                <p>{name}</p>
+                <a href={links}>{links}</a>
                 <button
                   type="button"
                   onClick={() => handleDelete(links?.links)}
@@ -46,7 +48,7 @@ const LinksPage = () => {
                   Delete
                 </button>
               </li>
-            ))}
+            ))} */}
           </ul>
         </div>
       </form>

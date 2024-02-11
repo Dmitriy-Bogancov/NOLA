@@ -3,8 +3,10 @@ import back from "../../assets/images/back.jpg";
 import Button from "../../components/Button";
 import { postLinksApi } from "../../services/https/https";
 import { useState } from "react";
+import { useCustomContext } from "../../services/Context/Context";
 
 const AddLinksPage = () => {
+  const { token, setToken } = useCustomContext();
   const [formData, setFormData] = useState({});
 
   const handleChange = (e) => {
@@ -19,7 +21,11 @@ const AddLinksPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    postLinksApi(formData);
+    try {
+      postLinksApi(token, formData);
+    } catch (error) {
+      console.log(error);
+    }
 
     setFormData({
       links: "",

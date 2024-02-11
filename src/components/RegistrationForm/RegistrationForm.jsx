@@ -4,6 +4,7 @@ import css from "./RegistrationForm.module.css";
 import Button from "../Button";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import * as yup from "yup";
+import { postRegistrationApi } from "../../services/https/https";
 
 const schema = yup.object().shape({
   email: yup
@@ -79,15 +80,22 @@ const RegistrationForm = () => {
     e.preventDefault();
     schema
       .validate(formData, { abortEarly: false })
-      .then(() => {
+      .then(async () => {
         console.log("Form submitted with data:", formData);
+
+        try {
+          await postRegistrationApi(formData);
+          navigate("/main/authorization", { replace: true });
+        } catch (error) {
+          setErrors(error);
+        }
+
         setFormData({
           email: "",
           password: "",
           confirmPassword: "",
         });
-        setErrors({});
-        navigate("/main/accountAdverticer");
+        // setErrors({});
       })
       .catch((validationErrors) => {
         const errorsMap = {};
@@ -169,6 +177,7 @@ const RegistrationForm = () => {
         <span className={css.spanPolicy}>Privacy Policy</span> and give my
         consent to data processing
       </p>
+      {errors && <p>{errors.message}</p>}
       <Button label="Register" type="submit" />
     </form>
   );
