@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import css from "./MainPage.module.css";
 import { useEffect, useState } from "react";
 
@@ -33,7 +33,6 @@ const data = [
 ];
 
 const MainPage = () => {
-  const location = useLocation();
   const [posts, setPost] = useState(() => {
     return JSON.parse(localStorage.getItem(LOKAL_KEY)) ?? "";
   });
@@ -58,9 +57,17 @@ const MainPage = () => {
     setPost((prev) => [...prev, ...savedPost]);
   };
 
+  useEffect(() => {
+ localStorage.removeItem("pathname")
+  }, [])
+
+  const handleSetting = () => {
+   localStorage.setItem("pathname", "/main")
+  }
+
   return (
     <div>
-      <NavLink to="setting" state={location}>
+      <NavLink to="setting" onClick={handleSetting}>
         <button type="button">Setting</button>
       </NavLink>
 

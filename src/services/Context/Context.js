@@ -7,7 +7,6 @@ export const useCustomContext = () => {
 };
 
 export const Context = ({ children }) => {
-  const [setting, setSetting] = useState(true);
   const [token, setToken] = useState(() => {
     return sessionStorage.getItem("token") ?? "";
   });
@@ -15,8 +14,6 @@ export const Context = ({ children }) => {
   return (
     <ContextPr.Provider
       value={{
-        setting,
-        setSetting,
         token,
         setToken,
       }}

@@ -4,8 +4,10 @@ import Button from "../../components/Button";
 import { postLinksApi } from "../../services/https/https";
 import { useState } from "react";
 import { useCustomContext } from "../../services/Context/Context";
+import { useLocation } from "react-router-dom";
 
 const AddLinksPage = () => {
+  const location = useLocation();
   const { token, setToken } = useCustomContext();
   const [formData, setFormData] = useState({});
 
@@ -35,10 +37,7 @@ const AddLinksPage = () => {
 
   return (
     <div>
-      <GoBackButton
-        to="/main/accountAdverticer/adverticerEdit/links"
-        imgSrc={back}
-      />
+      <GoBackButton to={location.state} imgSrc={back} />
       <form onSubmit={handleSubmit}>
         <input
           type="text"

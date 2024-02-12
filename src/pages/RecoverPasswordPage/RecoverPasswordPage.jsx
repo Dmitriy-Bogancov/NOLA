@@ -5,8 +5,13 @@ import { NavLink } from "react-router-dom";
 const RecoverPasswordPage = () => {
   return (
     <div>
-      <h1>RecoverPasswordPage</h1>
+      <form>
+        <input type="text" name="codeField" placeholder="Code Field" />
+        <input type="text" name="passwordField" placeholder="Password Field" />
 
+        <button type="button">Confirm</button>
+      </form>
+      <button type="button">Send a Code Again</button>
       <ul>
         <li>
           <NavLink to="/main/authorization">
@@ -15,8 +20,8 @@ const RecoverPasswordPage = () => {
         </li>
 
         <li>
-          <NavLink to="/recovery">
-            <button type="button">Reset the Password</button>
+          <NavLink to="/main/authorization">
+            <button type="button">OK</button>
           </NavLink>
         </li>
       </ul>

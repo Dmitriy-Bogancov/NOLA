@@ -21,7 +21,7 @@ const Layout = () => {
               <NavLink to="search">⚪</NavLink>
             </li>
             <li className={css.item}>
-              {!token ? (
+              {token ? (
                 <NavLink to="registrationCheck">➕</NavLink>
               ) : (
                 <NavLink to="addPost">➕</NavLink>

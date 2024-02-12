@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 import css from "./LinksPage.module.css";
 import GoBackButton from "../../components/GoBackButton/GoBackButton";
@@ -9,6 +9,7 @@ import { deleteLinksApi, getLinksApi } from "../../services/https/https";
 import { useCustomContext } from "../../services/Context/Context";
 
 const LinksPage = () => {
+  const location = useLocation()
   const [data, setData] = useState([]);
   const { token, setToken } = useCustomContext();
 
@@ -32,7 +33,7 @@ const LinksPage = () => {
         <div>
           <div className={css.input_container}>
             <input type="text" disabled className={css.input} />
-            <NavLink to="addLinks" className={css.addLink}>
+            <NavLink to="addLinks" className={css.addLink} state={location}>
               +
             </NavLink>
           </div>
