@@ -5,6 +5,7 @@ import * as yup from "yup";
 import email from "../../assets/images/email.jpg";
 import back from "../../assets/images/back.jpg";
 import GoBackButton from "../GoBackButton/GoBackButton";
+import { useNavigate } from "react-router-dom";
 
 const schema = yup.object().shape({
   email: yup
@@ -16,6 +17,7 @@ const schema = yup.object().shape({
 });
 
 const RecoveryForm = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
   });
@@ -76,6 +78,10 @@ const RecoveryForm = () => {
     }
   };
 
+  const handleSendEmail = () => {
+    navigate("/recoverPasswordPage");
+  };
+
   const getBorderColor = (field) => {
     return errors[field] ? "#ff0000" : "#9e9e9e";
   };
@@ -110,7 +116,7 @@ const RecoveryForm = () => {
             style={{ borderColor: getBorderColor("email") }}
           />
         </div>
-        <Button label="Send email" type="submit" />
+        <Button label="Send email" type="submit" onClick={handleSendEmail} />
       </form>
     </div>
   );

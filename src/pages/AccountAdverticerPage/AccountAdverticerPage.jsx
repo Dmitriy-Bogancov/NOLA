@@ -1,14 +1,32 @@
-import { NavLink, Outlet, useLocation } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 
 import css from "./AccountAdverticerPage.module.css";
 import { ScrollBar } from "../../components/ScrollBar/ScrollBar";
+import { useEffect, useState } from "react";
+import { getAccountApi } from "../../services/https/https";
 
 const AccountAdverticerPage = () => {
-  const location = useLocation();
+  const [data, setData] = useState([]);
+
+  // useEffect(() => {
+  //   const getData = (async () => {
+  //     const data = await getAccountApi();
+  //     setData(data)
+  //   })();
+  // }, [])
+
+  useEffect(() => {
+    localStorage.removeItem("pathname");
+  }, []);
+
+  const handleSetting = () => {
+    localStorage.setItem("pathname", "/main/setting");
+  };
+
   return (
     <div className={css.accountAdverticer_container}>
       <div className={css.nav}>
-        <NavLink to="setting" state={location}>
+        <NavLink to="/main/setting" onClick={handleSetting}>
           <button type="button">Setting</button>
         </NavLink>
 
@@ -17,6 +35,7 @@ const AccountAdverticerPage = () => {
         </NavLink>
       </div>
 
+      {/* {data?.map(({name, textarea}) => ())} */}
       <div className={css.account}>
         <svg width="72" height="72" className={css.icon}>
           <use></use>

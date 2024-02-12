@@ -1,48 +1,44 @@
-import back from "../../assets/images/back.jpg";
-import GoBackButton from "../../components/GoBackButton/GoBackButton";
-import { NavLink, Outlet, useLocation } from "react-router-dom";
-import { useCustomContext } from "../../services/Context/Context";
+import { useState } from "react";
+
+import { NavLink, useNavigate } from "react-router-dom";
 
 const SettingPage = () => {
-  const location = useLocation();
+  const navigate = useNavigate();
+  const [pathname, setPathname] = useState(() => {
+    return localStorage.getItem("pathname") ?? "";
+  });
 
-  const { setting, setSetting } = useCustomContext(true);
+  const handleSettingButton = () => {
+    if (pathname === "/main") {
+      navigate("/main");
 
-  const handleSettingClick = () => {
-    setSetting(false);
+      return;
+    }
+
+    navigate("/main/accountAdverticer");
   };
+
   return (
     <div>
-      {setting ? (
-        <div>
-          <GoBackButton
-            to={location.pathname.split("/").slice(0, -1).join("/")}
-            imgSrc={back}
-            imgAlt="Go back"
-          />
+      <div>
+        <button type="button" onClick={handleSettingButton}>
+          BACK
+        </button>
 
-          <h2>Setting</h2>
-          <ul>
-            <li>
-              <NavLink
-                to="language"
-                state={location}
-                onClick={handleSettingClick}
-              >
-                Language
-              </NavLink>
-            </li>
+        <h2>Setting</h2>
+        <ul>
+          <li>
+            <NavLink to="/main/setting/language">Language</NavLink>
+          </li>
 
-            <li>
-              <NavLink to="theme" onClick={handleSettingClick}>
-                Theme
-              </NavLink>
-            </li>
-          </ul>
-        </div>
-      ) : (
-        <Outlet />
-      )}
+          <li>
+            <NavLink to="/main/setting/theme">Theme</NavLink>
+          </li>
+          <li>
+            <NavLink to="/main/setting/aboutService">About service</NavLink>
+          </li>
+        </ul>
+      </div>
     </div>
   );
 };

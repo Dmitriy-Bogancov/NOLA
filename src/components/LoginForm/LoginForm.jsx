@@ -5,6 +5,8 @@ import css from "./LoginForm.module.css";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { postLoginApi, tokenApi } from "../../services/https/https";
+import { useCustomContext } from "../../services/Context/Context";
 
 const schema = yup.object().shape({
   email: yup
@@ -25,10 +27,9 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
-
+  const { token, setToken } = useCustomContext();
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -69,14 +70,24 @@ const LoginForm = () => {
 
     schema
       .validate(formData, { abortEarly: false })
-      .then(() => {
+      .then(async () => {
         console.log("Form submitted with data:", formData);
+        try {
+          const data = await postLoginApi(formData);
+          sessionStorage.setItem("token", data.token);
+          navigate("/main", { replace: true });
+          setToken(data.token);
+        } catch (error) {
+          setErrors(error);
+        }
+
+        navigate("/main/accountAdverticer");
+
         setFormData({
           email: "",
           password: "",
         });
-        setErrors({});
-        navigate("/main/accountAdverticer");
+        // setErrors({});
       })
       .catch((validationErrors) => {
         const errorsMap = {};
@@ -123,6 +134,7 @@ const LoginForm = () => {
       </div>
 
       <div>
+        {errors && <p>{errors.message}</p>}
         <Link to="/recovery">
           <p className={css.textForgot}>Forgot password?</p>
         </Link>

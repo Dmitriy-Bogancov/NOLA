@@ -7,13 +7,16 @@ export const useCustomContext = () => {
 };
 
 export const Context = ({ children }) => {
-  const [setting, setSetting] = useState(true);
-  const [addLink, setAddLink] = useState([]);
-  const [auth, setAuth] = useState(false);
+  const [token, setToken] = useState(() => {
+    return sessionStorage.getItem("token") ?? "";
+  });
 
   return (
     <ContextPr.Provider
-      value={{ setting, setSetting, addLink, setAddLink, auth, setAuth }}
+      value={{
+        token,
+        setToken,
+      }}
     >
       {children}
     </ContextPr.Provider>

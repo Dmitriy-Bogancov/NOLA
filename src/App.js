@@ -30,6 +30,8 @@ import AdverticerSavedPage from "./pages/AdverticerSavedPage/AdverticerSavedPage
 import LinksPage from "./pages/LinksPage/LinksPage";
 import AddLinksPage from "./pages/AddLinksPage/AddLinksPage";
 import AddPostPage from "./pages/AddPostPage/AddPostPage";
+import AboutServicePage from "./pages/AboutServicePage/AboutServicePage";
+import ContactServicePage from "./pages/PolicyAndPrivecyPage/PolicyAndPrivecyPage";
 
 function App() {
   return (
@@ -69,11 +71,6 @@ function App() {
           </Route>
 
           <Route path="addPost" element={<AddPostPage />} />
-
-          <Route path="/main/setting" element={<SettingPage />}>
-            <Route path="language" element={<LanguagePage />} />
-            <Route path="theme" element={<ThemePage />} />
-          </Route>
         </Route>
 
         <Route path="/main/:postId" element={<PostDetailsPage />} />
@@ -98,10 +95,18 @@ function App() {
           element={<AddLinksPage />}
         />
 
-        <Route path="main/accountAdverticer/setting" element={<SettingPage />}>
-          <Route path="language" element={<LanguagePage />} />
-          <Route path="theme" element={<ThemePage />} />
-        </Route>
+        <Route path="/main/setting" element={<SettingPage />} />
+        <Route path="/main/setting/language" element={<LanguagePage />} />
+        <Route path="/main/setting/theme" element={<ThemePage />} />
+        <Route
+          path="/main/setting/aboutService"
+          element={<AboutServicePage />}
+        />
+
+        <Route
+          path="/main/setting/aboutService/contactService"
+          element={<ContactServicePage />}
+        />
       </Routes>
     </div>
   );

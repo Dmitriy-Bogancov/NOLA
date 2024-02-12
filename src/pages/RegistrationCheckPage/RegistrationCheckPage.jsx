@@ -1,9 +1,13 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 import css from "./RegistrationCheckPage.module.css";
 import Button from "../../components/Button";
 
 const RegistrationCheckPage = () => {
+  const navigate = useNavigate();
+  const handleLoginClick = () => {
+    navigate("/main/authorization", { replace: true });
+  };
   return (
     <div>
       <div className={css.registrationCheck_container}>
@@ -14,9 +18,9 @@ const RegistrationCheckPage = () => {
           Log in to your account using your phone or e-mail{" "}
         </p>
 
-        <NavLink to="/main/authorization" className={css.btn}>
+        <div className={css.btn} onClick={handleLoginClick}>
           <Button label="Login" type="button" />
-        </NavLink>
+        </div>
 
         <p className={css.orText}>or</p>
 
