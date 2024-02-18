@@ -11,7 +11,7 @@ import { useCustomContext } from "../../services/Context/Context";
 const LinksPage = () => {
   const location = useLocation()
   const [data, setData] = useState([]);
-  const [deletePost, setDeletePost] = useState(false);
+  const [deleteLinks, setDeleteLinks] = useState(false);
   const { token, setToken } = useCustomContext();
 
   useEffect(() => {
@@ -23,18 +23,18 @@ const LinksPage = () => {
           })
           .then((data) => {
            setData(data);
-           setDeletePost(false)
+           setDeleteLinks(false)
         });
       } catch (error) {
         console.log(error);
       }
     })();
-   }, [token, deletePost]);
+   }, [token, deleteLinks]);
 
   const handleDelete = (id) => {
     setData(data.filter(({ links }) => links !== id));
     deleteLinksApi(token, id);
-    setDeletePost(true)
+    setDeleteLinks(true)
   };
 
   return (

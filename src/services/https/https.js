@@ -85,8 +85,10 @@ export const postLinksApi = async (token, links) => {
   }
 };
 
-export const deleteLinksApi = async (id) => {
-  const { data } = await axios.delete(`https://.../account/  LINKS ?? /${id}`);
+export const deleteLinksApi = async (token, id) => {
+  const { data } = await axios.delete(`https://.../account/  LINKS ?? /${id}`,{
+    headers: { Authorization: `${token}` },
+  });
   return data;
 };
 
