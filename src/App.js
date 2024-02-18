@@ -32,6 +32,7 @@ import AddLinksPage from "./pages/AddLinksPage/AddLinksPage";
 import AddPostPage from "./pages/AddPostPage/AddPostPage";
 import AboutServicePage from "./pages/AboutServicePage/AboutServicePage";
 import ContactServicePage from "./pages/PolicyAndPrivecyPage/PolicyAndPrivecyPage";
+import EditPostPage from "./pages/EditPostPage/EditPostPage";
 
 function App() {
   return (
@@ -71,6 +72,7 @@ function App() {
           </Route>
 
           <Route path="addPost" element={<AddPostPage />} />
+          <Route path="addPost/:editPostId" element={<EditPostPage />} />
         </Route>
 
         <Route path="/main/:postId" element={<PostDetailsPage />} />

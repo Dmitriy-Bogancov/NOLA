@@ -72,17 +72,15 @@ const LoginForm = () => {
       .validate(formData, { abortEarly: false })
       .then(async () => {
         console.log("Form submitted with data:", formData);
-        try {
-          const data = await postLoginApi(formData);
-          sessionStorage.setItem("token", data.token);
-          navigate("/main", { replace: true });
-          setToken(data.token);
-        } catch (error) {
-          setErrors(error);
-        }
-
-        navigate("/main/accountAdverticer");
-
+        // try {
+        //   const data = await postLoginApi(formData);
+        //   sessionStorage.setItem("token", data.token);
+        //   navigate("/main", { replace: true });
+        //   setToken(data.token);
+        // } catch (error) {
+        //   setErrors(error);
+        // }
+        navigate("/main/accountAdverticer", { replace: true });
         setFormData({
           email: "",
           password: "",
