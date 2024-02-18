@@ -5,25 +5,36 @@ import GoBackButton from "../../components/GoBackButton/GoBackButton";
 import back from "../../assets/images/back.jpg";
 import { useEffect, useState } from "react";
 
-import { deleteLinksApi, getLinksApi } from "../../services/https/https";
+import { deleteLinksApi , getLinksApi } from "../../services/https/https";
 import { useCustomContext } from "../../services/Context/Context";
 
 const LinksPage = () => {
   const location = useLocation()
   const [data, setData] = useState([]);
+  const [deleteLinks, setDeleteLinks] = useState(false);
   const { token, setToken } = useCustomContext();
 
   useEffect(() => {
     const getData = (async () => {
-      const data = await getLinksApi(token);
-
-      setData(data);
+      try {
+        await getLinksApi(token)
+          .then((response) => {
+            return response.json();
+          })
+          .then((data) => {
+           setData(data);
+           setDeleteLinks(false)
+        });
+      } catch (error) {
+        console.log(error);
+      }
     })();
-  }, [token]);
+   }, [token, deleteLinks]);
 
   const handleDelete = (id) => {
     setData(data.filter(({ links }) => links !== id));
-    //  deleteLinksApi(id);
+    deleteLinksApi(token, id);
+    setDeleteLinks(true)
   };
 
   return (
@@ -38,18 +49,18 @@ const LinksPage = () => {
             </NavLink>
           </div>
           <ul>
-            {/* {data?.map(({ links, name }) => (
+            {data?.map(({ links, name, id }) => (
               <li key={links}>
                 <p>{name}</p>
                 <a href={links}>{links}</a>
                 <button
                   type="button"
-                  onClick={() => handleDelete(links?.links)}
+                  onClick={() => handleDelete(id)}
                 >
                   Delete
                 </button>
               </li>
-            ))} */}
+            ))} 
           </ul>
         </div>
       </form>
