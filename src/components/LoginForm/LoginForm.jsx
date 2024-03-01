@@ -1,3 +1,4 @@
+// .........
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button";
@@ -5,8 +6,8 @@ import css from "./LoginForm.module.css";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { postLoginApi, tokenApi } from "../../services/https/https";
-import { useCustomContext } from "../../services/Context/Context";
+// import { postLoginApi, tokenApi } from "../../services/https/https";
+// import { useCustomContext } from "../../services/Context/Context";
 
 const schema = yup.object().shape({
   email: yup
@@ -27,7 +28,7 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
-  const { token, setToken } = useCustomContext();
+  // const { token, setToken } = useCustomContext();
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const handleInputChange = (e) => {

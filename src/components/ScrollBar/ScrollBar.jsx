@@ -1,5 +1,6 @@
 import { NavLink, useLocation } from "react-router-dom";
 import css from "./ScrollBar.module.css";
+import PropTypes from "prop-types";
 
 export const ScrollBar = ({ labelOne, pathnameOne, labelTwo, pathnameTwo }) => {
   const location = useLocation();
@@ -27,4 +28,10 @@ export const ScrollBar = ({ labelOne, pathnameOne, labelTwo, pathnameTwo }) => {
       </div>
     </div>
   );
+};
+ScrollBar.propTypes = {
+  labelOne: PropTypes.string.isRequired,
+  pathnameOne: PropTypes.string.isRequired,
+  labelTwo: PropTypes.string.isRequired,
+  pathnameTwo: PropTypes.string.isRequired,
 };

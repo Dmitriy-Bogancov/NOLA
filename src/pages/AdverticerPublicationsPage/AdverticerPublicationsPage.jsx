@@ -39,7 +39,7 @@ const AdverticerPublicationsPage = () => {
     <div>
       AdverticerPublications
       {post?.map(({ id, name, textarea }) => (
-        <div style={{ margin: "80px" }}>
+        <div key={id} style={{ margin: "80px" }}>
           <h2>{name}</h2>
           <p>{textarea}</p>
           <NavLink to={`/main/addPost/${id}`}>
