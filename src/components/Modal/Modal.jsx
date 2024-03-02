@@ -1,12 +1,33 @@
+import { useNavigate } from "react-router";
 import css from "./Modal.module.css";
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 
-export const Modal = ({ children, handleToggleModal }) => {
+export const Modal = ({
+  children,
+  handleToggleModal,
+  navigatePage,
+  feedback = false,
+}) => {
+  const navigate = useNavigate();
+
   const handleCloseBackdrop = (e) => {
     const { target, currentTarget } = e;
     if (target === currentTarget) {
       handleToggleModal();
     }
   };
+
+  useEffect(() => {
+    const handleSetTimeoutModal = (() => {
+      if (!feedback) {
+        setTimeout(() => {
+          navigate(`${navigatePage}`, { replace: true });
+        }, 1500);
+        return;
+      }
+    })();
+  }, [feedback, navigate, navigatePage]);
 
   return (
     <div className={css.backdrop} onClick={handleCloseBackdrop}>
@@ -19,4 +40,11 @@ export const Modal = ({ children, handleToggleModal }) => {
       </div>
     </div>
   );
+};
+
+Modal.propTypes = {
+  children: PropTypes.node.isRequired,
+  handleToggleModal: PropTypes.func.isRequired,
+  navigatePage: PropTypes.string,
+  feedback: PropTypes.bool,
 };

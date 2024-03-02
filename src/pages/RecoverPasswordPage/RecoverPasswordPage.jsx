@@ -1,18 +1,14 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { Modal } from "../../components/Modal/Modal";
 import { useState } from "react";
 
 // import css from "./RecoverPasswordPage.module.css";
 
 const RecoverPasswordPage = () => {
-  const navigate = useNavigate();
   const [isModal, setIsModal] = useState(false);
 
   const handleToggleModal = () => {
     setIsModal((prev) => !prev);
-    setTimeout(() => {
-      navigate("/main/authorization");
-    }, 1500);  
   };
 
   return (
@@ -23,7 +19,9 @@ const RecoverPasswordPage = () => {
 
         <button type="button">Confirm</button>
       </form>
-      <button type="button">Send a Code Again</button>
+      <button type="button" onClick={handleToggleModal}>
+        Send a Code Again
+      </button>
       <ul>
         <li>
           <NavLink to="/main/authorization">
@@ -32,19 +30,17 @@ const RecoverPasswordPage = () => {
         </li>
 
         <li>
-          {/* <NavLink to="/main/authorization"> */}
-          <button type="button" onClick={handleToggleModal}>
-            OK
-          </button>
-          {/* </NavLink> */}
+          <NavLink to="/main/authorization">
+            <button type="button">OK</button>
+          </NavLink>
         </li>
       </ul>
       {isModal && (
-        <Modal handleToggleModal={handleToggleModal}>
-          <p>
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolore
-            quidem laboriosam, iste animi deserunt ad.
-          </p>
+        <Modal handleToggleModal={handleToggleModal} feedback={true}>
+          <p>Send a new password to email</p>
+          <button type="button" onClick={handleToggleModal}>
+            ok
+          </button>
         </Modal>
       )}
     </div>
