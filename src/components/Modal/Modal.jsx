@@ -23,7 +23,7 @@ export const Modal = ({
       if (!feedback) {
         setTimeout(() => {
           navigate(`${navigatePage}`, { replace: true });
-        }, 1500);
+        }, 2000);
         return;
       }
     })();

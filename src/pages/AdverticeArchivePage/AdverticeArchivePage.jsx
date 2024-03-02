@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useCustomContext } from "../../services/Context/Context";
 import { Modal } from "../../components/Modal/Modal";
+import { NavLink } from "react-router-dom";
 
 const getPost = [
   {
@@ -56,6 +57,9 @@ const AdverticerSavedPage = () => {
           <h2>{name}</h2>
           <p>{textarea}</p>
 
+          <NavLink to={`/main/addPost/${id}`}>
+            <button>Edit</button>
+          </NavLink>
           <button onClick={handleRecoverePostMessage}>Recovere post</button>
           <button onClick={handleDeletePostMessage}>delete</button>
 

@@ -88,6 +88,9 @@ const AddPostPage = () => {
             </li>
           </ul>
 
+          <NavLink to="previewAdvertisemet">
+            <button>Preview</button>
+          </NavLink>
           <button>Confirm </button>
         </div>
       </form>
@@ -98,13 +101,9 @@ const AddPostPage = () => {
       {isModal && (
         <Modal
           handleToggleModal={handleToggleModal}
-          navigatePage={"/main/authorization"}
-          feedback={true}
+          navigatePage={"/main/accountAdverticer"}
         >
           <p>Sucsessfull add a new advertisement</p>
-          <button type="button" onClick={handleToggleModal}>
-            ok
-          </button>
         </Modal>
       )}
     </div>

@@ -26,13 +26,16 @@ import SettingPage from "./pages/SettingPage/SettingPage";
 import ThemePage from "./pages/ThemePage/ThemePage";
 import LanguagePage from "./pages/LanguagePage/LanguagePage";
 import AdverticerPublicationsPage from "./pages/AdverticerPublicationsPage/AdverticerPublicationsPage";
-import AdverticerSavedPage from "./pages/AdverticerSavedPage/AdverticerSavedPage";
+import AdverticeArchivePage from "./pages/AdverticeArchivePage/AdverticeArchivePage";
 import LinksPage from "./pages/LinksPage/LinksPage";
 import AddLinksPage from "./pages/AddLinksPage/AddLinksPage";
 import AddPostPage from "./pages/AddPostPage/AddPostPage";
 import AboutServicePage from "./pages/AboutServicePage/AboutServicePage";
 import ContactServicePage from "./pages/PolicyAndPrivecyPage/PolicyAndPrivecyPage";
 import EditPostPage from "./pages/EditPostPage/EditPostPage";
+import PreviewAdvertisemetPage from "./pages/PreviewAdvertisemetPage/PreviewAdvertisemetPage";
+import SettingAdverticerPage from "./pages/SettingAdverticerPage/SettingAdverticerPage";
+import ChangePasswordPage from "./pages/ChangePasswordPage/ChangePasswordPage";
 
 function App() {
   return (
@@ -68,11 +71,18 @@ function App() {
               index
               element={<AdverticerPublicationsPage />}
             />
-            <Route path="adverticerSaved" element={<AdverticerSavedPage />} />
+            <Route
+              path="adverticerArchive"
+              element={<AdverticeArchivePage />}
+            />
           </Route>
 
           <Route path="addPost" element={<AddPostPage />} />
           <Route path="addPost/:editPostId" element={<EditPostPage />} />
+          <Route
+            path="addPost/previewAdvertisemet"
+            element={<PreviewAdvertisemetPage />}
+          />
         </Route>
 
         <Route path="/main/:postId" element={<PostDetailsPage />} />
@@ -97,6 +107,10 @@ function App() {
           element={<AddLinksPage />}
         />
 
+        <Route
+          path="/main/settingAdverticer"
+          element={<SettingAdverticerPage />}
+        />
         <Route path="/main/setting" element={<SettingPage />} />
         <Route path="/main/setting/language" element={<LanguagePage />} />
         <Route path="/main/setting/theme" element={<ThemePage />} />
@@ -108,6 +122,10 @@ function App() {
         <Route
           path="/main/setting/aboutService/contactService"
           element={<ContactServicePage />}
+        />
+        <Route
+          path="/main/settingAdverticer/changePassword"
+          element={<ChangePasswordPage />}
         />
       </Routes>
     </div>

@@ -4,6 +4,7 @@ import css from "./AccountAdverticerPage.module.css";
 import { ScrollBar } from "../../components/ScrollBar/ScrollBar";
 import { useEffect, useState } from "react";
 import { getAccountApi } from "../../services/https/https";
+import SettingPage from "../SettingPage/SettingPage";
 
 const AccountAdverticerPage = () => {
   const [data, setData] = useState([]);
@@ -26,7 +27,7 @@ const AccountAdverticerPage = () => {
   return (
     <div className={css.accountAdverticer_container}>
       <div className={css.nav}>
-        <NavLink to="/main/setting" onClick={handleSetting}>
+        <NavLink to="/main/settingAdverticer" onClick={handleSetting}>
           <button type="button">Setting</button>
         </NavLink>
 
@@ -53,8 +54,8 @@ const AccountAdverticerPage = () => {
       <ScrollBar
         labelOne="My publications"
         pathnameOne="/main/accountAdverticer"
-        labelTwo="Saved"
-        pathnameTwo="/main/accountAdverticer/adverticerSaved"
+        labelTwo="Archive"
+        pathnameTwo="/main/accountAdverticer/adverticerArchive"
       />
 
       <Outlet />
