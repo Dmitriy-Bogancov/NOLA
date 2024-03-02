@@ -11,18 +11,14 @@ import {
   postAccoutApi,
 } from "../../services/https/https";
 import { useCustomContext } from "../../services/Context/Context";
-import { Modal } from "../../components/Modal/Modal";
 
 const AdverticerEditPage = () => {
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
   const { token, setToken } = useCustomContext();
   const [account, setAccount] = useState({
     name: "",
     textarea: "",
   });
-
-  const [isModal, setIsModal] = useState(false);
 
   useEffect(() => {
     const getData = (async () => {
@@ -42,22 +38,12 @@ const AdverticerEditPage = () => {
     })();
   }, [data, token]);
 
-  const handleToggleModal = () => {
-    setIsModal((prev) => !prev);
-  };
-
   const handleForm = (e) => {
     const { name, value } = e.target;
     setAccount((prev) => ({
       ...prev,
       [name]: value,
     }));
-  };
-
-  const handleLogOut = () => {
-    setToken("");
-    sessionStorage.setItem("token", "");
-    navigate("/main", { replace: true });
   };
 
   const handleSubmit = async (e) => {
@@ -99,9 +85,6 @@ const AdverticerEditPage = () => {
         imgWidth="50px"
         imgHeight="50px"
       />
-      <button type="button" onClick={handleToggleModal}>
-        Log out
-      </button>
       <h2>Account</h2>
       <svg width="72" height="72" className={css.icon}>
         <use></use>
@@ -146,15 +129,6 @@ const AdverticerEditPage = () => {
       </form>
 
       <NavLink to="/welcome">Enter data later</NavLink>
-
-      {isModal && (
-        <Modal handleToggleModal={handleToggleModal} feedback={true}>
-          <p>Want to Sign Out</p>
-          <button type="button" onClick={handleLogOut}>
-            ok
-          </button>
-        </Modal>
-      )}
     </div>
   );
 };
