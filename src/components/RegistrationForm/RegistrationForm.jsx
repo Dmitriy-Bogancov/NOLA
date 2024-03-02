@@ -5,6 +5,7 @@ import Button from "../Button";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import * as yup from "yup";
 import { postRegistrationApi } from "../../services/https/https";
+import { Modal } from "../Modal/Modal";
 
 const schema = yup.object().shape({
   email: yup
@@ -34,6 +35,7 @@ const RegistrationForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
+  const [isModal, setIsModal] = useState(false);
 
   useEffect(() => {}, [errors]);
 
@@ -76,6 +78,10 @@ const RegistrationForm = () => {
     return errors[field] ? "#ff0000" : "#9e9e9e";
   };
 
+  const handleToggleModal = () => {
+    setIsModal((prev) => !prev);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     schema
@@ -85,7 +91,8 @@ const RegistrationForm = () => {
 
         try {
           await postRegistrationApi(formData);
-          navigate("/main/authorization", { replace: true });
+          handleToggleModal();
+          // navigate("/main/authorization", { replace: true });
         } catch (error) {
           setErrors(error);
         }
@@ -107,6 +114,7 @@ const RegistrationForm = () => {
   };
 
   return (
+   <>
     <form onSubmit={handleSubmit}>
       <div className={css.inputContainer}>
         {errors.email && <div className={css.errorText}>{errors.email}</div>}
@@ -180,6 +188,16 @@ const RegistrationForm = () => {
       {errors && <p>{errors.message}</p>}
       <Button label="Register" type="submit" />
     </form>
+
+      {isModal && (
+        <Modal
+          handleToggleModal={handleToggleModal}
+          navigatePage={"/main/authorization"}
+        >
+          <p>Registration sucsessfull</p>
+        </Modal>
+      )}
+    </>
   );
 };
 

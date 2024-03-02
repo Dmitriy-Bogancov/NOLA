@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Modal } from "../../components/Modal/Modal";
 import Button from "../Button";
 import css from "./RecoveryForm.module.css";
 import * as yup from "yup";
@@ -23,6 +24,7 @@ const RecoveryForm = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [isModal, setIsModal] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -43,6 +45,7 @@ const RecoveryForm = () => {
       .validate(formData, { abortEarly: false })
       .then(() => {
         console.log("Form submitted with data:", formData);
+        handleToggleModal();
         setFormData({
           email: "",
         });
@@ -78,8 +81,8 @@ const RecoveryForm = () => {
     }
   };
 
-  const handleSendEmail = () => {
-    navigate("/recoverPasswordPage");
+  const handleToggleModal = () => {
+    setIsModal((prev) => !prev);
   };
 
   const getBorderColor = (field) => {
@@ -116,8 +119,17 @@ const RecoveryForm = () => {
             style={{ borderColor: getBorderColor("email") }}
           />
         </div>
-        <Button label="Send email" type="submit" onClick={handleSendEmail} />
+        <Button label="Send email" type="submit" />
       </form>
+
+      {isModal && (
+        <Modal
+          handleToggleModal={handleToggleModal}
+          navigatePage={"/recoverPasswordPage"}
+        >
+          <p>Send a new password to email</p>
+        </Modal>
+      )}
     </div>
   );
 };

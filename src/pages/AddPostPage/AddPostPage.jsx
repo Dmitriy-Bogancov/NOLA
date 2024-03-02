@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { postPostApi } from "../../services/https/https";
 import { useCustomContext } from "../../services/Context/Context";
+import { Modal } from "../../components/Modal/Modal";
 
 const AddPostPage = () => {
   const location = useLocation();
@@ -11,6 +12,11 @@ const AddPostPage = () => {
     name: "",
     textarea: "",
   });
+  const [isModal, setIsModal] = useState(false);
+
+  const handleToggleModal = () => {
+    setIsModal((prev) => !prev);
+  };
 
   const handleChangePost = ({ target }) => {
     const { name, value } = target;
@@ -23,7 +29,8 @@ const AddPostPage = () => {
   const handleSubmitPost = async (e) => {
     e.preventDefault();
     try {
-      await postPostApi(token, post);
+      // await postPostApi(token, post);
+      handleToggleModal();
     } catch (error) {
       console.log(error);
     }
@@ -87,6 +94,19 @@ const AddPostPage = () => {
       <NavLink to="/main">
         <button type="button">Cancel </button>
       </NavLink>
+
+      {isModal && (
+        <Modal
+          handleToggleModal={handleToggleModal}
+          navigatePage={"/main/authorization"}
+          feedback={true}
+        >
+          <p>Sucsessfull add a new advertisement</p>
+          <button type="button" onClick={handleToggleModal}>
+            ok
+          </button>
+        </Modal>
+      )}
     </div>
   );
 };

@@ -6,6 +6,7 @@ import css from "./LoginForm.module.css";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { Modal } from "../Modal/Modal";
 // import { postLoginApi, tokenApi } from "../../services/https/https";
 // import { useCustomContext } from "../../services/Context/Context";
 
@@ -31,6 +32,8 @@ const LoginForm = () => {
   // const { token, setToken } = useCustomContext();
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
+  const [isModal, setIsModal] = useState(false);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -66,6 +69,10 @@ const LoginForm = () => {
     return errors[field] ? "#ff0000" : "#9e9e9e";
   };
 
+  const handleToggleModal = () => {
+    setIsModal((prev) => !prev);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -73,15 +80,17 @@ const LoginForm = () => {
       .validate(formData, { abortEarly: false })
       .then(async () => {
         console.log("Form submitted with data:", formData);
-        // try {
-        //   const data = await postLoginApi(formData);
-        //   sessionStorage.setItem("token", data.token);
-        //   navigate("/main", { replace: true });
-        //   setToken(data.token);
-        // } catch (error) {
-        //   setErrors(error);
-        // }
-        navigate("/main/accountAdverticer", { replace: true });
+        try {
+          // const data = await postLoginApi(formData);
+          // sessionStorage.setItem("token", data.token);
+
+          // navigate("/main", { replace: true });
+          // setToken(data.token);
+          handleToggleModal();
+        } catch (error) {
+          setErrors(error);
+        }
+
         setFormData({
           email: "",
           password: "",
@@ -98,6 +107,7 @@ const LoginForm = () => {
   };
 
   return (
+    <>
     <form onSubmit={handleSubmit}>
       <div className={css.inputContainer}>
         <div className={css.errorText}>{errors.email}</div>
@@ -140,6 +150,16 @@ const LoginForm = () => {
       </div>
       <Button label="Sign In" type="submit" />
     </form>
+
+      {isModal && (
+        <Modal
+          handleToggleModal={handleToggleModal}
+          navigatePage={"/main/accountAdverticer"}
+        >
+          <p>SignIn sucsessfull</p>
+        </Modal>
+      )}
+    </>
   );
 };
 
