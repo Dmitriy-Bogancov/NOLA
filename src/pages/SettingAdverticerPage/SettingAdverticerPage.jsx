@@ -4,6 +4,8 @@ import { useNavigate } from "react-router";
 import { useCustomContext } from "../../services/Context/Context";
 import { Modal } from "../../components/Modal/Modal";
 import { NavLink } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { Toastify } from "../../services/Toastify/Toastify.js";
 
 const SettingAdverticerPage = () => {
   const navigate = useNavigate();
@@ -17,11 +19,16 @@ const SettingAdverticerPage = () => {
   const handleLogOut = () => {
     setToken("");
     sessionStorage.setItem("token", "");
-    navigate("/main", { replace: true });
+    Toastify("Out success");
+
+    setTimeout(() => {
+      navigate("/main", { replace: true });
+    }, 1500);
   };
 
   return (
     <div>
+      <ToastContainer />
       <SettingPage />
       <ul>
         <li>
@@ -38,12 +45,12 @@ const SettingAdverticerPage = () => {
 
       {isModal && (
         <Modal handleToggleModal={handleToggleModal} feedback={true}>
-          <p>Want to Sign Out</p>
+          <p>Are you sure you want to Sign Out?</p>
           <button type="button" onClick={handleLogOut}>
-            ok
+            Yes
           </button>
           <button type="button" onClick={handleToggleModal}>
-            cancel
+            No
           </button>
         </Modal>
       )}

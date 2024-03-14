@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useCustomContext } from "../../services/Context/Context";
 import { Modal } from "../../components/Modal/Modal";
 import { NavLink } from "react-router-dom";
+import { Toastify } from "../../services/Toastify/Toastify";
+import { ToastContainer } from "react-toastify";
 
 const getPost = [
   {
@@ -29,12 +31,12 @@ const AdverticerSavedPage = () => {
   };
 
   const handleDeletePostMessage = () => {
-    handleToggleModal("Сurrent post is deleted");
+    handleToggleModal("Are you sure you want to delete?");
     setIsActive({ recovere: false, deleted: true });
   };
 
   const handleRecoverePostMessage = () => {
-    handleToggleModal("Сurrent post is recoveres");
+    handleToggleModal("Are you sure you want to recovery?");
     setIsActive({ recovere: true, deleted: false });
   };
 
@@ -43,15 +45,18 @@ const AdverticerSavedPage = () => {
     setDeletePost(true);
     // deletePostApi(token, id);
     handleToggleModal();
+    Toastify("Archived post has been deleted");
   };
 
   const handleRecoverePost = (id) => {
     setPost(post.filter(() => post.id !== id));
     handleToggleModal();
+    Toastify("Archived post has been recovered");
   };
 
   return (
     <div>
+      <ToastContainer />
       {post?.map(({ id, name, textarea }) => (
         <div key={id} style={{ margin: "80px" }}>
           <h2>{name}</h2>
@@ -69,7 +74,7 @@ const AdverticerSavedPage = () => {
                 <>
                   <p>{isMessage}</p>
                   <button type="button" onClick={() => handleRecoverePost(id)}>
-                    ok
+                    Yes
                   </button>
                 </>
               )}
@@ -78,13 +83,13 @@ const AdverticerSavedPage = () => {
                 <>
                   <p>{isMessage}</p>
                   <button type="button" onClick={() => handleDeletePost(id)}>
-                    ok
+                    Yes
                   </button>
                 </>
               )}
 
               <button type="button" onClick={handleToggleModal}>
-                cancel
+                No
               </button>
             </Modal>
           )}

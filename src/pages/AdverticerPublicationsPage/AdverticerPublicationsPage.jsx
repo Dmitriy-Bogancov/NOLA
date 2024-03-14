@@ -3,6 +3,9 @@ import { getAllAdverticerPostApi } from "../../services/https/https";
 import { useCustomContext } from "../../services/Context/Context";
 import { NavLink } from "react-router-dom";
 import { Modal } from "../../components/Modal/Modal";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Toastify } from "../../services/Toastify/Toastify";
 
 const getPost = [
   {
@@ -23,7 +26,10 @@ const AdverticerPublicationsPage = () => {
     archived: false,
     stopped: false,
     deleted: false,
+    launchAgain: false,
   });
+
+  const [isPostStopped, setIsPostStopped] = useState(false);
 
   useEffect(() => {
     const getData = (async () => {
@@ -49,27 +55,58 @@ const AdverticerPublicationsPage = () => {
   };
 
   const handlePostArchivationMessage = () => {
-    handleToggleModal("Current post archived");
-    setIsActive({ archived: true, stopped: false, deleted: false });
+    handleToggleModal("Are you sure you want to archive?");
+    setIsActive({
+      archived: true,
+      stopped: false,
+      deleted: false,
+      launchAgain: false,
+    });
   };
 
   const handlePostStoppingMessage = () => {
-    handleToggleModal("Сurrent post is stopped");
-    setIsActive({ archived: false, stopped: true, deleted: false });
+    handleToggleModal("Are you sure you want to stop?");
+    setIsActive({
+      archived: false,
+      stopped: true,
+      deleted: false,
+      launchAgain: false,
+    });
+  };
+
+  const handlePostLaunchAgainMessage = () => {
+    handleToggleModal("Are you sure you want to launch aagin?");
+    setIsActive({
+      archived: false,
+      stopped: false,
+      deleted: false,
+      launchAgain: true,
+    });
   };
 
   const handlePostArchivation = (id) => {
     setPost(post.filter(() => post.id !== id));
     handleToggleModal();
+    Toastify("Curent post has been archived!");
   };
 
   const handlePostStopping = (id) => {
     setPost(post.filter(() => post.id !== id));
     handleToggleModal();
+    setIsPostStopped(true);
+    Toastify("Current post stopping!");
+  };
+
+  const handlePostLaunchAgain = (id) => {
+    setPost(post.filter(() => post.id !== id));
+    handleToggleModal();
+    setIsPostStopped(false);
+    Toastify("Post has been launched");
   };
 
   return (
     <div>
+      <ToastContainer />
       {post?.map(({ id, name, textarea }) => (
         <div key={id} style={{ margin: "80px" }}>
           <h2>{name}</h2>
@@ -77,8 +114,23 @@ const AdverticerPublicationsPage = () => {
           <NavLink to={`/main/addPost/${id}`}>
             <button>Edit</button>
           </NavLink>
-          <button onClick={handlePostArchivationMessage}>archivation</button>
-          <button onClick={handlePostStoppingMessage}>stopping</button>
+          <button type="button" onClick={handlePostArchivationMessage}>
+            archivation
+          </button>
+          <button
+            type="button"
+            disabled={isPostStopped}
+            onClick={handlePostStoppingMessage}
+          >
+            stopping
+          </button>
+          <button
+            type="button"
+            disabled={!isPostStopped}
+            onClick={handlePostLaunchAgainMessage}
+          >
+            to launch post again?
+          </button>
 
           {isModal && (
             <Modal handleToggleModal={handleToggleModal} feedback={true}>
@@ -89,7 +141,7 @@ const AdverticerPublicationsPage = () => {
                     type="button"
                     onClick={() => handlePostArchivation(id)}
                   >
-                    ok
+                    Yes
                   </button>
                 </>
               )}
@@ -98,13 +150,25 @@ const AdverticerPublicationsPage = () => {
                 <>
                   <p>{isMessage}</p>
                   <button type="button" onClick={() => handlePostStopping(id)}>
-                    ok
+                    Yes
+                  </button>
+                </>
+              )}
+
+              {isActive.launchAgain && (
+                <>
+                  <p>{isMessage}</p>
+                  <button
+                    type="button"
+                    onClick={() => handlePostLaunchAgain(id)}
+                  >
+                    Yes
                   </button>
                 </>
               )}
 
               <button type="button" onClick={handleToggleModal}>
-                cancel
+                No
               </button>
             </Modal>
           )}
