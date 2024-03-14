@@ -4,7 +4,6 @@ import css from "./AccountAdverticerPage.module.css";
 import { ScrollBar } from "../../components/ScrollBar/ScrollBar";
 import { useEffect, useState } from "react";
 import { getAccountApi } from "../../services/https/https";
-import SettingPage from "../SettingPage/SettingPage";
 
 const AccountAdverticerPage = () => {
   const [data, setData] = useState([]);

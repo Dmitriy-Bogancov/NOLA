@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
-import { NavLink, useLocation, useParams } from "react-router-dom";
+import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import AddPostPage from "../AddPostPage/AddPostPage";
 import { getPostApi, patchPostApi } from "../../services/https/https";
 import { useCustomContext } from "../../services/Context/Context";
 
+import { ToastContainer } from "react-toastify";
+import { Toastify } from "../../services/Toastify/Toastify";
+
 const EditPostPage = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { token, setToken } = useCustomContext();
   const params = useParams();
   const [post, setPost] = useState({
@@ -58,9 +62,20 @@ const EditPostPage = () => {
     return;
   };
 
+  const handleConfirmClick = () => {
+    Toastify("Current post has been edited");
+
+    setTimeout(() => {
+      navigate("/main/accountAdverticer");
+    }, 1500);
+
+    return;
+  };
+
   return (
     <div>
       EditPostPage
+      <ToastContainer />
       <div>
         <form onSubmit={handleSubmitPost}>
           <NavLink to="/main/accountAdverticer">
@@ -110,7 +125,7 @@ const EditPostPage = () => {
               </li>
             </ul>
 
-            <button>Confirm </button>
+            <button onClick={handleConfirmClick}>Confirm </button>
           </div>
         </form>
         <NavLink to="/main/accountAdverticer">

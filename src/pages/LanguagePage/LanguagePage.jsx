@@ -3,9 +3,9 @@ import { NavLink } from "react-router-dom";
 const LanguagePage = () => {
   return (
     <div>
-      <NavLink to={"/main/setting"}>
+      {/* <NavLink to={"/main/setting"}>
         <button type="button">BACK</button>
-      </NavLink>
+      </NavLink> */}
       <h2>Language</h2>
       <ul>
         <li>English</li>
