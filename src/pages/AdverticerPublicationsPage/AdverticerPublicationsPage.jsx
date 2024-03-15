@@ -133,7 +133,7 @@ const AdverticerPublicationsPage = () => {
           </button>
 
           {isModal && (
-            <Modal handleToggleModal={handleToggleModal} feedback={true}>
+            <Modal handleToggleModal={handleToggleModal}>
               {isActive.archived && (
                 <>
                   <p>{isMessage}</p>

@@ -1,30 +1,28 @@
 import GoBackButton from "../../components/GoBackButton/GoBackButton";
 import back from "../../assets/images/back.jpg";
 import { useState } from "react";
-import { Modal } from "../../components/Modal/Modal";
+import { HandleFormConfig } from "../../components/HandleFormConfig/HandleFormConfig";
 
 const PreviewAdvertisemetPage = () => {
-  const [isModal, setIsModal] = useState(false);
+  const [formConfig, setFormConfig] = useState(false);
 
-  const handleToggleModal = () => {
-    setIsModal((prev) => !prev);
+  const handleConfirmClick = () => {
+    setFormConfig(true);
   };
 
   return (
     <div>
+      {formConfig && (
+        <HandleFormConfig
+          message={"Sucsessfull add a new advertisement"}
+          navigatePage={"/main/accountAdverticer"}
+        />
+      )}
       PreviewAdvertisemetPage
       <GoBackButton to="/main/addPost" imgSrc={back} imgAlt="Go back" />
-      <button type="button" onClick={handleToggleModal}>
+      <button type="button" onClick={handleConfirmClick}>
         Confirm
       </button>
-      {isModal && (
-        <Modal
-          handleToggleModal={handleToggleModal}
-          navigatePage={"/main/accountAdverticer"}
-        >
-          <p>Sucsessfull add a new advertisement</p>
-        </Modal>
-      )}
     </div>
   );
 };

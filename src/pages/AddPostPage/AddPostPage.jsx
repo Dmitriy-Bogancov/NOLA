@@ -1,31 +1,27 @@
 import { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { postPostApi } from "../../services/https/https";
 import { useCustomContext } from "../../services/Context/Context";
-import { Modal } from "../../components/Modal/Modal";
 import { Toastify } from "../../services/Toastify/Toastify";
 import { ToastContainer } from "react-toastify";
 import css from "./AddPostPage.module.css";
+import { ToastError } from "../../services/ToastError/ToastError";
+import { HandleFormConfig } from "../../components/HandleFormConfig/HandleFormConfig";
 
 const AddPostPage = () => {
   const location = useLocation();
-
+  const navigate = useNavigate();
   const { token, setToken } = useCustomContext();
   const [addPostPhoto, setAddPostPhoto] = useState(false);
   const [selestedFile, setSelestedFile] = useState(false);
   const [uploaded, setUploaded] = useState(false);
   const [formatPost, setFormatPost] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [formConfig, setFormConfig] = useState(false);
   const [post, setPost] = useState({
     name: "",
     textarea: "",
     banner: "",
   });
-  const [isModal, setIsModal] = useState(false);
-
-  const handleToggleModal = () => {
-    setIsModal((prev) => !prev);
-  };
 
   const handleAddPost = () => {
     setAddPostPhoto(true);
@@ -82,9 +78,10 @@ const AddPostPage = () => {
     e.preventDefault();
     try {
       // await postPostApi(token, post);
-      handleToggleModal();
+
+      setFormConfig(true);
     } catch (error) {
-      console.log(error);
+      ToastError(error.message);
     }
 
     setPost({ name: "", textarea: "" });
@@ -93,13 +90,18 @@ const AddPostPage = () => {
   return (
     <div>
       <ToastContainer />
-      {/* {isLoading && Toastify("Photo still downloаding")} */}
+      {formConfig && (
+        <HandleFormConfig
+          message={"Sucsessfull add a new advertisement"}
+          navigatePage={"/main/accountAdverticer"}
+        />
+      )}
       {addPostPhoto && (
         <>
           <input
             type="file"
             value={formatPost}
-            accept="image/* ,.jpg,.jpeg,.gif,.web"
+            accept="image/*  ,.png,.jpg,.jpeg,.gif,.webp,.svg,.pdf"
             onChange={handleChange}
           />
 
@@ -164,17 +166,8 @@ const AddPostPage = () => {
         </div>
       </form>
       <NavLink to="/main">
-        <button type="button">Cancel </button>
+        <button type="button">Cancel</button>
       </NavLink>
-
-      {isModal && (
-        <Modal
-          handleToggleModal={handleToggleModal}
-          navigatePage={"/main/accountAdverticer"}
-        >
-          <p>Sucsessfull add a new advertisement</p>
-        </Modal>
-      )}
     </div>
   );
 };

@@ -5,7 +5,9 @@ import Button from "../Button";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import * as yup from "yup";
 import { postRegistrationApi } from "../../services/https/https";
-import { Modal } from "../Modal/Modal";
+import { ToastContainer } from "react-toastify";
+import { ToastError } from "../../services/ToastError/ToastError";
+import { HandleFormConfig } from "../HandleFormConfig/HandleFormConfig";
 
 const schema = yup.object().shape({
   email: yup
@@ -35,7 +37,7 @@ const RegistrationForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
-  const [isModal, setIsModal] = useState(false);
+  const [formConfig, setFormConfig] = useState(false);
 
   useEffect(() => {}, [errors]);
 
@@ -78,10 +80,6 @@ const RegistrationForm = () => {
     return errors[field] ? "#ff0000" : "#9e9e9e";
   };
 
-  const handleToggleModal = () => {
-    setIsModal((prev) => !prev);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     schema
@@ -91,10 +89,10 @@ const RegistrationForm = () => {
 
         try {
           await postRegistrationApi(formData);
-          handleToggleModal();
+          setFormConfig(true);
           // navigate("/main/authorization", { replace: true });
         } catch (error) {
-          setErrors(error);
+          ToastError(error.message);
         }
 
         setFormData({
@@ -114,89 +112,86 @@ const RegistrationForm = () => {
   };
 
   return (
-   <>
-    <form onSubmit={handleSubmit}>
-      <div className={css.inputContainer}>
-        {errors.email && <div className={css.errorText}>{errors.email}</div>}
-        <input
-          className={css.inputForm}
-          type="email"
-          name="email"
-          placeholder="E-mail"
-          value={formData.email}
-          onChange={handleInputChange}
-          onBlur={() => handleBlur("email")}
-          style={{ borderColor: getBorderColor("email") }}
-        />
-      </div>
-
-      <div className={css.inputContainer}>
-        {errors.password && (
-          <div className={css.errorText}>{errors.password}</div>
-        )}
-        <div className={css.passwordInputContainer}>
-          <input
-            className={`${css.inputForm} ${css.passwordInput}`}
-            type={showPassword ? "text" : "password"}
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleInputChange}
-            onBlur={() => handleBlur("password")}
-            style={{ borderColor: getBorderColor("password") }}
-          />
-
-          <div
-            className={css.eyeIcon}
-            onClick={() => handleTogglePassword("password")}
-          >
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
-          </div>
-        </div>
-      </div>
-
-      <div className={css.inputContainer}>
-        {errors.confirmPassword && (
-          <div className={css.errorText}>{errors.confirmPassword}</div>
-        )}
-        <div className={css.passwordInputContainer}>
-          <input
-            className={`${css.inputForm} ${css.passwordInput}`}
-            type={showConfirmPassword ? "text" : "password"}
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            value={formData.confirmPassword}
-            onChange={handleInputChange}
-            onBlur={() => handleBlur("confirmPassword")}
-            style={{ borderColor: getBorderColor("confirmPassword") }}
-          />
-
-          <div
-            className={css.eyeIcon}
-            onClick={() => handleTogglePassword("confirmPassword")}
-          >
-            {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
-          </div>
-        </div>
-      </div>
-
-      <p className={css.textInfo}>
-        *By clicking the Register button, I agree to the
-        <span className={css.spanPolicy}>Privacy Policy</span> and give my
-        consent to data processing
-      </p>
-      {errors && <p>{errors.message}</p>}
-      <Button label="Register" type="submit" />
-    </form>
-
-      {isModal && (
-        <Modal
-          handleToggleModal={handleToggleModal}
+    <>
+      <ToastContainer />
+      {formConfig && (
+        <HandleFormConfig
+          message={"Registration sucsessfull"}
           navigatePage={"/main/authorization"}
-        >
-          <p>Registration sucsessfull</p>
-        </Modal>
+        />
       )}
+      <form onSubmit={handleSubmit}>
+        <div className={css.inputContainer}>
+          {errors.email && <div className={css.errorText}>{errors.email}</div>}
+          <input
+            className={css.inputForm}
+            type="email"
+            name="email"
+            placeholder="E-mail"
+            value={formData.email}
+            onChange={handleInputChange}
+            onBlur={() => handleBlur("email")}
+            style={{ borderColor: getBorderColor("email") }}
+          />
+        </div>
+
+        <div className={css.inputContainer}>
+          {errors.password && (
+            <div className={css.errorText}>{errors.password}</div>
+          )}
+          <div className={css.passwordInputContainer}>
+            <input
+              className={`${css.inputForm} ${css.passwordInput}`}
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleInputChange}
+              onBlur={() => handleBlur("password")}
+              style={{ borderColor: getBorderColor("password") }}
+            />
+
+            <div
+              className={css.eyeIcon}
+              onClick={() => handleTogglePassword("password")}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </div>
+          </div>
+        </div>
+
+        <div className={css.inputContainer}>
+          {errors.confirmPassword && (
+            <div className={css.errorText}>{errors.confirmPassword}</div>
+          )}
+          <div className={css.passwordInputContainer}>
+            <input
+              className={`${css.inputForm} ${css.passwordInput}`}
+              type={showConfirmPassword ? "text" : "password"}
+              name="confirmPassword"
+              placeholder="Confirm Password"
+              value={formData.confirmPassword}
+              onChange={handleInputChange}
+              onBlur={() => handleBlur("confirmPassword")}
+              style={{ borderColor: getBorderColor("confirmPassword") }}
+            />
+
+            <div
+              className={css.eyeIcon}
+              onClick={() => handleTogglePassword("confirmPassword")}
+            >
+              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+            </div>
+          </div>
+        </div>
+
+        <p className={css.textInfo}>
+          *By clicking the Register button, I agree to the
+          <span className={css.spanPolicy}>Privacy Policy</span> and give my
+          consent to data processing
+        </p>
+        <Button label="Register" type="submit" />
+      </form>
     </>
   );
 };
