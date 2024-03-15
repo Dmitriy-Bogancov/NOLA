@@ -1,4 +1,3 @@
-// .........
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button";
@@ -6,7 +5,9 @@ import css from "./LoginForm.module.css";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Modal } from "../Modal/Modal";
+import { HandleFormConfig } from "../HandleFormConfig/HandleFormConfig";
+import { ToastContainer } from "react-toastify";
+import { ToastError } from "../../services/ToastError/ToastError";
 // import { postLoginApi, tokenApi } from "../../services/https/https";
 // import { useCustomContext } from "../../services/Context/Context";
 
@@ -32,7 +33,7 @@ const LoginForm = () => {
   // const { token, setToken } = useCustomContext();
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
-  const [isModal, setIsModal] = useState(false);
+  const [formConfig, setFormConfig] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -69,10 +70,6 @@ const LoginForm = () => {
     return errors[field] ? "#ff0000" : "#9e9e9e";
   };
 
-  const handleToggleModal = () => {
-    setIsModal((prev) => !prev);
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -86,9 +83,10 @@ const LoginForm = () => {
 
           // navigate("/main", { replace: true });
           // setToken(data.token);
-          handleToggleModal();
+
+          setFormConfig(true);
         } catch (error) {
-          setErrors(error);
+          ToastError(error.message);
         }
 
         setFormData({
@@ -108,57 +106,54 @@ const LoginForm = () => {
 
   return (
     <>
-    <form onSubmit={handleSubmit}>
-      <div className={css.inputContainer}>
-        <div className={css.errorText}>{errors.email}</div>
-        <input
-          className={css.inputForm}
-          type="email"
-          name="email"
-          placeholder="Username or Email"
-          value={formData.email}
-          onChange={handleInputChange}
-          onBlur={() => handleBlur("email")}
-          style={{ borderColor: getBorderColor("email") }}
+      <ToastContainer />
+      {formConfig && (
+        <HandleFormConfig
+          message={"SignIn sucsessfull"}
+          navigatePage={"/main/accountAdverticer"}
         />
-      </div>
-
-      <div className={css.inputContainer}>
-        <div className={css.errorText}>{errors.password}</div>
-        <div className={css.passwordInputContainer}>
+      )}
+      <form onSubmit={handleSubmit}>
+        <div className={css.inputContainer}>
+          <div className={css.errorText}>{errors.email}</div>
           <input
-            className={`${css.inputForm} ${css.passwordInput}`}
-            type={showPassword ? "text" : "password"}
-            name="password"
-            placeholder="Password"
-            value={formData.password}
+            className={css.inputForm}
+            type="email"
+            name="email"
+            placeholder="Username or Email"
+            value={formData.email}
             onChange={handleInputChange}
-            onBlur={() => handleBlur("password")}
-            style={{ borderColor: getBorderColor("password") }}
+            onBlur={() => handleBlur("email")}
+            style={{ borderColor: getBorderColor("email") }}
           />
-          <div className={css.eyeIcon} onClick={handleTogglePassword}>
-            {showPassword ? <FaEyeSlash /> : <FaEye />}
+        </div>
+
+        <div className={css.inputContainer}>
+          <div className={css.errorText}>{errors.password}</div>
+          <div className={css.passwordInputContainer}>
+            <input
+              className={`${css.inputForm} ${css.passwordInput}`}
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleInputChange}
+              onBlur={() => handleBlur("password")}
+              style={{ borderColor: getBorderColor("password") }}
+            />
+            <div className={css.eyeIcon} onClick={handleTogglePassword}>
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div>
-        {errors && <p>{errors.message}</p>}
-        <Link to="/recovery">
-          <p className={css.textForgot}>Forgot password?</p>
-        </Link>
-      </div>
-      <Button label="Sign In" type="submit" />
-    </form>
-
-      {isModal && (
-        <Modal
-          handleToggleModal={handleToggleModal}
-          navigatePage={"/main/accountAdverticer"}
-        >
-          <p>SignIn sucsessfull</p>
-        </Modal>
-      )}
+        <div>
+          <Link to="/recovery">
+            <p className={css.textForgot}>Forgot password?</p>
+          </Link>
+        </div>
+        <Button label="Sign In" type="submit" />
+      </form>
     </>
   );
 };

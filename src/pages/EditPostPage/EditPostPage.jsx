@@ -4,14 +4,16 @@ import AddPostPage from "../AddPostPage/AddPostPage";
 import { getPostApi, patchPostApi } from "../../services/https/https";
 import { useCustomContext } from "../../services/Context/Context";
 
-import { ToastContainer } from "react-toastify";
-import { Toastify } from "../../services/Toastify/Toastify";
+import { ToastContainer, toast } from "react-toastify";
+import { HandleFormConfig } from "../../components/HandleFormConfig/HandleFormConfig";
+import { ToastError } from "../../services/ToastError/ToastError";
 
 const EditPostPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { token, setToken } = useCustomContext();
   const params = useParams();
+  const [formConfig, setFormConfig] = useState(false);
   const [post, setPost] = useState({
     name: "",
     textarea: "",
@@ -43,6 +45,7 @@ const EditPostPage = () => {
 
   const handleSubmitPost = async (e) => {
     e.preventDefault();
+    setFormConfig(true); // delete later
 
     try {
       await patchPostApi(token, post.id, {
@@ -54,21 +57,12 @@ const EditPostPage = () => {
         })
         .then((data) => {
           setPost(data);
+          // setFormConfig(true);
           return data;
         });
     } catch (error) {
-      console.log(error);
+      // ToastError(error.message)
     }
-    return;
-  };
-
-  const handleConfirmClick = () => {
-    Toastify("Current post has been edited");
-
-    setTimeout(() => {
-      navigate("/main/accountAdverticer");
-    }, 1500);
-
     return;
   };
 
@@ -76,6 +70,12 @@ const EditPostPage = () => {
     <div>
       EditPostPage
       <ToastContainer />
+      {formConfig && (
+        <HandleFormConfig
+          message={"Current post has been edited"}
+          navigatePage={"/main/accountAdverticer"}
+        />
+      )}
       <div>
         <form onSubmit={handleSubmitPost}>
           <NavLink to="/main/accountAdverticer">
@@ -125,7 +125,7 @@ const EditPostPage = () => {
               </li>
             </ul>
 
-            <button onClick={handleConfirmClick}>Confirm </button>
+            <button>Confirm</button>
           </div>
         </form>
         <NavLink to="/main/accountAdverticer">

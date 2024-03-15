@@ -13,8 +13,8 @@
   left: 50%;
   z-index: 2;
   transform: translate(-50%, -40%);
-  width: 35%;
-  height: 15%;
+  min-width: 35%;
+  min-height: 15%;
   background-color: honeydew;
 }
 
