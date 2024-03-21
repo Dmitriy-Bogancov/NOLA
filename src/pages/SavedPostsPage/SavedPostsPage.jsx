@@ -1,13 +1,24 @@
 import { NavLink } from "react-router-dom";
 import css from "./SavedPostsPage.module.css";
 import { useState } from "react";
+import saved_icon from "../../assets/icons/saved_icon.svg";
+import { Toastify } from "../../services/Toastify/Toastify";
+import { ToastContainer } from "react-toastify";
+import { Modal } from "../../components/Modal/Modal";
 
 const LOKAL_KEY = "savedPost";
 
 const SavedPostsPage = () => {
+  const [isModal, setIsModal] = useState(false);
+  const [isDeletePost, setDeletePost] = useState("");
   const [posts, setPosts] = useState(() => {
     return JSON.parse(localStorage.getItem(LOKAL_KEY));
   });
+
+  const handleToggleModal = (message) => {
+    setDeletePost(message);
+    setIsModal((prev) => !prev);
+  };
 
   const handleDeletePost = (postId) => {
     const savedPost = posts.filter((post) => post.id !== postId);
@@ -15,29 +26,70 @@ const SavedPostsPage = () => {
     setPosts(savedPost);
 
     localStorage.setItem(LOKAL_KEY, JSON.stringify(savedPost));
+
+    Toastify("Post has been deleted");
+    handleToggleModal();
   };
 
   return (
     <div>
-      <h2>Saved Posts</h2>
+      <ToastContainer />
+      <h1 className={css.title}>My saved</h1>
 
-      <div>
-        {posts?.length > 0 ? (
-          posts.map((post) => (
-            <div key={post.id}>
+      {posts.length > 0 ? (
+        <ul className={css.list}>
+          {posts.map((post) => (
+            <li key={post.id} className={css.item}>
               <NavLink to={`/main/${post.id}`}>
-                <img src="" alt="" className={css.img} />
-                <p>{post.advertiser}</p>
+                <img src={post.banner} alt="" className={css.img} />
+
+                <div className={css.item_footer}>
+                  <div>
+                    <img src="" alt="" className={css.logo_icon} />
+                  </div>
+
+                  <p className={css.item_description}>{post.advertiser}</p>
+                </div>
               </NavLink>
-              <button type="button" onClick={() => handleDeletePost(post.id)}>
-                DELETE
+
+              <button
+                type="button"
+                className={css.item_btn}
+                onClick={
+                  () => handleToggleModal(post.id)
+                  // onClick={() => handleDeletePost(post.id)
+                }
+              >
+                <img src={saved_icon} alt="saved_icon" />
               </button>
-            </div>
-          ))
-        ) : (
-          <p>No post</p>
-        )}
-      </div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className={css.container}>
+          <h2 className={css.title_empty}>This list is empty</h2>
+          <p className={css.description}>
+            Add something you`ve liked from the main page
+          </p>
+        </div>
+      )}
+
+      {isModal && (
+        <Modal handleToggleModal={handleToggleModal}>
+          <>
+            "Are you sure you want to delete?"
+            <button type="button" onClick={handleToggleModal}>
+              No
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDeletePost(isDeletePost)}
+            >
+              Yes
+            </button>
+          </>
+        </Modal>
+      )}
     </div>
   );
 };

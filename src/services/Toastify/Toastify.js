@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 export const Toastify = (message) => {
   toast(`${message}`, {
     position: "top-right",
-    autoClose: 1500,
+    autoClose: 3000,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
