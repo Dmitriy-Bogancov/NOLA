@@ -1,28 +1,31 @@
 import { NavLink } from "react-router-dom";
 import css from "./MainPage.module.css";
 import { useEffect, useState } from "react";
+import { Toastify } from "../../services/Toastify/Toastify";
+import { ToastError } from "../../services/ToastError/ToastError";
+import { ToastContainer } from "react-toastify";
 
 const LOKAL_KEY = "savedPost";
 
 const data = [
   {
     id: "1",
-    advertiser: "user-1",
+    advertiser: "Learn Chinese",
     banner: "BANNER-1",
   },
   {
     id: "2",
-    advertiser: "user-2",
+    advertiser: "Graphic design",
     banner: "BANNER-2",
   },
   {
     id: "3",
-    advertiser: "user-3",
+    advertiser: "Englishdom",
     banner: "BANNER-3",
   },
   {
     id: "4",
-    advertiser: "user-4",
+    advertiser: "Music production",
     banner: "BANNER-4",
   },
   {
@@ -50,23 +53,26 @@ const MainPage = () => {
     if (posts) {
       const savedValid = posts.find((post) => post.id === savedId);
       if (savedValid) {
+        ToastError("This post has already been saved");
         return;
       }
+      Toastify("Post successfully saved");
     }
 
     setPost((prev) => [...prev, ...savedPost]);
   };
 
   useEffect(() => {
- localStorage.removeItem("pathname")
-  }, [])
+    localStorage.removeItem("pathname");
+  }, []);
 
   const handleSetting = () => {
-   localStorage.setItem("pathname", "/main")
-  }
+    localStorage.setItem("pathname", "/main");
+  };
 
   return (
     <div>
+      <ToastContainer />
       <NavLink to="setting" onClick={handleSetting}>
         <button type="button">Setting</button>
       </NavLink>
@@ -78,7 +84,7 @@ const MainPage = () => {
               <img src="" alt="" className={css.img} />
               <div className={css.description}>
                 {banner}
-                <h3>English for IT (B2 Level)</h3>
+                <h3>{advertiser}</h3>
                 <p className={css.post_description}>
                   Geringe finanzielle Bildung hält dich davon ab, den richtigen
                   Plan für deine Finanzen zu...
@@ -97,10 +103,8 @@ const MainPage = () => {
 
           <div>
             <div className={css.post_footer}>
-              <p>Englishdom</p>
-              <NavLink to={`/${id}`}>
-                {`${advertiser}`} Show all courses
-              </NavLink>
+              <p>{advertiser}</p>
+              <NavLink to={`/${id}`}>Show all courses</NavLink>
             </div>
           </div>
         </div>

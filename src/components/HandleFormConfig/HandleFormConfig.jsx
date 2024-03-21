@@ -4,14 +4,14 @@ import { Toastify } from "../../services/Toastify/Toastify";
 import { useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 
-export const HandleFormConfig = ({ message, navigatePage = false}) => {
+export const HandleFormConfig = ({ message, navigatePage }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
     Toastify(`${message}`);
     setTimeout(() => {
-    navigatePage ?  navigate(`/${navigatePage}`, { replace: true }) : "";
-    }, 1500);
+      navigate(navigatePage)
+    }, 3200);
   }, [message, navigate, navigatePage]);
 
   return <ToastContainer />;
