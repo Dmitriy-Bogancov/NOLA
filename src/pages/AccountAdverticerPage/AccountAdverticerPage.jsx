@@ -24,7 +24,7 @@ const AccountAdverticerPage = () => {
   };
 
   return (
-    <div className={css.accountAdverticer_container}>
+    <div>
       <div className={css.nav}>
         <NavLink to="/main/settingAdverticer" onClick={handleSetting}>
           <button type="button">Setting</button>
@@ -50,12 +50,14 @@ const AccountAdverticerPage = () => {
         </p>
       </div>
 
-      <ScrollBar
-        labelOne="My publications"
-        pathnameOne="/main/accountAdverticer"
-        labelTwo="Archive"
-        pathnameTwo="/main/accountAdverticer/adverticerArchive"
-      />
+
+        <ScrollBar
+          labelOne="My publications"
+          pathnameOne="/main/accountAdverticer"
+          labelTwo="Archive"
+          pathnameTwo="/main/accountAdverticer/adverticerArchive"
+        />
+  
 
       <Outlet />
     </div>

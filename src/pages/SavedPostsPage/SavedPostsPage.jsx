@@ -48,7 +48,7 @@ const SavedPostsPage = () => {
                     <img src="" alt="" className={css.logo_icon} />
                   </div>
 
-                  <p className={css.item_description}>{post.advertiser}</p>
+                  <p className={`${css.item_description} dark:text-white`}>{post.advertiser}</p>
                 </div>
               </NavLink>
 
@@ -67,8 +67,8 @@ const SavedPostsPage = () => {
         </ul>
       ) : (
         <div className={css.container}>
-          <h2 className={css.title_empty}>This list is empty</h2>
-          <p className={css.description}>
+          <h2 className={`${css.title_empty} dark:text-white`}>This list is empty</h2>
+          <p className={`${css.description} dark:text-white`}>
             Add something you`ve liked from the main page
           </p>
         </div>

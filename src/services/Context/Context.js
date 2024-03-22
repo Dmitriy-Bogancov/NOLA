@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 const ContextPr = React.createContext();
@@ -12,11 +12,29 @@ export const Context = ({ children }) => {
     return sessionStorage.getItem("token") ?? "";
   });
 
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem("theme");
+  });
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+
+      localStorage.setItem("theme", "dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+
+      localStorage.setItem("theme", "light");
+    }
+  }, [theme]);
+
   return (
     <ContextPr.Provider
       value={{
         token,
         setToken,
+        theme,
+        setTheme,
       }}
     >
       {children}

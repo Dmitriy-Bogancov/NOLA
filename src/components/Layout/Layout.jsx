@@ -8,7 +8,7 @@ const Layout = () => {
   const { token, setToken } = useCustomContext();
 
   return (
-    <div className={css.container}>
+    <div>
       <main className={css.main}>
         <Outlet />
       </main>
