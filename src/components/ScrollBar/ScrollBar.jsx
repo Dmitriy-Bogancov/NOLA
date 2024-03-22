@@ -6,7 +6,6 @@ export const ScrollBar = ({ labelOne, pathnameOne, labelTwo, pathnameTwo }) => {
   const location = useLocation();
 
   return (
-    <div className="container">
       <div className={css.authContainer}>
         <NavLink
           className={`${css.auth} ${
@@ -26,7 +25,6 @@ export const ScrollBar = ({ labelOne, pathnameOne, labelTwo, pathnameTwo }) => {
           {labelTwo}
         </NavLink>
       </div>
-    </div>
   );
 };
 ScrollBar.propTypes = {

@@ -6,7 +6,7 @@ import { ScrollBar } from "../../components/ScrollBar/ScrollBar";
 
 const AuthorizationPage = () => {
   return (
-    <div className="container">
+    <div>
       <ScrollBar
         labelOne="Sign In"
         pathnameOne="/main/authorization"

@@ -1,10 +1,3 @@
-.accountAdverticer_container {
-  margin-top: 43px;
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
 .nav {
   display: flex;
   justify-content: space-between;

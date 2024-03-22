@@ -8,14 +8,19 @@
 }
 
 .modal {
+  display: flex;
+  align-items: center;
+  text-align: center;
   position: absolute;
   top: 40%;
   left: 50%;
   z-index: 2;
   transform: translate(-50%, -40%);
-  min-width: 35%;
+  color: white;
+  background-color: #ca7979;
+  min-width: 35%;     
   min-height: 15%;
-  background-color: honeydew;
+  padding: 15px;
 }
 
 .svg {

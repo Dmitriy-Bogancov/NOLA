@@ -15,7 +15,7 @@ const GoogleAndAppleButton = () => {
   return (
     <div className={css.buttonContainer}>
       <div className={css.separatorLine}></div>
-      <div className={css.orText}>or</div>
+      <div className={`${css.orText} dark:bg-black`}>or</div>
 
       <button className={css.buttonForm} onClick={handleContinueWithApple}>
         <FaApple className={css.icon} />
