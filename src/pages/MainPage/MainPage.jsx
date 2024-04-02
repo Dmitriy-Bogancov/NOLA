@@ -4,45 +4,29 @@ import { useEffect, useState } from "react";
 import { Toastify } from "../../services/Toastify/Toastify";
 import { ToastError } from "../../services/ToastError/ToastError";
 import { ToastContainer } from "react-toastify";
+import { Posts } from "../../components/Posts/Posts";
+import { getAllPostApi } from "../../services/https/https";
 
 const LOKAL_KEY = "savedPost";
-
-const data = [
-  {
-    id: "1",
-    advertiser: "Learn Chinese",
-    banner: "BANNER-1",
-  },
-  {
-    id: "2",
-    advertiser: "Graphic design",
-    banner: "BANNER-2",
-  },
-  {
-    id: "3",
-    advertiser: "Englishdom",
-    banner: "BANNER-3",
-  },
-  {
-    id: "4",
-    advertiser: "Music production",
-    banner: "BANNER-4",
-  },
-  {
-    id: "5",
-    advertiser: "user-5",
-    banner: "BANNER-5",
-  },
-];
 
 const MainPage = () => {
   const [posts, setPost] = useState(() => {
     return JSON.parse(localStorage.getItem(LOKAL_KEY)) ?? "";
   });
 
-  //  useEffect(() => {
-  //   const data =  http://
-  //   }, [])
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = (async () => {
+      try {
+        const { data } = await getAllPostApi();
+        console.log(data);
+        setData(data);
+      } catch (error) {
+        ToastError("Error! Try later");
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     localStorage.setItem(LOKAL_KEY, JSON.stringify(posts));
@@ -73,42 +57,22 @@ const MainPage = () => {
   return (
     <div>
       <ToastContainer />
-      <NavLink to="setting" onClick={handleSetting}>
-        <button type="button">Setting</button>
+      <NavLink to="setting" >
+        <button type="button" onClick={handleSetting}>Setting</button>
       </NavLink>
 
-      {data.map(({ banner, advertiser, id }) => (
-        <div key={banner} className={css.item}>
-          <div className={css.post_header}>
-            <NavLink to={`${id}`} className={css.link}>
-              <img src="" alt="" className={css.img} />
-              <div className={css.description}>
-                {banner}
-                <h3>{advertiser}</h3>
-                <p className={css.post_description}>
-                  Geringe finanzielle Bildung hält dich davon ab, den richtigen
-                  Plan für deine Finanzen zu...
-                </p>
-              </div>
-            </NavLink>
-
-            <button
-              type="button"
-              onClick={() => handleSavePost(id)}
-              className={css.save_btn}
-            >
-              SAVE
-            </button>
-          </div>
-
-          <div>
-            <div className={css.post_footer}>
-              <p>{advertiser}</p>
-              <NavLink to={`/${id}`}>Show all courses</NavLink>
-            </div>
-          </div>
-        </div>
-      ))}
+      <ul>
+        {data.map(({ id, url, title }) => (
+          <Posts
+            key={id}
+            data={data}
+            url={url}
+            title={title}
+            id={id}
+            handleSavePost={handleSavePost}
+          />
+        ))}
+      </ul>
     </div>
   );
 };

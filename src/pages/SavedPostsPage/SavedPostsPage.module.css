@@ -21,7 +21,7 @@
 }
 
 .img {
-  max-width: 100%;
+  width: 100%;
   aspect-ratio: 1 / 0.98;
   border-radius: 16px;
   background-color: #666666;
@@ -46,17 +46,13 @@
   font-size: 12px;
   line-height: 16px;
   color: #333333;
-  padding-right: 20px;
+  padding-right: 6px;
 }
 
 .item_btn {
-  position: absolute;
-  bottom: 2px;
-  right: 0;
-  transform: translate(0px, -2px);
   background-color: transparent;
   border: transparent;
-  padding: 10px 0 10px 10px;
+  margin-left: auto;
 }
 
 .container {

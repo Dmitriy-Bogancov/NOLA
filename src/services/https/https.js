@@ -2,15 +2,20 @@ import axios from "axios";
 
 export const postRegistrationApi = async (body) => {
   try {
-    return await axios.post("https://.../signup", body);
+    return await axios.post(
+      "https://nola-be.azurewebsites.net/api/Account/register",
+      body
+    );
   } catch (error) {
-    console.log(error);
     return error;
   }
 };
 
 export const postLoginApi = async (body) => {
-  const { data } = await axios.post("https://.../login", body);
+  const { data } = await axios.post(
+    "https://nola-be.azurewebsites.net/api/Account/login",
+    body
+  );
   return data;
 };
 
@@ -95,14 +100,17 @@ export const deleteLinksApi = async (token, id) => {
 // -----------POSTS-------------
 export const getAllPostApi = async () => {
   try {
-    return fetch("https://...", {
-      method: "GET",
-    });
+    return axios.get("https://nola-be.azurewebsites.net/api/advertisements");
   } catch (error) {
     console.log(error);
     return error;
   }
 };
+
+export const getPostIdApi = (id) => {
+  return axios.get(`https://nola-be.azurewebsites.net/api/advertisement/${id}`);
+};
+
 
 export const getAllAdverticerPostApi = async (token) => {
   try {

@@ -1,0 +1,14 @@
+.img {
+  width: 100%;
+}
+
+.card {
+  max-width: 100%;
+  aspect-ratio: 1;
+  margin-top: 15px;
+}
+
+.action{
+  padding: 10px;
+
+}

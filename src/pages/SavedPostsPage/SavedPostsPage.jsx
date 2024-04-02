@@ -41,33 +41,36 @@ const SavedPostsPage = () => {
           {posts.map((post) => (
             <li key={post.id} className={css.item}>
               <NavLink to={`/main/${post.id}`}>
-                <img src={post.banner} alt="" className={css.img} />
-
-                <div className={css.item_footer}>
-                  <div>
-                    <img src="" alt="" className={css.logo_icon} />
-                  </div>
-
-                  <p className={`${css.item_description} dark:text-white`}>{post.advertiser}</p>
-                </div>
+                <img src={post.url} alt="" className={css.img} />
               </NavLink>
+              <div className={css.item_footer}>
+                <div>
+                  <img src="" alt="" className={css.logo_icon} />
+                </div>
 
-              <button
-                type="button"
-                className={css.item_btn}
-                onClick={
-                  () => handleToggleModal(post.id)
-                  // onClick={() => handleDeletePost(post.id)
-                }
-              >
-                <img src={saved_icon} alt="saved_icon" />
-              </button>
+                <p className={`${css.item_description} dark:text-white`}>
+                  {post.title}
+                </p>
+
+                <button
+                  type="button"
+                  className={css.item_btn}
+                  onClick={
+                    () => handleToggleModal(post.id)
+                    // onClick={() => handleDeletePost(post.id)
+                  }
+                >
+                  <img src={saved_icon} alt="saved_icon" />
+                </button>
+              </div>
             </li>
           ))}
         </ul>
       ) : (
         <div className={css.container}>
-          <h2 className={`${css.title_empty} dark:text-white`}>This list is empty</h2>
+          <h2 className={`${css.title_empty} dark:text-white`}>
+            This list is empty
+          </h2>
           <p className={`${css.description} dark:text-white`}>
             Add something you`ve liked from the main page
           </p>
