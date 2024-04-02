@@ -1,53 +1,35 @@
 import { NavLink, useParams } from "react-router-dom";
 import css from "./PostDetailsPage.module.css";
-
-const advertiser = [
-  {
-    id: "1",
-    advertiser: "user-1",
-    banner: "BANNER-1",
-  },
-  {
-    id: "2",
-    advertiser: "user-2",
-    banner: "BANNER-2",
-  },
-  {
-    id: "3",
-    advertiser: "user-3",
-    banner: "BANNER-3",
-  },
-  {
-    id: "4",
-    advertiser: "user-4",
-    banner: "BANNER-4",
-  },
-  {
-    id: "5",
-    advertiser: "user-5",
-    banner: "BANNER-5",
-  },
-];
+import { useEffect, useState } from "react";
+import { getPostIdApi } from "../../services/https/https";
+import { ToastError } from "../../services/ToastError/ToastError";
+import { ToastContainer } from "react-toastify";
 
 const PostDetailsPage = () => {
   const { postId } = useParams();
+  const [post, setPost] = useState(null);
 
-  //  useEffect(() => {
-  //  const data = http://${postId}
-  // }, [])
-  const data = advertiser.filter((post) => post.id === postId);
+  useEffect(() => {
+    const fetchData = (async () => {
+      try {
+        const { data } = await getPostIdApi(postId);
+        setPost(data);
+        console.log(data);
+      } catch (error) {
+        ToastError("Error");
+      }
+    })();
+  }, [postId]);
 
   return (
     <div>
+      <ToastContainer />
       <h1>PostDetailsPage</h1>
+      {post && (
+        <div key={post.id}>
+          <NavLink to={`/${post.id}`}>Advertiser Header {`${postId}`}</NavLink>
 
-      {data?.map(({ id: advertiserId }) => (
-        <div key={advertiserId}>
-          <NavLink to={`/${advertiserId}`}>
-            Advertiser Header {`${postId}`}
-          </NavLink>
-
-          <p>BANNER {`${postId}`}</p>
+          <p>{`${post.title}`}</p>
 
           <a href="/" className={css.link}>
             Site/Profile
@@ -69,7 +51,7 @@ const PostDetailsPage = () => {
             </li>
           </ul>
         </div>
-      ))}
+      )}
     </div>
   );
 };

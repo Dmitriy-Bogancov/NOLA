@@ -88,10 +88,12 @@ const RegistrationForm = () => {
         console.log("Form submitted with data:", formData);
 
         try {
-          await postRegistrationApi(formData);
+         const data = await postRegistrationApi(formData);
+          console.log(data);
           setFormConfig(true);
           // navigate("/main/authorization", { replace: true });
         } catch (error) {
+          console.log(error);
           ToastError(error.message);
         }
 
