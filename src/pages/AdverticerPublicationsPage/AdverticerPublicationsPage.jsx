@@ -14,35 +14,10 @@ import { PostsAdverticer } from "../../components/PostsAdverticer/PostsAdvertice
 import css from "./AdverticerPublicationsPage.module.css";
 import { PostsAdverticerMenu } from "../../components/PostsAdverticerMenu/PostsAdverticerMenu";
 
-const getPost = [
-  {
-    id: "1",
-    url: "https://static-cse.canva.com/blob/847132/paulskorupskas7KLaxLbSXAunsplash2.jpg",
-    name: "Post 1",
-    textarea:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, illum.",
-  },
-
-  {
-    id: "3",
-    url: "https://static-cse.canva.com/blob/847132/paulskorupskas7KLaxLbSXAunsplash2.jpg",
-    name: "Post 3",
-    textarea:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, illum.",
-  },
-
-  {
-    id: "2",
-    url: "https://static-cse.canva.com/blob/847132/paulskorupskas7KLaxLbSXAunsplash2.jpg",
-    name: "Post 2",
-    textarea:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic, illum.",
-  },
-];
 
 const AdverticerPublicationsPage = () => {
   const { token, setToken } = useCustomContext();
-  const [post, setPost] = useState(getPost);
+  const [post, setPost] = useState([]);
   const [deletePost, setDeletePost] = useState(false);
   const [isModal, setIsModal] = useState(false);
   const [isMessage, setIsMessage] = useState(false);
@@ -65,20 +40,11 @@ const AdverticerPublicationsPage = () => {
         //  await getAllAdverticerPostApi || getAccountApi
         const { data } = await getAllPostApi(token);
         setPost(data);
-        // await getAllAdverticerPostApi(token)
-        // .then((response) => {
-        //   return response.json();
-        // })
-        // .then((data) => {
-        //   console.log(data);
-        //   setPost(data);
-        //   setDeletePost(false);
-        // });
       } catch (error) {
         console.log(error);
       }
     })();
-  }, [token, deletePost]);
+  }, [token]);
 
   const handleToggleModal = (message) => {
     setIsModal((prev) => !prev);
@@ -148,7 +114,7 @@ const AdverticerPublicationsPage = () => {
       <ToastContainer />
       <ul className={css.card}>
         {!showPost &&
-          post?.map(({ id, name, textarea, banner }) => (
+          post?.map(({ id, title, description, banner }) => (
             <li key={id} className={css.post_container}>
               <img
                 src={banner}
@@ -156,7 +122,7 @@ const AdverticerPublicationsPage = () => {
                 className={css.img}
                 onClick={() => handlePost(id)}
               />
-              <h2>{name}</h2>
+              <h2 className={css.title}>{title}</h2>
 
               <PostsAdverticerMenu
                 getPost={post}
@@ -217,12 +183,13 @@ const AdverticerPublicationsPage = () => {
 
       <ul>
         {showPost &&
-          showPost?.map(({ id, name, banner }) => (
+          showPost?.map(({ id, title, description, banner }) => (
             <li key={id}>
               <PostsAdverticer
                 id={id}
-                name={name}
-                url={banner}
+                name={title}
+                description={description}
+                banner={banner}
                 setShowPost={setShowPost}
               />
             </li>

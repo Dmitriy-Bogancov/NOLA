@@ -3,7 +3,7 @@ import css from "./PostsAdverticer.module.css";
 import GoBackButton from "../GoBackButton/GoBackButton";
 import back from "../../assets/images/back.jpg";
 
-export const PostsAdverticer = ({ name, url, setShowPost }) => {
+export const PostsAdverticer = ({ name, banner, description, title, setShowPost }) => {
   const handleBack = () => {
     setShowPost(false);
   };
@@ -23,7 +23,7 @@ export const PostsAdverticer = ({ name, url, setShowPost }) => {
         <p className={css.return}>Return to the feed</p>
       </div>
 
-      <img src={url} alt="" className={css.img} />
+      <img src={banner} alt="" className={css.img} />
       <div className={css.logo_container}>
         <img src="" alt="" className={css.logo} />
         <p className={css.logo_description}>{name}</p>
@@ -59,6 +59,8 @@ export const PostsAdverticer = ({ name, url, setShowPost }) => {
 PostsAdverticer.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string.isRequired,
-  url: PropTypes.string.isRequired,
+  banner: PropTypes.string.isRequired,
   setShowPost: PropTypes.func,
+  description:  PropTypes.string,
+  title:  PropTypes.string, 
 };

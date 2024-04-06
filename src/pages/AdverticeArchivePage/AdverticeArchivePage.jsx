@@ -14,7 +14,6 @@ import { deletePostApi, getAllPostApi } from "../../services/https/https";
 const AdverticeArchivePage = () => {
   const { token, setToken } = useCustomContext();
   const [post, setPost] = useState([]);
-  // const [deletePost, setDeletePost] = useState(false);
   const [isModal, setIsModal] = useState(false);
   const [isMessage, setIsMessage] = useState(false);
   const [isActive, setIsActive] = useState({
@@ -31,22 +30,11 @@ const AdverticeArchivePage = () => {
         //  await getAllAdverticerPostApi.status || getAccountApi.status
         const { data } = await getAllPostApi(token);
         setPost(data);
-        // await getAllAdverticerPostApi(token)
-        // .then((response) => {
-        //   return response.json();
-        // })
-        // .then((data) => {
-        //   console.log(data);
-        //   setPost(data);
-        //   setDeletePost(false);
-        // });
       } catch (error) {
         console.log(error);
       }
     })();
-  }, [token,
-    // deletePost
-  ]);
+  }, [token]);
 
 
   const handleToggleModal = (message) => {
@@ -66,8 +54,7 @@ const AdverticeArchivePage = () => {
 
   const handleDeletePost = (id) => {
     setPost(post.filter((post) => post.id !== id));
-    // setDeletePost(true);
-    deletePostApi(id);
+    deletePostApi(token, id);
     handleToggleModal();
     Toastify("Archived post has been deleted");
   };
@@ -91,7 +78,7 @@ const AdverticeArchivePage = () => {
       <ToastContainer />
       <ul className={css.card}>
         {!showPost &&
-          post?.map(({ id, name, textarea, banner }) => (
+          post?.map(({ id, title, description, banner }) => (
             <li key={id} className={css.post_container}>
               <img
                 src={banner}
@@ -99,7 +86,7 @@ const AdverticeArchivePage = () => {
                 className={css.img}
                 onClick={() => handlePost(id)}
               />
-              <h2>{name}</h2>
+              <h2 className={css.title}>{title}</h2>
               <PostsAdverticerMenu
                 setShowMenuActive={false}
                 postMenuActive={postMenuActive}
@@ -141,14 +128,15 @@ const AdverticeArchivePage = () => {
           </button>
         </Modal>
       )}
-      <ul>
+      <ul className={css.list}>
         {showPost &&
-          showPost?.map(({ id, name, banner }) => (
+          showPost?.map(({ id, title, description, banner }) => (
             <li key={id}>
               <PostsAdverticer
                 id={id}
-                name={name}
-                url={banner}
+                name={title}
+                banner={banner}
+                description={description}
                 setShowPost={setShowPost}
               />
             </li>

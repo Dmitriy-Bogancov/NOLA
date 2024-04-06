@@ -1,3 +1,10 @@
+.title{
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  margin: 4px 0;
+}
+
 .card {
   display: flex;
   flex-wrap: wrap;
@@ -27,8 +34,8 @@
   flex-basis: calc((100% - 30px) / 2);
 }
 
-.test {
-  height: 100%;
+.list{
+  margin-bottom: 40px;
 }
 
 @media screen and (max-width: 360px) {

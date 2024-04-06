@@ -1,10 +1,10 @@
 import axios from "axios";
 // 1111111A-z
 export const postRegistrationApi = async (body) => {
-    return await axios.post(
-      "https://nola-be.azurewebsites.net/api/Account/register",
-      body
-   ) 
+  return await axios.post(
+    "https://nola-be.azurewebsites.net/api/Account/register",
+    body
+  );
 };
 
 export const postLoginApi = async (body) => {
@@ -87,7 +87,7 @@ export const postLinksApi = async (token, links) => {
 };
 
 export const deleteLinksApi = async (token, id) => {
-  const { data } = await axios.delete(`https://.../account/  LINKS ?? /${id}`,{
+  const { data } = await axios.delete(`https://.../account/  LINKS ?? /${id}`, {
     headers: { Authorization: `${token}` },
   });
   return data;
@@ -95,13 +95,14 @@ export const deleteLinksApi = async (token, id) => {
 
 // -----------POSTS-------------
 export const getAllPostApi = async () => {
-    return axios.get("https://nola-be.azurewebsites.net/api/advertisements");
+  return axios.get("https://nola-be.azurewebsites.net/api/advertisements");
 };
 
 export const getPostIdApi = (id) => {
-  return axios.get(`https://nola-be.azurewebsites.net/api/advertisements/${id}`);
+  return axios.get(
+    `https://nola-be.azurewebsites.net/api/advertisements/${id}`
+  );
 };
-
 
 export const getAllAdverticerPostApi = async (token) => {
   try {
@@ -134,29 +135,25 @@ export const getPostApi = async (token, id) => {
 };
 
 export const postPostApi = async (token, post) => {
-  try {
-    return fetch("https://nola-be.azurewebsites.net/api/Advertisements", {
-      method: "POST",
-      body: JSON.stringify(post),
+  const { data } = await axios.post(
+    `https://nola-be.azurewebsites.net/api/Advertisements`, post,
+    {
       headers: {
-        "Content-type": "application/json",
-        Authorization: `${token}`,
+       "Content-type": "application/json",
+        Authorization: "Bearer " + token,
       },
-    });
-  } catch (error) {
-    console.log(error);
-    return error;
-  }
+    }
+  );
+  return data;
 };
 
 export const patchPostApi = async (token, id, { ...body }) => {
   try {
-    return fetch(`https://nola-be.azurewebsites.net/api/Advertisements/${id}`, {
+    return fetch(`https://nola-be.azurewebsites.net/api/Advertisements/${id}`, body, {
       method: "PATCH",
-      body: JSON.stringify(body),
       headers: {
         "Content-type": "application/json",
-        Authorization: `${token}`,
+        Authorization: "Bearer " + token,
       },
     });
   } catch (error) {
@@ -165,11 +162,12 @@ export const patchPostApi = async (token, id, { ...body }) => {
   }
 };
 
-export const deletePostApi = async (id) => {
-  const { data } = await axios.delete(`https://nola-be.azurewebsites.net/api/Advertisements/${id}`
-    // , {
-    // headers: { Authorization: `${token}` },
-    // }
+export const deletePostApi = async (token, id) => {
+  const { data } = await axios.delete(
+    `https://nola-be.azurewebsites.net/api/Advertisements/${id}`
+    , {
+    headers: { Authorization: "Bearer " + token },
+    }
   );
   return data;
 };
