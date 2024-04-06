@@ -20,7 +20,7 @@ const AddPostPage = () => {
   const [post, setPost] = useState({
     description: "",
     title: "",
-    banner: "https://static-cse.canva.com/blob/847132/paulskorupskas7KLaxLbSXAunsplash2.jpg",
+    banner: "https://img.freepik.com/premium-photo/nelle-vie-di-milano_1048944-5187462.jpg",
   });
 
   const handleAddPost = () => {
@@ -59,7 +59,7 @@ const AddPostPage = () => {
     }
 
     const formAddPostPhoto = new FormData();
-    // file ? - backend
+    // file ?
     formAddPostPhoto.append("file", selestedFile);
     setUploaded(true);
     setPost({
@@ -78,13 +78,12 @@ const AddPostPage = () => {
     e.preventDefault();
     try {
     const data =  await postPostApi(token, post);
-      console.log(post);
-      console.log(data);
+
       // setUploaded(data)
       
-      // setFormConfig(true);
+      setFormConfig(true);
     } catch (error) {
-      ToastError(error.message);
+     ToastError(error?.response?.statusText || error.message);
     }
 
     setPost({ banner: "", description: "" , title: ""});
