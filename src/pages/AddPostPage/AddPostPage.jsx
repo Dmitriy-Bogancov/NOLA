@@ -18,9 +18,9 @@ const AddPostPage = () => {
   const [formatPost, setFormatPost] = useState(null);
   const [formConfig, setFormConfig] = useState(false);
   const [post, setPost] = useState({
-    name: "",
-    textarea: "",
-    banner: "",
+    description: "",
+    title: "",
+    banner: "https://static-cse.canva.com/blob/847132/paulskorupskas7KLaxLbSXAunsplash2.jpg",
   });
 
   const handleAddPost = () => {
@@ -77,14 +77,17 @@ const AddPostPage = () => {
   const handleSubmitPost = async (e) => {
     e.preventDefault();
     try {
-      // await postPostApi(token, post);
-
-      setFormConfig(true);
+    const data =  await postPostApi(token, post);
+      console.log(post);
+      console.log(data);
+      // setUploaded(data)
+      
+      // setFormConfig(true);
     } catch (error) {
       ToastError(error.message);
     }
 
-    setPost({ name: "", textarea: "" });
+    setPost({ banner: "", description: "" , title: ""});
   };
 
   return (
@@ -122,11 +125,13 @@ const AddPostPage = () => {
           </div>
         )}
 
+        <input type="text" name="title" value={post.title} onChange={handleChangePost}/>
+
         <textarea
-          name="textarea"
+          name="description"
           cols="30"
           rows="10"
-          value={post.textarea}
+          value={post.description}
           onChange={handleChangePost}
         ></textarea>
         <div>

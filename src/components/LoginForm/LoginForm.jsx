@@ -8,8 +8,8 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { HandleFormConfig } from "../HandleFormConfig/HandleFormConfig";
 import { ToastContainer } from "react-toastify";
 import { ToastError } from "../../services/ToastError/ToastError";
-// import { postLoginApi, tokenApi } from "../../services/https/https";
-// import { useCustomContext } from "../../services/Context/Context";
+import { postLoginApi, tokenApi } from "../../services/https/https";
+import { useCustomContext } from "../../services/Context/Context";
 
 const schema = yup.object().shape({
   email: yup
@@ -30,7 +30,7 @@ const LoginForm = () => {
     email: "",
     password: "",
   });
-  // const { token, setToken } = useCustomContext();
+  const { token, setToken } = useCustomContext();
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
   const [formConfig, setFormConfig] = useState(false);
@@ -78,15 +78,16 @@ const LoginForm = () => {
       .then(async () => {
         console.log("Form submitted with data:", formData);
         try {
-          // const data = await postLoginApi(formData);
-          // sessionStorage.setItem("token", data.token);
+          const data = await postLoginApi(formData);
+          console.log(data);
+          sessionStorage.setItem("token", data.token);
 
-          // navigate("/main", { replace: true });
-          // setToken(data.token);
+          setToken(data.token);
 
           setFormConfig(true);
         } catch (error) {
-          ToastError(error.message);
+          console.log(error);
+          ToastError(error.response.data.title);
         }
 
         setFormData({

@@ -10,7 +10,7 @@ export const HandleFormConfig = ({ message, navigatePage }) => {
   useEffect(() => {
     Toastify(`${message}`);
     setTimeout(() => {
-      navigate(navigatePage)
+      navigate(navigatePage, { replace: true })
     }, 3200);
   }, [message, navigate, navigatePage]);
 

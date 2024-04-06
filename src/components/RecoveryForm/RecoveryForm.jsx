@@ -102,7 +102,7 @@ const RecoveryForm = () => {
       <img src={email} alt="Logo" className={css.imageForm} />
       <h3 className={css.titleForm}>Update your password</h3>
       <p className={css.infoForm}>
-        Enter your username or email address and select Send Email
+        Enter your email address and select Send Email
       </p>
 
       <form onSubmit={handleSubmit}>
@@ -112,7 +112,7 @@ const RecoveryForm = () => {
             className={css.inputForm}
             type="email"
             name="email"
-            placeholder="Username or Email"
+            placeholder="Email"
             value={formData.email}
             onChange={handleInputChange}
             onBlur={() => handleBlur("email")}

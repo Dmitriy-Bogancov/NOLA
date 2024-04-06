@@ -12,10 +12,6 @@ export const Modal = ({ children, handleToggleModal }) => {
   return (
     <div className={css.backdrop} onClick={handleCloseBackdrop}>
       <div className={css.modal}>
-        <svg className={css.svg} onClick={handleToggleModal}>
-          <use></use>
-        </svg>
-
         <div>{children}</div>
       </div>
     </div>

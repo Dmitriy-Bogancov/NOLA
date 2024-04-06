@@ -15,14 +15,18 @@ const MainPage = () => {
   });
 
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const fetchData = (async () => {
       try {
         const { data } = await getAllPostApi();
         console.log(data);
         setData(data);
+        setLoading(false);
       } catch (error) {
+        setLoading(false);
         ToastError("Error! Try later");
       }
     })();
@@ -57,16 +61,19 @@ const MainPage = () => {
   return (
     <div>
       <ToastContainer />
-      <NavLink to="setting" >
-        <button type="button" onClick={handleSetting}>Setting</button>
+      <NavLink to="setting">
+        <button type="button" onClick={handleSetting}>
+          Setting
+        </button>
       </NavLink>
 
+      {loading && <h2>LOADING...</h2>}
       <ul>
-        {data.map(({ id, url, title }) => (
+        {data.map(({ id, title, banner }) => (
           <Posts
             key={id}
             data={data}
-            url={url}
+            url={banner}
             title={title}
             id={id}
             handleSavePost={handleSavePost}

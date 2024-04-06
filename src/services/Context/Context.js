@@ -13,7 +13,7 @@ export const Context = ({ children }) => {
   });
 
   const [theme, setTheme] = useState(() => {
-    return localStorage.getItem("theme");
+    return localStorage.getItem("theme") ?? "light";
   });
 
   useEffect(() => {
