@@ -1,0 +1,27 @@
+.post_menu {
+  display: flex;
+  justify-content: space-between;
+}
+
+.container_menu {
+  text-align: end;
+}
+
+.container_menu:hover .select,
+.container_menu.active .select {
+  position: absolute;
+  display: block;
+  cursor: pointer;
+  text-align: center;
+}
+
+.select {
+  position: relative;
+  top: 0;
+  right: 0;
+  background-color: rgba(235, 235, 235, 0.7);
+  text-align: end;
+  display: none;
+  width: 100%;
+  height: 100%;
+}

@@ -78,7 +78,7 @@ const EditPostPage = () => {
       )}
       <div>
         <form onSubmit={handleSubmitPost}>
-          <NavLink to="/main/accountAdverticer">
+          <NavLink to="">
             <button type="button">Add Bunner</button>
           </NavLink>
 

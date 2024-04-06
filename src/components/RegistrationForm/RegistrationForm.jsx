@@ -88,13 +88,21 @@ const RegistrationForm = () => {
         console.log("Form submitted with data:", formData);
 
         try {
-         const data = await postRegistrationApi(formData);
+          const data = await postRegistrationApi(formData);
           console.log(data);
-          setFormConfig(true);
+          // setFormConfig(true);
           // navigate("/main/authorization", { replace: true });
         } catch (error) {
-          console.log(error);
-          ToastError(error.message);
+          if (error.response.status === 400) {
+            ToastError(error.response.data.errors.Password.join(""));
+            return;
+          }
+
+          if (error.response.status === 404) {
+            ToastError(error.request.statusText);
+            return;
+          }
+          ToastError(error.code);
         }
 
         setFormData({
@@ -129,7 +137,7 @@ const RegistrationForm = () => {
             className={css.inputForm}
             type="email"
             name="email"
-            placeholder="E-mail"
+            placeholder="Email"
             value={formData.email}
             onChange={handleInputChange}
             onBlur={() => handleBlur("email")}

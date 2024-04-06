@@ -5,7 +5,7 @@ import css from "./Posts.module.css";
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import { average } from "color.js";
+import { average, prominent } from "color.js";
 
 const LOKAL_KEY = "savedPost";
 
@@ -16,12 +16,19 @@ export const Posts = ({ id, url, title, handleSavePost }) => {
   });
 
   const [getColor, setGetColor] = useState("");
+   const [getBackColor, setGetBackColor] = useState("");
 
   useEffect(() => {
-    average(url, { format: "hex" })
-      .then((color) => {
-        setGetColor(color);
-      })
+    prominent(url, { format: "hex" })
+    .then(color => {
+      setGetColor(color[2]) 
+      setGetBackColor(color[0])
+})
+    // average(url, { format: "hex" })
+    //   .then((color) => {
+    //     setGetColor(color);
+    //     })
+      
       .catch((error) => console.log(error));
   }, [url]);
 
@@ -49,7 +56,8 @@ export const Posts = ({ id, url, title, handleSavePost }) => {
                 <div
                   className={css.action}
                   style={{
-                    backgroundColor: getColor ? getColor : "#ebe3e3",
+                    backgroundColor: getBackColor ? getBackColor : "#faf5f5",
+                    color: getColor ? getColor : "#080808"
                   }}
                 >
                   Learn more
