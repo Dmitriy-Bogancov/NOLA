@@ -1,27 +1,33 @@
+.backdrop {
+  position: fixed;
+  bottom: 80px;
+  left: 0;
+  width: 100vw;
+  height: 100%;
+  background-color: rgb(214 214 214 / 55%);
+}
+
 .registrationCheck_container {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  height: 100vh;
-  margin-top: 85px;
-}
-
-.description {
-  margin-top: 16px;
-  width: 247px;
   text-align: center;
-}
-
-.orText {
-  margin-bottom: 16px;
-}
-
-.icon {
-  border: solid 2px #656565;
-  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%);
+  color: white;
+  background-color: #ca7979;
+  width: 100%;
+  padding: 15px;
 }
 
 .btn {
-  min-width: 175px;
-  margin: 0;
+  width: 25%;
+  padding: 10px;
+}
+
+.item {
+  text-align: center;
+  padding: 20px;
 }

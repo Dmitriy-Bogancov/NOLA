@@ -4,10 +4,11 @@ import css from "./RegistrationForm.module.css";
 import Button from "../Button";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import * as yup from "yup";
-import { postRegistrationApi } from "../../services/https/https";
 import { ToastContainer } from "react-toastify";
 import { ToastError } from "../../services/ToastError/ToastError";
-import { HandleFormConfig } from "../HandleFormConfig/HandleFormConfig";
+import { useDispatch } from "react-redux";
+import { registerThunk } from "../../redux/auth/authThunk";
+import { Toastify } from "../../services/Toastify/Toastify";
 
 const schema = yup.object().shape({
   email: yup
@@ -28,7 +29,9 @@ const schema = yup.object().shape({
 });
 
 const RegistrationForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -37,10 +40,8 @@ const RegistrationForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
-  const [formConfig, setFormConfig] = useState(false);
 
   useEffect(() => {}, [errors]);
-
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -88,23 +89,12 @@ const RegistrationForm = () => {
         console.log("Form submitted with data:", formData);
 
         try {
-          const data = await postRegistrationApi(formData);
-          console.log(data);
-          // setFormConfig(true);
-          // navigate("/main/authorization", { replace: true });
+          await dispatch(registerThunk(formData)).unwrap();
+          Toastify("Registration sucsessfull");
+          navigate("/main/accountAdverticer");
         } catch (error) {
-          if (error.response.status === 400) {
-            ToastError(error.response.data.errors.Password.join(""));
-            return;
-          }
-
-          if (error.response.status === 404) {
-            ToastError(error.request.statusText);
-            return;
-          }
-          ToastError(error.code);
+          ToastError(error);
         }
-
         setFormData({
           email: "",
           password: "",
@@ -124,12 +114,6 @@ const RegistrationForm = () => {
   return (
     <>
       <ToastContainer />
-      {formConfig && (
-        <HandleFormConfig
-          message={"Registration sucsessfull"}
-          navigatePage={"/main/authorization"}
-        />
-      )}
       <form onSubmit={handleSubmit}>
         <div className={css.inputContainer}>
           {errors.email && <div className={css.errorText}>{errors.email}</div>}

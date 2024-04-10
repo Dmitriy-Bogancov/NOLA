@@ -8,10 +8,6 @@ export const useCustomContext = () => {
 };
 
 export const Context = ({ children }) => {
-  const [token, setToken] = useState(() => {
-    return sessionStorage.getItem("token") ?? "";
-  });
-
   const [theme, setTheme] = useState(() => {
     return localStorage.getItem("theme") ?? "light";
   });
@@ -31,8 +27,6 @@ export const Context = ({ children }) => {
   return (
     <ContextPr.Provider
       value={{
-        token,
-        setToken,
         theme,
         setTheme,
       }}

@@ -5,7 +5,7 @@ import css from "./Posts.module.css";
 import { NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-import { average, prominent } from "color.js";
+import {  prominent } from "color.js";
 
 const LOKAL_KEY = "savedPost";
 
@@ -16,19 +16,14 @@ export const Posts = ({ id, url, title, handleSavePost }) => {
   });
 
   const [getColor, setGetColor] = useState("");
-   const [getBackColor, setGetBackColor] = useState("");
+  const [getBackColor, setGetBackColor] = useState("");
 
   useEffect(() => {
     prominent(url, { format: "hex" })
     .then(color => {
       setGetColor(color[2]) 
       setGetBackColor(color[0])
-})
-    // average(url, { format: "hex" })
-    //   .then((color) => {
-    //     setGetColor(color);
-    //     })
-      
+    })
       .catch((error) => console.log(error));
   }, [url]);
 

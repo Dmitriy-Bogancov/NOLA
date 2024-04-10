@@ -36,7 +36,7 @@ const SavedPostsPage = () => {
       <ToastContainer />
       <h1 className={css.title}>My saved</h1>
 
-      {posts.length > 0 ? (
+      {posts?.length > 0 ? (
         <ul className={css.list}>
           {posts.map((post) => (
             <li key={post.id} className={css.item}>

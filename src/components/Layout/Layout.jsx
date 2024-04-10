@@ -1,11 +1,24 @@
 /* eslint-disable no-unused-vars */
-import { NavLink, Outlet } from "react-router-dom";
-
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import css from "./Layout.module.css";
-import { useCustomContext } from "../../services/Context/Context";
+import { useAuth } from "../../services/hooks/useAuth";
+import { useState } from "react";
+import RegistrationCheckPage from "../../pages/RegistrationCheckPage/RegistrationCheckPage";
 
 const Layout = () => {
-  const { token, setToken } = useCustomContext();
+  const { token } = useAuth();
+  const navigate = useNavigate();
+  const [addPost, setAddPost] = useState(false);
+  const [registrationCheck, setRegistrationCheck] = useState(false);
+
+  const handleAddPost = (e) => {
+    if (token) {
+      setAddPost((prev) => !prev);
+      navigate("/main/addPost");
+    } else if (!token) {
+      setRegistrationCheck((prev) => !prev);
+    }
+  };
 
   return (
     <div>
@@ -22,26 +35,21 @@ const Layout = () => {
               <NavLink to="search">⚪</NavLink>
             </li>
             <li className={css.item}>
-              {!token ? (
-                <NavLink to="registrationCheck">➕</NavLink>
-              ) : (
-                <NavLink to="addPost">➕</NavLink>
+              <button type="button" onClick={handleAddPost}>
+                ➕
+              </button>
+              {addPost && <NavLink to="addPost"></NavLink>}
+              {registrationCheck && (
+                <RegistrationCheckPage
+                  setRegistrationCheck={setRegistrationCheck}
+                />
               )}
             </li>
             <li className={css.item}>
               <NavLink to="savedPosts">🤍</NavLink>
             </li>
             <li className={css.item}>
-              {
-                //   account ? (
-                //   <NavLink to="accountAdverticer">👩</NavLink>
-                // ) :
-                token ? (
-                  <NavLink to="accountAdverticer">👩</NavLink>
-                ) : (
-                  <NavLink to="authorization">👩</NavLink>
-                )
-              }
+              <NavLink to="authorization">👩</NavLink>
             </li>
           </ul>
         </nav>

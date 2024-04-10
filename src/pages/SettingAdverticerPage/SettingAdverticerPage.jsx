@@ -1,15 +1,15 @@
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import SettingPage from "../SettingPage/SettingPage";
-import { useNavigate } from "react-router";
-import { useCustomContext } from "../../services/Context/Context";
 import { Modal } from "../../components/Modal/Modal";
 import { NavLink } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import { Toastify } from "../../services/Toastify/Toastify.js";
+import { logoutAction } from "../../redux/auth/authSlice.js";
+import { ToastError } from "../../services/ToastError/ToastError.js";
+
 
 const SettingAdverticerPage = () => {
-  const navigate = useNavigate();
-  const { token, setToken } = useCustomContext();
+  const dispatch = useDispatch();
+
   const [isModal, setIsModal] = useState(false);
 
   const handleToggleModal = () => {
@@ -17,18 +17,15 @@ const SettingAdverticerPage = () => {
   };
 
   const handleLogOut = () => {
-    setToken("");
-    sessionStorage.setItem("token", "");
-    Toastify("Out success");
-
-    setTimeout(() => {
-      navigate("/main", { replace: true });
-    }, 1500);
+    try {
+      dispatch(logoutAction());
+    } catch (error) {
+      ToastError("Error! Try later");
+    }
   };
 
   return (
     <div>
-      <ToastContainer />
       <SettingPage />
       <ul>
         <li>

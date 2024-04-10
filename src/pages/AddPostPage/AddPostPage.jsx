@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { postPostApi } from "../../services/https/https";
-import { useCustomContext } from "../../services/Context/Context";
 import { Toastify } from "../../services/Toastify/Toastify";
 import { ToastContainer } from "react-toastify";
 import css from "./AddPostPage.module.css";
@@ -10,8 +9,6 @@ import { HandleFormConfig } from "../../components/HandleFormConfig/HandleFormCo
 
 const AddPostPage = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-  const { token, setToken } = useCustomContext();
   const [addPostPhoto, setAddPostPhoto] = useState(false);
   const [selestedFile, setSelestedFile] = useState(false);
   const [uploaded, setUploaded] = useState(false);
@@ -77,7 +74,7 @@ const AddPostPage = () => {
   const handleSubmitPost = async (e) => {
     e.preventDefault();
     try {
-    const data =  await postPostApi(token, post);
+    const data =  await postPostApi(post);
 
       // setUploaded(data)
       
