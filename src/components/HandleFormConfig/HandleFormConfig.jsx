@@ -11,7 +11,7 @@ export const HandleFormConfig = ({ message, navigatePage }) => {
     Toastify(`${message}`);
     setTimeout(() => {
       navigate(navigatePage, { replace: true })
-    }, 3200);
+    },  3000);
   }, [message, navigate, navigatePage]);
 
   return <ToastContainer />;

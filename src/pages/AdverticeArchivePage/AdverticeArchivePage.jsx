@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-import { useCustomContext } from "../../services/Context/Context";
 import { Modal } from "../../components/Modal/Modal";
-import { NavLink } from "react-router-dom";
 import { Toastify } from "../../services/Toastify/Toastify";
 import { ToastContainer } from "react-toastify";
 import { PostsAdverticer } from "../../components/PostsAdverticer/PostsAdverticer";
@@ -9,10 +7,9 @@ import { PostsAdverticer } from "../../components/PostsAdverticer/PostsAdvertice
 import css from "./AdverticeArchivePage.module.css";
 import { PostsAdverticerMenu } from "../../components/PostsAdverticerMenu/PostsAdverticerMenu";
 import { deletePostApi, getAllPostApi } from "../../services/https/https";
-
+import { ToastError } from "../../services/ToastError/ToastError";
 
 const AdverticeArchivePage = () => {
-  const { token, setToken } = useCustomContext();
   const [post, setPost] = useState([]);
   const [isModal, setIsModal] = useState(false);
   const [isMessage, setIsMessage] = useState(false);
@@ -28,14 +25,13 @@ const AdverticeArchivePage = () => {
     const getData = (async () => {
       try {
         //  await getAllAdverticerPostApi.status || getAccountApi.status
-        const { data } = await getAllPostApi(token);
+        const { data } = await getAllPostApi();
         setPost(data);
       } catch (error) {
-        console.log(error);
+        ToastError(error);
       }
     })();
-  }, [token]);
-
+  }, []);
 
   const handleToggleModal = (message) => {
     setIsModal((prev) => !prev);
@@ -52,11 +48,16 @@ const AdverticeArchivePage = () => {
     setIsActive({ recovere: true, deleted: false });
   };
 
-  const handleDeletePost = (id) => {
-    setPost(post.filter((post) => post.id !== id));
-    deletePostApi(token, id);
+  const handleDeletePost = async (id) => {
+    try {
+      await deletePostApi(id);
+      Toastify("Archived post has been deleted");
+      setPost(post.filter((post) => post.id !== id));
+    } catch (error) {
+      ToastError("Error! Try later");
+    }
+
     handleToggleModal();
-    Toastify("Archived post has been deleted");
   };
 
   const handleRecoverePost = (id) => {
@@ -98,7 +99,7 @@ const AdverticeArchivePage = () => {
           ))}
       </ul>
       {isModal && (
-        <Modal handleToggleModal={handleToggleModal} >
+        <Modal handleToggleModal={handleToggleModal}>
           {isActive.recovere && (
             <>
               <p>{isMessage}</p>

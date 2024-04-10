@@ -5,11 +5,11 @@ import css from "./LoginForm.module.css";
 import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { HandleFormConfig } from "../HandleFormConfig/HandleFormConfig";
 import { ToastContainer } from "react-toastify";
 import { ToastError } from "../../services/ToastError/ToastError";
-import { postLoginApi, tokenApi } from "../../services/https/https";
-import { useCustomContext } from "../../services/Context/Context";
+import { useDispatch } from "react-redux";
+import { loginThunk } from "../../redux/auth/authThunk";
+import { Toastify } from "../../services/Toastify/Toastify";
 
 const schema = yup.object().shape({
   email: yup
@@ -25,15 +25,15 @@ const schema = yup.object().shape({
 });
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const { token, setToken } = useCustomContext();
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
-  const [formConfig, setFormConfig] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -78,16 +78,11 @@ const LoginForm = () => {
       .then(async () => {
         console.log("Form submitted with data:", formData);
         try {
-          const data = await postLoginApi(formData);
-          console.log(data);
-          sessionStorage.setItem("token", data.token);
-
-          setToken(data.token);
-
-          setFormConfig(true);
+          await dispatch(loginThunk(formData)).unwrap();
+          Toastify("SignIn sucsessfull");
+          navigate("/main/accountAdverticer");
         } catch (error) {
-          console.log(error);
-          ToastError(error.response.data.title);
+          ToastError(error);
         }
 
         setFormData({
@@ -108,12 +103,6 @@ const LoginForm = () => {
   return (
     <>
       <ToastContainer />
-      {formConfig && (
-        <HandleFormConfig
-          message={"SignIn sucsessfull"}
-          navigatePage={"/main/accountAdverticer"}
-        />
-      )}
       <form onSubmit={handleSubmit}>
         <div className={css.inputContainer}>
           <div className={css.errorText}>{errors.email}</div>
