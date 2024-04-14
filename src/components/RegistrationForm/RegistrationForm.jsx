@@ -9,6 +9,7 @@ import { ToastError } from "../../services/ToastError/ToastError";
 import { useDispatch } from "react-redux";
 import { registerThunk } from "../../redux/auth/authThunk";
 import { Toastify } from "../../services/Toastify/Toastify";
+import error from "../../assets/icons/circle-exclamation-mark.svg";
 
 const schema = yup.object().shape({
   email: yup
@@ -20,11 +21,11 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .required("Password is required")
-    .min(6, "Password must be at least 6 characters"),
+    .min(8, "Password must be at least 8 characters"),
   confirmPassword: yup
     .string()
     .required("Confirm Password is required")
-    .min(6, "Confirm Password must be at least 6 characters")
+    .min(8, "Confirm Password must be at least 8 characters")
     .oneOf([yup.ref("password"), null], "Passwords must match"),
 });
 
@@ -40,6 +41,7 @@ const RegistrationForm = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
+  const [validForm, setValidForm] = useState(false);
 
   useEffect(() => {}, [errors]);
   const handleInputChange = (e) => {
@@ -52,6 +54,17 @@ const RegistrationForm = () => {
       ...errors,
       [name]: "",
     });
+    if (
+      formData?.email?.length !== 0 &&
+      formData?.password?.length > 6 &&
+      formData?.confirmPassword?.length > 6 &&
+      errors?.email?.length === 0 &&
+      errors?.password?.length === 0 &&
+      errors?.confirmPassword?.length === 0
+    ) {
+      setValidForm(true);
+      return;
+    }
   };
 
   const handleTogglePassword = (field) => {
@@ -74,11 +87,12 @@ const RegistrationForm = () => {
         ...prevErrors,
         [field]: validationError.message,
       }));
+      setValidForm(false);
     }
   };
 
   const getBorderColor = (field) => {
-    return errors[field] ? "#ff0000" : "#9e9e9e";
+    return errors[field] && "#ff0000";
   };
 
   const handleSubmit = (e) => {
@@ -100,7 +114,8 @@ const RegistrationForm = () => {
           password: "",
           confirmPassword: "",
         });
-        // setErrors({});
+        setErrors({});
+        setValidForm(false);
       })
       .catch((validationErrors) => {
         const errorsMap = {};
@@ -125,8 +140,17 @@ const RegistrationForm = () => {
             value={formData.email}
             onChange={handleInputChange}
             onBlur={() => handleBlur("email")}
-            style={{ borderColor: getBorderColor("email") }}
+            style={{
+              borderColor: getBorderColor("email"),
+              color: getBorderColor("email"),
+            }}
           />
+
+          {errors?.email?.length > 1 ? (
+            <img src={error} alt="" className={css.img_error} />
+          ) : (
+            ""
+          )}
         </div>
 
         <div className={css.inputContainer}>
@@ -142,11 +166,16 @@ const RegistrationForm = () => {
               value={formData.password}
               onChange={handleInputChange}
               onBlur={() => handleBlur("password")}
-              style={{ borderColor: getBorderColor("password") }}
+              style={{
+                borderColor: getBorderColor("password"),
+                color: getBorderColor("password"),
+              }}
             />
 
             <div
-              className={css.eyeIcon}
+              className={`${css.eyeIcon} ${
+                errors?.password?.length > 1 ? css.error : ""
+              }`}
               onClick={() => handleTogglePassword("password")}
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -167,11 +196,16 @@ const RegistrationForm = () => {
               value={formData.confirmPassword}
               onChange={handleInputChange}
               onBlur={() => handleBlur("confirmPassword")}
-              style={{ borderColor: getBorderColor("confirmPassword") }}
+              style={{
+                borderColor: getBorderColor("confirmPassword"),
+                color: getBorderColor("confirmPassword"),
+              }}
             />
 
             <div
-              className={css.eyeIcon}
+              className={`${css.eyeIcon} ${
+                errors?.confirmPassword?.length > 1 ? css.error : ""
+              }`}
               onClick={() => handleTogglePassword("confirmPassword")}
             >
               {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
@@ -184,7 +218,9 @@ const RegistrationForm = () => {
           <span className={css.spanPolicy}>Privacy Policy</span> and give my
           consent to data processing
         </p>
-        <Button label="Register" type="submit" />
+        <div className={`${css.btn_text} ${validForm ? css.btn_valid : ""}`}>
+          <Button label="Register" type="submit" />
+        </div>
       </form>
     </>
   );
