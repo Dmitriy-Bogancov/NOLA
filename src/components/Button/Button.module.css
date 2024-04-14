@@ -1,9 +1,9 @@
 .buttonForm {
   background-color: #9e9e9e;
-  margin: 30px auto;
+  margin: 24px auto;
   color: #fff;
   width: 100%;
-  max-width: 400px;
+  /* max-width: 400px; */
   border-radius: 12px;
   padding: 20px;
   cursor: pointer;

@@ -10,6 +10,7 @@ import { ToastError } from "../../services/ToastError/ToastError";
 import { useDispatch } from "react-redux";
 import { loginThunk } from "../../redux/auth/authThunk";
 import { Toastify } from "../../services/Toastify/Toastify";
+import error from "../../assets/icons/circle-exclamation-mark.svg";
 
 const schema = yup.object().shape({
   email: yup
@@ -21,7 +22,7 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .required("Password is required")
-    .min(6, "Password must be at least 6 characters"),
+    .min(8, "Password must be at least 8 characters"),
 });
 
 const LoginForm = () => {
@@ -34,6 +35,7 @@ const LoginForm = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
+  const [validForm, setValidForm] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -45,6 +47,15 @@ const LoginForm = () => {
       ...errors,
       [name]: "",
     });
+    if (
+      formData?.email?.length !== 0 &&
+      formData?.password?.length > 6 &&
+      errors?.email?.length === 0 &&
+      errors?.password?.length === 0
+    ) {
+      setValidForm(true);
+      return;
+    }
   };
 
   const handleTogglePassword = () => {
@@ -63,11 +74,12 @@ const LoginForm = () => {
         ...prevErrors,
         [field]: validationError.message,
       }));
+      setValidForm(false);
     }
   };
 
   const getBorderColor = (field) => {
-    return errors[field] ? "#ff0000" : "#9e9e9e";
+    return errors[field] && "#ff0000";
   };
 
   const handleSubmit = (e) => {
@@ -89,8 +101,10 @@ const LoginForm = () => {
           email: "",
           password: "",
         });
-        // setErrors({});
+        setErrors({});
+        setValidForm(false);
       })
+
       .catch((validationErrors) => {
         const errorsMap = {};
         validationErrors.inner.forEach((error) => {
@@ -114,8 +128,16 @@ const LoginForm = () => {
             value={formData.email}
             onChange={handleInputChange}
             onBlur={() => handleBlur("email")}
-            style={{ borderColor: getBorderColor("email") }}
+            style={{
+              borderColor: getBorderColor("email"),
+              color: getBorderColor("email"),
+            }}
           />
+          {errors?.email?.length > 1 ? (
+            <img src={error} alt="" className={css.img_error} />
+          ) : (
+            ""
+          )}
         </div>
 
         <div className={css.inputContainer}>
@@ -129,9 +151,17 @@ const LoginForm = () => {
               value={formData.password}
               onChange={handleInputChange}
               onBlur={() => handleBlur("password")}
-              style={{ borderColor: getBorderColor("password") }}
+              style={{
+                borderColor: getBorderColor("password"),
+                color: getBorderColor("password"),
+              }}
             />
-            <div className={css.eyeIcon} onClick={handleTogglePassword}>
+            <div
+              className={`${css.eyeIcon} ${
+                errors?.password?.length > 1 ? css.error : ""
+              }`}
+              onClick={handleTogglePassword}
+            >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </div>
           </div>
@@ -142,7 +172,9 @@ const LoginForm = () => {
             <p className={css.textForgot}>Forgot password?</p>
           </Link>
         </div>
-        <Button label="Sign In" type="submit" />
+        <div className={`${css.btn_text} ${validForm ? css.btn_valid : ""}`}>
+          <Button label="Sign In" type="submit" />
+        </div>
       </form>
     </>
   );

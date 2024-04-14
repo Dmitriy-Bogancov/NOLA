@@ -20,7 +20,8 @@
 
 .auth:hover,
 .auth.active {
-  color: #858585;
+  font-weight: 600;
+  color: #333333;
 }
 
 .auth::after {
@@ -40,5 +41,5 @@
 .auth.active::after,
 .auth:hover::after {
   height: 4px;
-  background-color: #858585;
+  background-color: #333333;
 }

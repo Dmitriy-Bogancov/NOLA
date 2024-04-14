@@ -3,7 +3,7 @@ import GoogleAndAppleButton from "../../components/GoogleButton/GoogleAndAppleBu
 
 const RegistrationPage = () => {
   return (
-    <div className="container">
+    <div className="">
       <RegistrationForm />
       <GoogleAndAppleButton />
     </div>

@@ -1,11 +1,19 @@
 .inputForm {
-  width: calc(100% - 30px);
+  width: calc(100% - 34px);
   border-radius: 12px;
   border: 2px solid;
   padding: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 18px;
   color: #9e9e9e;
   position: relative;
+}
+
+input:active,
+:hover,
+:focus {
+  outline: #000000 !important;
+  border-color: #000000 !important;
+  /* color: #000000; */
 }
 
 .textInfo {
@@ -15,6 +23,9 @@
   font-size: 9px;
   font-weight: 400;
   text-align: center;
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 12px;
 }
 .spanPolicy {
   cursor: pointer;
@@ -31,6 +42,15 @@
   align-items: center;
 }
 
+.img_error {
+  position: absolute;
+  top: 18%;
+  display: block;
+  right: 20px;
+  width: 20px;
+  height: 26px;
+}
+
 .eyeIcon {
   color: #9e9e9e;
   cursor: pointer;
@@ -39,13 +59,31 @@
   top: 40%;
   transform: translateY(-50%);
 }
+
+.error {
+  color: #da2e2e;
+}
+
 .errorText {
   color: #ff0000;
   font-size: 12px;
   position: absolute;
-  top: -8px;
-  left: 15px;
+  bottom: 4px;
+  left: 0;
   background-color: white;
   padding: 0 5px;
   z-index: 1;
+}
+
+.btn_text {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 48px;
+  letter-spacing: -0.41px;
+  color: #f8f8f8;
+}
+
+.btn_valid button {
+  background-color: #eccd43;
+  color: #f8f8f8;
 }
