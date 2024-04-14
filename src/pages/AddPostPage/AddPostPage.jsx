@@ -6,9 +6,11 @@ import { ToastContainer } from "react-toastify";
 import css from "./AddPostPage.module.css";
 import { ToastError } from "../../services/ToastError/ToastError";
 import { HandleFormConfig } from "../../components/HandleFormConfig/HandleFormConfig";
+import PreviewAdvertisemetPage from "../PreviewAdvertisemetPage/PreviewAdvertisemetPage";
 
 const AddPostPage = () => {
   const location = useLocation();
+  const [preview, setPreview] = useState(false)
   const [addPostPhoto, setAddPostPhoto] = useState(false);
   const [selestedFile, setSelestedFile] = useState(false);
   const [uploaded, setUploaded] = useState(false);
@@ -17,7 +19,8 @@ const AddPostPage = () => {
   const [post, setPost] = useState({
     description: "",
     title: "",
-    banner: "https://img.freepik.com/premium-photo/nelle-vie-di-milano_1048944-5187462.jpg",
+    banner:
+      "https://img.freepik.com/premium-photo/nelle-vie-di-milano_1048944-5187462.jpg",
   });
 
   const handleAddPost = () => {
@@ -74,101 +77,167 @@ const AddPostPage = () => {
   const handleSubmitPost = async (e) => {
     e.preventDefault();
     try {
-    const data =  await postPostApi(post);
+      const data = await postPostApi(post);
 
       // setUploaded(data)
-      
+
       setFormConfig(true);
     } catch (error) {
-     ToastError(error?.response?.statusText || error.message);
+      ToastError(error?.response?.statusText || error.message);
     }
 
-    setPost({ banner: "", description: "" , title: ""});
+    setPost({ banner: "", description: "", title: "" });
   };
+
+  const handlePreview = () => {
+    setPreview(prev => !prev)
+  }
 
   return (
     <div>
-      <ToastContainer />
-      {formConfig && (
-        <HandleFormConfig
-          message={"Sucsessfull add a new advertisement"}
-          navigatePage={"/main/accountAdverticer"}
-        />
-      )}
-      {addPostPhoto && (
-        <>
-          <input
-            type="file"
-            value={formatPost}
-            accept="image/*  ,.png,.jpg,.jpeg,.gif,.webp,.svg,.pdf"
-            onChange={handleChange}
+      {!preview &&
+      <>
+          <ToastContainer />
+        {formConfig && (
+          <HandleFormConfig
+            message={"Sucsessfull add a new advertisement"}
+            navigatePage={"/main/accountAdverticer"}
           />
-
-          <button onClick={handleUploadClick}>Upload now</button>
-        </>
-      )}
-      <form onSubmit={handleSubmitPost}>
-        <button type="button" onClick={handleAddPost}>
-          Add Bunner
-        </button>
-
-        {selestedFile && <ul></ul>}
-
-        {uploaded && (
-          <div>
-            <h2></h2>
-            <img src="" alt="" className={css.banner} />
-          </div>
         )}
+        <h1>New advertisement</h1>
+  
+        <p>Add banners</p>
+  
+        <form onSubmit={handleSubmitPost}>
+          {/* =====================================  */}
+          {selestedFile && <ul></ul>}
+  
+          {uploaded && (
+            <div>
+              <h2></h2>
+              <img src="" alt="" className={css.banner} />
+            </div>
+          )}
+  
+          {addPostPhoto && (
+            <>
+              <input
+                type="file"
+                value={formatPost}
+                accept="image/*  ,.png,.jpg,.jpeg,.gif,.webp,.svg,.pdf"
+                onChange={handleChange}
+              />
+  
+              <button onClick={handleUploadClick}>Upload now</button>
+            </>
+          )}
+          <button type="button" onClick={handleAddPost}>
+            Add Bunner
+          </button>
+  
+          <p>
+            Supported types of images: JPEG, PNG, GIF, WEBP, SVG You can upload up
+            to 3 images.
+          </p>
+          {/* =====================================  */}
+  
+          <h2>Fill in the details</h2>
+  
+          <label>
+            Title*
+            <input
+              type="text"
+              name="title"
+              value={post.title}
+              onChange={handleChangePost}
+              placeholder="Friendly Study"
+            />
+            Symbols left <span>0/70</span>
+          </label>
+  
+          <label>
+            Category*
+            <input
+              type="text"
+              name="category"
+              value={post.title}
+              onChange={handleChangePost}
+              placeholder="Language schools"
+            />
+          </label>
+  
+          <label>
+            Subcategory*
+            <input
+              type="text"
+              name="subcategory"
+              value={post.title}
+              onChange={handleChangePost}
+              placeholder="Language schools"
+            />
+          </label>
+  
+          <label>
+            Description
+            <textarea
+              name="description"
+              cols="30"
+              rows="10"
+              value={post.description}
+              onChange={handleChangePost}
+            ></textarea>
+            Symbols left <span>0/9000</span>
+          </label>
+  
+          <div>
+            <h2>Add your links</h2>
+            <p>Add links to your social networks or your webpage (at least one).</p>
+            <ul>
+              <li>
+                <input type="text" name="" placeholder="Web adress" />
+                <input type="text" name="" placeholder="Short title" />
+                <NavLink
+                  to="/main/accountAdverticer/adverticerEdit/links/addLinks"
+                  state={location}
+                >
+                  Link
+                </NavLink>
+              </li>
+  
+              <li>
+                <NavLink
+                  to="/main/accountAdverticer/adverticerEdit/links/addLinks"
+                  state={location}
+                >
+                  Link
+                </NavLink>
+              </li>
+  
+              <li>
+                <NavLink
+                  to="/main/accountAdverticer/adverticerEdit/links/addLinks"
+                  state={location}
+                >
+                  Link
+                </NavLink>
+              </li>
+            </ul>
+  <p>Supported links: Facebook, Instagram, Pinterest, Tik-tok, Webpage</p>
+            {/* <NavLink to="previewAdvertisemet"> */}
+              <button type="button" onClick={handlePreview}>Preview</button>
+            {/* </NavLink> */}
+            <button>Post  </button>
+          </div>
+        </form>
+        <NavLink to="/main">
+          <button type="button">Cancel</button>
+        </NavLink>
+        </>
+      }
 
-        <input type="text" name="title" value={post.title} onChange={handleChangePost}/>
-
-        <textarea
-          name="description"
-          cols="30"
-          rows="10"
-          value={post.description}
-          onChange={handleChangePost}
-        ></textarea>
-        <div>
-          <ul>
-            <li>
-              <NavLink
-                to="/main/accountAdverticer/adverticerEdit/links/addLinks"
-                state={location}
-              >
-                Link
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                to="/main/accountAdverticer/adverticerEdit/links/addLinks"
-                state={location}
-              >
-                Link
-              </NavLink>
-            </li>
-
-            <li>
-              <NavLink
-                to="/main/accountAdverticer/adverticerEdit/links/addLinks"
-                state={location}
-              >
-                Link
-              </NavLink>
-            </li>
-          </ul>
-
-          <NavLink to="previewAdvertisemet">
-            <button>Preview</button>
-          </NavLink>
-          <button>Confirm </button>
-        </div>
-      </form>
-      <NavLink to="/main">
-        <button type="button">Cancel</button>
-      </NavLink>
+      {
+        preview && <PreviewAdvertisemetPage post={post} setPreview={setPreview} />
+      }
     </div>
   );
 };

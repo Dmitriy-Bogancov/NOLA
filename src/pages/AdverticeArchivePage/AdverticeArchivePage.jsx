@@ -8,6 +8,9 @@ import css from "./AdverticeArchivePage.module.css";
 import { PostsAdverticerMenu } from "../../components/PostsAdverticerMenu/PostsAdverticerMenu";
 import { deletePostApi, getAllPostApi } from "../../services/https/https";
 import { ToastError } from "../../services/ToastError/ToastError";
+import GoBackButton from "../../components/GoBackButton/GoBackButton";
+import back from "../../assets/images/back.jpg";
+
 
 const AdverticeArchivePage = () => {
   const [post, setPost] = useState([]);
@@ -32,6 +35,10 @@ const AdverticeArchivePage = () => {
       }
     })();
   }, []);
+
+      const handleBack = () => {
+    setShowPost(false);
+  };
 
   const handleToggleModal = (message) => {
     setIsModal((prev) => !prev);
@@ -73,6 +80,8 @@ const AdverticeArchivePage = () => {
   const handlePost = (id) => {
     setShowPost(post.filter((item) => item.id === id));
   };
+
+
 
   return (
     <div>
@@ -131,16 +140,33 @@ const AdverticeArchivePage = () => {
       )}
       <ul className={css.list}>
         {showPost &&
+          
           showPost?.map(({ id, title, description, banner }) => (
+
+
             <li key={id}>
-              <PostsAdverticer
-                id={id}
-                name={title}
-                banner={banner}
-                description={description}
-                setShowPost={setShowPost}
-              />
-            </li>
+                                 <div className={css.top_container}>
+          <GoBackButton
+            imgSrc={back}
+            imgAlt="Go back"
+            imgWidth="50px"
+            imgHeight="50px"
+            onClick={handleBack}
+  
+          />
+  
+          <p className={css.return}>Return to the feed</p>
+              </div>
+               <img src={banner} alt="" className={css.img} />
+                <PostsAdverticer
+                  id={id}
+                  name={title}
+                  banner={banner}
+                  description={description}
+                  setShowPost={setShowPost}
+                />
+              </li>
+
           ))}
       </ul>
     </div>

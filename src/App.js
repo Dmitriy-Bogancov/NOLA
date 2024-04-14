@@ -163,7 +163,7 @@ function App() {
                 />
               </Route>
 
-              <Route
+              {/* <Route
                 path="/main/addPost"
                 element={
                   <PrivateRoute
@@ -171,17 +171,9 @@ function App() {
                     redirectTo="/main/authorization"
                   />
                 }
-              />
+              /> */}
 
-              <Route
-                path="/main/addPost"
-                element={
-                  <PrivateRoute
-                    component={<AddPostPage />}
-                    redirectTo="/main/authorization"
-                  />
-                }
-              />
+
               <Route
                 path="addPost/:editPostId"
                 element={
@@ -202,6 +194,16 @@ function App() {
                 }
               />
             </Route>
+
+             <Route
+                path="/main/addPost"
+                element={
+                  <PrivateRoute
+                    component={<AddPostPage />}
+                    redirectTo="/main/authorization"
+                  />
+                }
+              />
 
             <Route path="/main/:postId" element={<PostDetailsPage />} />
 

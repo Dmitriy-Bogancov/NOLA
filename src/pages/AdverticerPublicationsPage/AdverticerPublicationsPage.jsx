@@ -10,7 +10,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Toastify } from "../../services/Toastify/Toastify";
 import { PostsAdverticer } from "../../components/PostsAdverticer/PostsAdverticer";
-
+import GoBackButton from "../../components/GoBackButton/GoBackButton";
+import back from "../../assets/images/back.jpg";
 import css from "./AdverticerPublicationsPage.module.css";
 import { PostsAdverticerMenu } from "../../components/PostsAdverticerMenu/PostsAdverticerMenu";
 
@@ -45,6 +46,10 @@ const AdverticerPublicationsPage = () => {
       }
     })();
   }, [token]);
+
+        const handleBack = () => {
+    setShowPost(false);
+  };
 
   const handleToggleModal = (message) => {
     setIsModal((prev) => !prev);
@@ -185,6 +190,19 @@ const AdverticerPublicationsPage = () => {
         {showPost &&
           showPost?.map(({ id, title, description, banner }) => (
             <li key={id}>
+                                 <div className={css.top_container}>
+          <GoBackButton
+            imgSrc={back}
+            imgAlt="Go back"
+            imgWidth="50px"
+            imgHeight="50px"
+            onClick={handleBack}
+  
+          />
+  
+          <p className={css.return}>Return to the feed</p>
+              </div>
+               <img src={banner} alt="" className={css.img} />
               <PostsAdverticer
                 id={id}
                 name={title}

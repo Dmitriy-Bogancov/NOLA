@@ -1,3 +1,20 @@
+.top_container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.return {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 48px;
+  letter-spacing: -0.41px;
+}
+
 .container{
 padding-bottom: 40px;
 }

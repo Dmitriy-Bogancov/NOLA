@@ -1,0 +1,46 @@
+.top_container{
+      position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.title{
+font-weight: 500;
+font-size: 18px;
+line-height: 24px;
+color: #333333;
+
+}
+
+.btn_container{
+    margin-top: auto;
+}
+
+
+.btn,
+.btn_active{
+    width: 100%;
+    border-radius: 15px;
+    border: 1px solid #9E9E9E;
+    background-color: transparent;
+}
+
+.btn_active{
+background-color: #ECCD43;
+ margin-top: 16px;
+}
+
+.btn_back,
+.btn_back_active{
+font-weight: 400;
+font-size: 20px;
+line-height: 48px;
+align-items: center;
+color: #666666;
+}
+
+.btn_back_active{
+    font-weight: 500;
+    color: #333333;
+   
+}

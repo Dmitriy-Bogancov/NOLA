@@ -4,27 +4,11 @@ import GoBackButton from "../GoBackButton/GoBackButton";
 import back from "../../assets/images/back.jpg";
 
 export const PostsAdverticer = ({ name, banner, description, title, setShowPost }) => {
-  const handleBack = () => {
-    setShowPost(false);
-  };
 
   return (
     <>
-      <div className={css.top_container}>
-        <GoBackButton
-          imgSrc={back}
-          imgAlt="Go back"
-          imgWidth="50px"
-          imgHeight="50px"
-          onClick={handleBack}
-
-        />
-
-        <p className={css.return}>Return to the feed</p>
-      </div>
-
-      <img src={banner} alt="" className={css.img} />
-      <div className={css.logo_container}>
+    
+     <div className={css.logo_container}>
         <img src="" alt="" className={css.logo} />
         <p className={css.logo_description}>{name}</p>
       </div>
