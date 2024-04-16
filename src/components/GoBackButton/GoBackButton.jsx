@@ -24,11 +24,11 @@ const GoBackButton = ({
 };
 GoBackButton.propTypes = {
   to: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
   imgSrc: PropTypes.string.isRequired,
   imgAlt: PropTypes.string.isRequired,
-  imgWidth: PropTypes.number.isRequired,
-  imgHeight: PropTypes.number.isRequired,
+  imgWidth: PropTypes.number,
+  imgHeight: PropTypes.number,
   onClick: PropTypes.func,
 };
 

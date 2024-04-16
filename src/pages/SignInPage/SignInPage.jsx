@@ -3,7 +3,7 @@ import LoginForm from "../../components/LoginForm";
 
 const SignInPage = () => {
   return (
-    <div className="container">
+    <div className="">
       <LoginForm />
       <GoogleAndAppleButton />
     </div>
