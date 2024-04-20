@@ -4,29 +4,43 @@
   border: 2px solid;
   padding: 15px 24px;
   margin-bottom: 22px;
+  /* margin-bottom: 8px; */
   color: #9e9e9e;
   position: relative;
 }
 
 .inputForm:active,
-:hover,
 :focus {
-  outline: #000000 !important;
-  border-color: #000000 !important;
-  /* color: #000000; */
+  outline: #000000;
+  border-color: #000000;
+  color: #000000;
+}
+
+.active {
+  outline: #000000;
+  border-color: #000000;
+  color: #000000;
+}
+
+.link_forgot {
+  display: block;
+  width: 80px;
+  padding: 8px 0;
+  margin-left: auto;
+  margin-top: -20px;
+  cursor: pointer;
 }
 
 .textForgot {
-  display: flex;
-  justify-content: flex-end;
   color: #da2e2e;
-  cursor: pointer;
   text-decoration: underline;
   font-weight: 400;
   font-size: 10px;
-  line-height: 48px;
+  line-height: 28px;
   letter-spacing: -0.41px;
-  margin-top: -28px;
+  /* margin-top: -28px; */
+  cursor: pointer;
+  /* padding: 4px; */
 }
 
 .inputContainer {
@@ -60,7 +74,7 @@
 }
 
 .errorText {
-  color: #ff0000;
+  color: #da2e2e;
   font-size: 12px;
   position: absolute;
   bottom: 8px;
@@ -75,9 +89,10 @@
   font-size: 20px;
   line-height: 48px;
   letter-spacing: -0.41px;
- 
+  color: #fff;
 }
 
 .btn_valid button {
   background-color: #eccd43;
+  color: #fff;
 }

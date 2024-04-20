@@ -8,12 +8,17 @@
   position: relative;
 }
 
-input:active,
-:hover,
+.inputForm:active,
 :focus {
-  outline: #000000 !important;
-  border-color: #000000 !important;
-  /* color: #000000; */
+  outline: #000000;
+  border-color: #000000;
+  color: #000000;
+}
+
+.active {
+  outline: #000000;
+  border-color: #000000;
+  color: #000000;
 }
 
 .textInfo {
@@ -65,7 +70,7 @@ input:active,
 }
 
 .errorText {
-  color: #ff0000;
+  color: #da2e2e;
   font-size: 12px;
   position: absolute;
   bottom: 4px;

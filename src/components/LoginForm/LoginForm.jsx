@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button";
 import css from "./LoginForm.module.css";
@@ -37,6 +37,29 @@ const LoginForm = () => {
   const [errors, setErrors] = useState({});
   const [validForm, setValidForm] = useState(false);
 
+  useEffect(() => {
+    const validEmail = [".com", ".net", ".ua"];
+
+    if (
+      validEmail.find((el) => formData?.email?.includes(el)) &&
+      formData?.password?.length > 7 &&
+      errors?.email?.length === 0 &&
+      errors?.password?.length === 0
+    ) {
+      setValidForm(true);
+      return;
+    } else {
+      setValidForm(false);
+    }
+  }, [
+    errors?.email?.length,
+    errors?.password?.length,
+    formData?.email,
+    formData?.email?.length,
+    formData?.password?.length,
+    errors,
+  ]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -47,15 +70,6 @@ const LoginForm = () => {
       ...errors,
       [name]: "",
     });
-    if (
-      formData?.email?.length !== 0 &&
-      formData?.password?.length > 6 &&
-      errors?.email?.length === 0 &&
-      errors?.password?.length === 0
-    ) {
-      setValidForm(true);
-      return;
-    }
   };
 
   const handleTogglePassword = () => {
@@ -79,7 +93,7 @@ const LoginForm = () => {
   };
 
   const getBorderColor = (field) => {
-    return errors[field] && "#ff0000";
+    return errors[field] && "#DA2E2E";
   };
 
   const handleSubmit = (e) => {
@@ -121,7 +135,9 @@ const LoginForm = () => {
         <div className={css.inputContainer}>
           <div className={css.errorText}>{errors.email}</div>
           <input
-            className={css.inputForm}
+            className={`${css.inputForm}  ${
+              errors?.email?.length === 0 ? css.active : ""
+            }`}
             type="email"
             name="email"
             placeholder="Username or Email"
@@ -144,7 +160,9 @@ const LoginForm = () => {
           <div className={css.errorText}>{errors.password}</div>
           <div className={css.passwordInputContainer}>
             <input
-              className={`${css.inputForm} ${css.passwordInput}`}
+              className={`${css.inputForm} ${css.passwordInput}  ${
+                errors?.password?.length === 0 ? css.active : ""
+              }`}
               type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
@@ -168,12 +186,16 @@ const LoginForm = () => {
         </div>
 
         <div>
-          <Link to="/recovery">
+          <Link to="/recovery" className={css.link_forgot}>
             <p className={css.textForgot}>Forgot password?</p>
           </Link>
         </div>
         <div className={`${css.btn_text} ${validForm ? css.btn_valid : ""}`}>
-          <Button label="Sign In" type="submit" />
+          <Button
+            label="Sign In"
+            type="submit"
+            disabled={validForm ? false : true}
+          />
         </div>
       </form>
     </>
