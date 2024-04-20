@@ -85,6 +85,10 @@ const RecoveryForm = () => {
     setIsModal((prev) => !prev);
   };
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   const getBorderColor = (field) => {
     return errors[field] ? "#ff0000" : "#9e9e9e";
   };
@@ -92,12 +96,12 @@ const RecoveryForm = () => {
   return (
     <div className={css.formContainer}>
       <GoBackButton
-        to="/main/authorization/"
         imgSrc={back}
         imgAlt="Go back"
         imgWidth="50px"
         imgHeight="50px"
         title="Password recovery"
+        onClick={handleBack}
       />
       <img src={email} alt="Logo" className={css.imageForm} />
       <h3 className={css.titleForm}>Update your password</h3>

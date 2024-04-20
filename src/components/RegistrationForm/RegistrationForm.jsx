@@ -54,18 +54,32 @@ const RegistrationForm = () => {
       ...errors,
       [name]: "",
     });
+  };
+
+  useEffect(() => {
+    const validEmail = [".com", ".net", ".ua"];
+
     if (
-      formData?.email?.length !== 0 &&
-      formData?.password?.length > 6 &&
-      formData?.confirmPassword?.length > 6 &&
+      validEmail.find((el) => formData?.email?.includes(el)) &&
+      formData?.password?.length > 7 &&
+      formData?.confirmPassword?.length > 7 &&
       errors?.email?.length === 0 &&
       errors?.password?.length === 0 &&
       errors?.confirmPassword?.length === 0
     ) {
       setValidForm(true);
       return;
+    } else {
+      setValidForm(false);
     }
-  };
+  }, [
+    errors?.confirmPassword?.length,
+    errors?.email?.length,
+    errors?.password?.length,
+    formData?.confirmPassword?.length,
+    formData?.email,
+    formData?.password?.length,
+  ]);
 
   const handleTogglePassword = (field) => {
     if (field === "password") {
@@ -92,7 +106,7 @@ const RegistrationForm = () => {
   };
 
   const getBorderColor = (field) => {
-    return errors[field] && "#ff0000";
+    return errors[field] && "#da2e2e";
   };
 
   const handleSubmit = (e) => {
@@ -133,7 +147,9 @@ const RegistrationForm = () => {
         <div className={css.inputContainer}>
           {errors.email && <div className={css.errorText}>{errors.email}</div>}
           <input
-            className={css.inputForm}
+            className={`${css.inputForm}  ${
+              errors?.email?.length === 0 ? css.active : ""
+            }`}
             type="email"
             name="email"
             placeholder="Email"
@@ -159,7 +175,9 @@ const RegistrationForm = () => {
           )}
           <div className={css.passwordInputContainer}>
             <input
-              className={`${css.inputForm} ${css.passwordInput}`}
+              className={`${css.inputForm} ${css.passwordInput}  ${
+                errors?.password?.length === 0 ? css.active : ""
+              }`}
               type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
@@ -189,7 +207,9 @@ const RegistrationForm = () => {
           )}
           <div className={css.passwordInputContainer}>
             <input
-              className={`${css.inputForm} ${css.passwordInput}`}
+              className={`${css.inputForm} ${css.passwordInput}  ${
+                errors?.confirmPassword?.length === 0 ? css.active : ""
+              }`}
               type={showConfirmPassword ? "text" : "password"}
               name="confirmPassword"
               placeholder="Confirm Password"
@@ -219,7 +239,11 @@ const RegistrationForm = () => {
           consent to data processing
         </p>
         <div className={`${css.btn_text} ${validForm ? css.btn_valid : ""}`}>
-          <Button label="Register" type="submit" />
+          <Button
+            label="Register"
+            type="submit"
+            disabled={validForm ? false : true}
+          />
         </div>
       </form>
     </>
