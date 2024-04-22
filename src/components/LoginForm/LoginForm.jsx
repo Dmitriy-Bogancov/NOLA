@@ -110,13 +110,6 @@ const LoginForm = () => {
         } catch (error) {
           ToastError(error);
         }
-
-        setFormData({
-          email: "",
-          password: "",
-        });
-        setErrors({});
-        setValidForm(false);
       })
 
       .catch((validationErrors) => {

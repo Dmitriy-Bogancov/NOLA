@@ -10,11 +10,11 @@ export const loginThunk = createAsyncThunk(
       token.set(data.token);
       return data;
     } catch (error) {
-      return rejectWithValue(
-        error?.response?.data?.title ||
-          error?.response?.statusText ||
-          error.message
-      );
+      if (error?.response?.status === 401) {
+        return rejectWithValue("The password or email was entered incorrectly");
+      } else {
+        return rejectWithValue(error?.response?.statusText || error.message);
+      }
     }
   }
 );
