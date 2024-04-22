@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { postPostApi } from "../../services/https/https";
 import { Toastify } from "../../services/Toastify/Toastify";
 import { ToastContainer } from "react-toastify";
@@ -7,15 +7,18 @@ import css from "./AddPostPage.module.css";
 import { ToastError } from "../../services/ToastError/ToastError";
 import { HandleFormConfig } from "../../components/HandleFormConfig/HandleFormConfig";
 import PreviewAdvertisemetPage from "../PreviewAdvertisemetPage/PreviewAdvertisemetPage";
+import { MessagePostOnModeration } from "../../components/MessagePostOnModeration/MessagePostOnModeration";
 
 const AddPostPage = () => {
   const location = useLocation();
-  const [preview, setPreview] = useState(false)
+  const navigate = useNavigate();
+  const [preview, setPreview] = useState(false);
   const [addPostPhoto, setAddPostPhoto] = useState(false);
   const [selestedFile, setSelestedFile] = useState(false);
   const [uploaded, setUploaded] = useState(false);
   const [formatPost, setFormatPost] = useState(null);
   const [formConfig, setFormConfig] = useState(false);
+  const [postSuccessfullyAdded, setPostSuccessfullyAdded] = useState(false);
   const [post, setPost] = useState({
     description: "",
     title: "",
@@ -81,7 +84,12 @@ const AddPostPage = () => {
 
       // setUploaded(data)
 
-      setFormConfig(true);
+      // setFormConfig(true);
+      setPostSuccessfullyAdded(true);
+
+      setTimeout(() => {
+        navigate("/main");
+      }, 3000);
     } catch (error) {
       ToastError(error?.response?.statusText || error.message);
     }
@@ -90,154 +98,160 @@ const AddPostPage = () => {
   };
 
   const handlePreview = () => {
-    setPreview(prev => !prev)
-  }
+    setPreview((prev) => !prev);
+  };
 
   return (
     <div>
-      {!preview &&
-      <>
+      {!postSuccessfullyAdded && (
+        <>
           <ToastContainer />
-        {formConfig && (
-          <HandleFormConfig
-            message={"Sucsessfull add a new advertisement"}
-            navigatePage={"/main/accountAdverticer"}
-          />
-        )}
-        <h1>New advertisement</h1>
-  
-        <p>Add banners</p>
-  
-        <form onSubmit={handleSubmitPost}>
-          {/* =====================================  */}
-          {selestedFile && <ul></ul>}
-  
-          {uploaded && (
-            <div>
-              <h2></h2>
-              <img src="" alt="" className={css.banner} />
-            </div>
+          {formConfig && (
+            <HandleFormConfig
+              message={"Sucsessfull add a new advertisement"}
+              navigatePage={"/main/accountAdverticer"}
+            />
           )}
-  
-          {addPostPhoto && (
-            <>
-              <input
-                type="file"
-                value={formatPost}
-                accept="image/*  ,.png,.jpg,.jpeg,.gif,.webp,.svg,.pdf"
-                onChange={handleChange}
-              />
-  
-              <button onClick={handleUploadClick}>Upload now</button>
-            </>
-          )}
-          <button type="button" onClick={handleAddPost}>
-            Add Bunner
-          </button>
-  
-          <p>
-            Supported types of images: JPEG, PNG, GIF, WEBP, SVG You can upload up
-            to 3 images.
-          </p>
-          {/* =====================================  */}
-  
-          <h2>Fill in the details</h2>
-  
-          <label>
-            Title*
-            <input
-              type="text"
-              name="title"
-              value={post.title}
-              onChange={handleChangePost}
-              placeholder="Friendly Study"
-            />
-            Symbols left <span>0/70</span>
-          </label>
-  
-          <label>
-            Category*
-            <input
-              type="text"
-              name="category"
-              value={post.title}
-              onChange={handleChangePost}
-              placeholder="Language schools"
-            />
-          </label>
-  
-          <label>
-            Subcategory*
-            <input
-              type="text"
-              name="subcategory"
-              value={post.title}
-              onChange={handleChangePost}
-              placeholder="Language schools"
-            />
-          </label>
-  
-          <label>
-            Description
-            <textarea
-              name="description"
-              cols="30"
-              rows="10"
-              value={post.description}
-              onChange={handleChangePost}
-            ></textarea>
-            Symbols left <span>0/9000</span>
-          </label>
-  
-          <div>
-            <h2>Add your links</h2>
-            <p>Add links to your social networks or your webpage (at least one).</p>
-            <ul>
-              <li>
-                <input type="text" name="" placeholder="Web adress" />
-                <input type="text" name="" placeholder="Short title" />
-                <NavLink
-                  to="/main/accountAdverticer/adverticerEdit/links/addLinks"
-                  state={location}
-                >
-                  Link
-                </NavLink>
-              </li>
-  
-              <li>
-                <NavLink
-                  to="/main/accountAdverticer/adverticerEdit/links/addLinks"
-                  state={location}
-                >
-                  Link
-                </NavLink>
-              </li>
-  
-              <li>
-                <NavLink
-                  to="/main/accountAdverticer/adverticerEdit/links/addLinks"
-                  state={location}
-                >
-                  Link
-                </NavLink>
-              </li>
-            </ul>
-  <p>Supported links: Facebook, Instagram, Pinterest, Tik-tok, Webpage</p>
-            {/* <NavLink to="previewAdvertisemet"> */}
-              <button type="button" onClick={handlePreview}>Preview</button>
-            {/* </NavLink> */}
-            <button>Post  </button>
-          </div>
-        </form>
-        <NavLink to="/main">
-          <button type="button">Cancel</button>
-        </NavLink>
-        </>
-      }
+          <h1>New advertisement</h1>
 
-      {
-        preview && <PreviewAdvertisemetPage post={post} setPreview={setPreview} />
-      }
+          <p>Add banners</p>
+
+          <form onSubmit={handleSubmitPost}>
+            {/* =====================================  */}
+            {selestedFile && <ul></ul>}
+
+            {uploaded && (
+              <div>
+                <h2></h2>
+                <img src="" alt="" className={css.banner} />
+              </div>
+            )}
+
+            {addPostPhoto && (
+              <>
+                <input
+                  type="file"
+                  value={formatPost}
+                  accept="image/*  ,.png,.jpg,.jpeg,.gif,.webp,.svg,.pdf"
+                  onChange={handleChange}
+                />
+
+                <button onClick={handleUploadClick}>Upload now</button>
+              </>
+            )}
+            <button type="button" onClick={handleAddPost}>
+              Add Bunner
+            </button>
+
+            <p>
+              Supported types of images: JPEG, PNG, GIF, WEBP, SVG You can
+              upload up to 3 images.
+            </p>
+            {/* =====================================  */}
+
+            <h2>Fill in the details</h2>
+
+            <label>
+              Title*
+              <input
+                type="text"
+                name="title"
+                value={post.title}
+                onChange={handleChangePost}
+                placeholder="Friendly Study"
+              />
+              Symbols left <span>0/70</span>
+            </label>
+
+            <label>
+              Category*
+              <input
+                type="text"
+                name="category"
+                value={post.title}
+                onChange={handleChangePost}
+                placeholder="Language schools"
+              />
+            </label>
+
+            <label>
+              Subcategory*
+              <input
+                type="text"
+                name="subcategory"
+                value={post.title}
+                onChange={handleChangePost}
+                placeholder="Language schools"
+              />
+            </label>
+
+            <label>
+              Description
+              <textarea
+                name="description"
+                cols="30"
+                rows="10"
+                value={post.description}
+                onChange={handleChangePost}
+              ></textarea>
+              Symbols left <span>0/9000</span>
+            </label>
+
+            <div>
+              <h2>Add your links</h2>
+              <p>
+                Add links to your social networks or your webpage (at least
+                one).
+              </p>
+              <ul>
+                <li>
+                  <input type="text" name="" placeholder="Web adress" />
+                  <input type="text" name="" placeholder="Short title" />
+                  <NavLink
+                    to="/main/accountAdverticer/adverticerEdit/links/addLinks"
+                    state={location}
+                  >
+                    Link
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    to="/main/accountAdverticer/adverticerEdit/links/addLinks"
+                    state={location}
+                  >
+                    Link
+                  </NavLink>
+                </li>
+
+                <li>
+                  <NavLink
+                    to="/main/accountAdverticer/adverticerEdit/links/addLinks"
+                    state={location}
+                  >
+                    Link
+                  </NavLink>
+                </li>
+              </ul>
+              <p>
+                Supported links: Facebook, Instagram, Pinterest, Tik-tok,
+                Webpage
+              </p>
+              <NavLink to="previewAdvertisemet">
+                <button type="button" onClick={handlePreview}>
+                  Preview
+                </button>
+              </NavLink>
+              <button>Post </button>
+            </div>
+          </form>
+          <NavLink to="/main">
+            <button type="button">Cancel</button>
+          </NavLink>
+        </>
+      )}
+
+      {postSuccessfullyAdded && <MessagePostOnModeration />}
     </div>
   );
 };

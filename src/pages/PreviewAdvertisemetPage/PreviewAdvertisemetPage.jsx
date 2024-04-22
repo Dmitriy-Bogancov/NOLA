@@ -35,7 +35,7 @@ const PreviewAdvertisemetPage = ({ post, setPreview }) => {
       )}
 
       <div className={css.top_container}>
-        <GoBackButton to="/main/addPost" imgSrc={back} imgAlt="Go back"  onClick={handleBack}/>
+        <GoBackButton to="/main/addPost" imgSrc={back} imgAlt="Go back"  />
         <h1 className={css.title}>Advertisement preview</h1>
       </div>
 
