@@ -15,8 +15,16 @@ const EditPostPage = () => {
   const params = useParams();
   const [formConfig, setFormConfig] = useState(false);
   const [post, setPost] = useState({
-    name: "",
-    textarea: "",
+    id: "",
+    description: "",
+    title: "",
+    category: { index: null, title: "" },
+    subcategory: { index: null, title: "" },
+    callToAction: "" || "Read more",
+    callToActionLinks: "",
+    links: [],
+    banner: [],
+    addLinks: [],
   });
 
   useEffect(() => {
@@ -27,7 +35,7 @@ const EditPostPage = () => {
             return response.json();
           })
           .then((data) => {
-            setPost(...data);
+            setPost({ ...post, ...data });
           });
       } catch (error) {
         console.log(error);
@@ -77,7 +85,8 @@ const EditPostPage = () => {
         />
       )}
       <div>
-        <form onSubmit={handleSubmitPost}>
+        <AddPostPage postEdit={post} setPostEdit={setPost} />
+        {/* <form onSubmit={handleSubmitPost}>
           <NavLink to="">
             <button type="button">Add Bunner</button>
           </NavLink>
@@ -130,7 +139,7 @@ const EditPostPage = () => {
         </form>
         <NavLink to="/main/accountAdverticer">
           <button type="button">Cancel </button>
-        </NavLink>
+        </NavLink> */}
       </div>
     </div>
   );

@@ -1,0 +1,33 @@
+.post_container {
+  resize: none;
+  width: calc(100% - 52px);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  padding: 15px 24px;
+  color: #8d8d8d;
+  border: 1px solid #8d8d8d;
+  border-radius: 12px;
+  margin-bottom: 4px;
+}
+
+.post_description {
+  display: block;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  color: #656565;
+  margin-top: 16px;
+}
+
+.select {
+  width: 100% !important;
+  appearance: none;
+  overflow: hidden;
+  background-origin: content-box;
+  background-color: transparent;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  pointer-events: fill;
+}

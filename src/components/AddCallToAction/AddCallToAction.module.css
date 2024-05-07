@@ -1,0 +1,27 @@
+.links_list {
+  display: flex;
+  margin-top: 16px;
+}
+
+
+.links_list_item{
+  width: 70%;
+}
+
+.action_links{
+  margin-right: 8px;
+}
+
+.callToActionLinks{
+  resize: none;
+  width: 70%;
+  height: 32px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 18px;
+  overflow-x: scroll;
+  white-space: nowrap;
+  color: #8D8D8D;
+  border-radius: 12px;
+  padding: 15px 24px 5px 24px;
+}

@@ -1,0 +1,48 @@
+[{
+    "id": "1",
+    "value": "read_more",
+    "label": "Read more"
+  },
+{
+    "id": "2",
+    "value": "learn_more",
+    "label": "Learn more"
+  
+},
+{
+    "id": "3",
+    "value": "follow",
+    "label": "Follow"
+  
+},
+{
+    "id": "4",
+    "value": "subscribe",
+    "label": "Subscribe"
+  
+},
+{
+    "id": "5",
+    "value": "download",
+    "label": "Download"
+  
+},
+{
+    "id": "6",
+    "value": "try_for_free",
+    "label": "Try for free"
+  
+},
+{
+    "id": "7",
+    "value": "get_this",
+    "label": "Get this!"
+  
+},
+{
+    "id": "8",
+    "value": "join_now",
+    "label": "Join now!"
+  
+}
+]

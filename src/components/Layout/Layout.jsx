@@ -1,24 +1,11 @@
 /* eslint-disable no-unused-vars */
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import css from "./Layout.module.css";
 import { useAuth } from "../../services/hooks/useAuth";
-import { useState } from "react";
-import RegistrationCheckPage from "../../pages/RegistrationCheckPage/RegistrationCheckPage";
 
 const Layout = () => {
   const { token } = useAuth();
-  const navigate = useNavigate();
-  const [addPost, setAddPost] = useState(false);
-  const [registrationCheck, setRegistrationCheck] = useState(false);
-
-  const handleAddPost = (e) => {
-    if (token) {
-      setAddPost((prev) => !prev);
-      navigate("/main/addPost");
-    } else if (!token) {
-      setRegistrationCheck((prev) => !prev);
-    }
-  };
+  const drafts = JSON.parse(localStorage.getItem("backend"));
 
   return (
     <div>
@@ -35,16 +22,15 @@ const Layout = () => {
               <NavLink to="search">⚪</NavLink>
             </li>
             <li className={css.item}>
-              <button type="button" onClick={handleAddPost}>
-                ➕
-              </button>
-              {addPost && <NavLink to="addPost"></NavLink>}
-              {registrationCheck && (
-                <RegistrationCheckPage
-                  setRegistrationCheck={setRegistrationCheck}
-                />
+              {drafts ? (
+                <NavLink to="/main/drafts"> ➕</NavLink>
+              ) : token ? (
+                <NavLink to="addPost"> ➕</NavLink>
+              ) : (
+                <NavLink to="registrationCheck"> ➕</NavLink>
               )}
             </li>
+
             <li className={css.item}>
               <NavLink to="savedPosts">🤍</NavLink>
             </li>

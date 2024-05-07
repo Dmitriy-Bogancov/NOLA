@@ -1,41 +1,36 @@
 import PropTypes from "prop-types";
 import { NavLink } from "react-router-dom";
 import css from "./RegistrationCheckPage.module.css";
+import registrationCheck from "../../assets/icons/registrationCheck.svg";
 
 const RegistrationCheckPage = ({ setRegistrationCheck }) => {
-  const handleLoginCheck = () => {
-    setRegistrationCheck((prev) => !prev);
-  };
   return (
-    <div className={css.backdrop}>
+    <div>
+      <p className={css.title}>Add an advertisement</p>
       <div className={css.registrationCheck_container}>
-        <div className={css.item}>
-          <svg width="72" height="72" className={css.icon}>
-            <use></use>
-          </svg>
-          <p className={css.description}>
-            Log in to your account using your e-mail{" "}
-          </p>
+        <img src={registrationCheck} alt="registrationCheck" />
+        <p className={css.description}>
+          Unfortunately, at the moment you can`t post your ads
+        </p>
 
-          <NavLink
-            to="authorization"
-            className={css.btn}
-            onClick={handleLoginCheck}
-          >
-            <button type="button">Login</button>
-            {/* <Button label="Login" type="button" />  */}
-          </NavLink>
-
-          <p className={css.orText}>or</p>
-
+        <p className={css.authorizationCheck}>
+          <NavLink to="/main/authorization" className={css.authorizationLinks}>
+            Log in
+          </NavLink>{" "}
+          or{" "}
           <NavLink
             to="/main/authorization/registration"
-            onClick={handleLoginCheck}
+            className={css.authorizationLinks}
           >
-            Register a new account
-          </NavLink>
-        </div>
+            create an account
+          </NavLink>{" "}
+          to start posting ads.
+        </p>
       </div>
+
+      <NavLink to="/main/drafts">
+        <button type="button">Drafts</button>
+      </NavLink>
     </div>
   );
 };

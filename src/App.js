@@ -79,6 +79,7 @@ const SettingAdverticerPage = lazy(() =>
 const ChangePasswordPage = lazy(() =>
   import("./pages/ChangePasswordPage/ChangePasswordPage")
 );
+const DraftsPage = lazy(() => import("./pages/DraftsPage/DraftsPage"));
 
 function App() {
   const dispatch = useDispatch();
@@ -124,17 +125,7 @@ function App() {
                 <Route index element={<SignInPage />} />
               </Route>
 
-              <Route path="registrationCheck"
-                element={
-                  <RestrictedRout
-                    redirectTo="/main/addPost"
-                    component={<RegistrationCheckPage />}
-                  />
-                }>
-                <Route path="addPost" element={<AddPostPage />} />
-              </Route>
-              
-              {/* <Route
+              <Route
                 path="registrationCheck"
                 element={
                   <RestrictedRout
@@ -142,7 +133,7 @@ function App() {
                     component={<RegistrationCheckPage />}
                   />
                 }
-              /> */}
+              />
 
               <Route
                 path="accountAdverticer"
@@ -153,10 +144,7 @@ function App() {
                   />
                 }
               >
-                <Route
-                  index
-                  element={<AdverticerPublicationsPage />}
-                />
+                <Route index element={<AdverticerPublicationsPage />} />
                 <Route
                   path="adverticerArchive"
                   element={<AdverticeArchivePage />}
@@ -164,24 +152,12 @@ function App() {
               </Route>
 
               <Route
-                path="/main/addPost"
+                path="drafts"
                 element={
-                  <PrivateRoute
-                    component={<AddPostPage />}
-                    redirectTo="/main/authorization"
-                  />
-                }
+                  <PrivateRoute component={<DraftsPage />} redirectTo="/main/authorization" />}
+                // element={<DraftsPage />}
               />
 
-              <Route
-                path="/main/addPost"
-                element={
-                  <PrivateRoute
-                    component={<AddPostPage />}
-                    redirectTo="/main/authorization"
-                  />
-                }
-              />
               <Route
                 path="addPost/:editPostId"
                 element={
@@ -202,6 +178,18 @@ function App() {
                 }
               />
             </Route>
+
+            <Route
+              path="/main/addPost"
+              element={
+                <PrivateRoute
+                component = {
+                <AddPostPage />
+              }
+                  redirectTo="/main/authorization"
+                />
+              }
+            />
 
             <Route path="/main/:postId" element={<PostDetailsPage />} />
 
