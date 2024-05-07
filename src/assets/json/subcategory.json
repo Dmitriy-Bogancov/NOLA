@@ -1,0 +1,57 @@
+[
+  {
+    "id": "1",
+    "value": "english",
+    "label": "English",
+    "categoryId": "1"
+  },
+  {
+    "id": "2",
+    "value": "deutsche",
+    "label": "Deutsche",
+    "categoryId": "1"
+  },
+    {
+    "id": "3",
+    "value": "polish",
+    "label": "Polish",
+    "categoryId": "1"
+  },
+    {
+    "id": "4",
+    "value": "france",
+    "label": "France",
+    "categoryId":"1"
+  },
+    {
+    "id": "5",
+    "value": "design",
+    "label": "Design",
+    "categoryId":"2"
+  },
+    {
+    "id": "6",
+    "value": "programming",
+    "label": "Programming",
+    "categoryId": "2"
+  },
+      {
+    "id": "7",
+    "value": "quality_assurance",
+    "label": "Quality Assurance",
+    "categoryId":"2"
+  },
+    {
+    "id": "8",
+    "value": "digital_marketing",
+    "label": "Digital Marketing",
+    "categoryId": "2"
+  },
+      {
+    "id": "9",
+    "value": "business_analysis",
+    "label": "Business analysis",
+    "categoryId": "2"
+  }
+  
+]

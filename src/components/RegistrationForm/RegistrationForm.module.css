@@ -1,8 +1,8 @@
 .inputForm {
-  width: calc(100% - 34px);
+  width: calc(100% - 52px);
   border-radius: 12px;
   border: 2px solid;
-  padding: 15px;
+  padding: 15px 24px;
   margin-bottom: 18px;
   color: #9e9e9e;
   position: relative;

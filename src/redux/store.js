@@ -12,6 +12,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
+import addPostSlice from "./addPostLink/addPostSlice";
 
 const persistConfig = {
   key: "auth",
@@ -23,6 +24,7 @@ const persistConfig = {
 export const store = configureStore({
   reducer: {
     auth: persistReducer(persistConfig, authSlice),
+    addLink: addPostSlice
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

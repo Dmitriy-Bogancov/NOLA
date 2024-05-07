@@ -8,108 +8,122 @@ import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 
 import GoBackButton from "../../components/GoBackButton/GoBackButton";
 import back from "../../assets/images/back.jpg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { HandleFormConfig } from "../../components/HandleFormConfig/HandleFormConfig";
 
 import css from "./PreviewAdvertisemetPage.module.css";
 import { PostsAdverticer } from "../../components/PostsAdverticer/PostsAdverticer";
+import { NavLink, useNavigate } from "react-router-dom";
+import { MessagePostOnModeration } from "../../components/MessagePostOnModeration/MessagePostOnModeration";
 
-const PreviewAdvertisemetPage = ({ post, setPreview }) => {
-  const [formConfig, setFormConfig] = useState(false);
+const PreviewAdvertisemetPage = ({ setPreview }) => {
+  const navigate = useNavigate();
+  const [data, setData] = useState(() => {
+    return JSON.parse(localStorage.getItem("previewPost")) ?? "";
+  });
+
+  const [postSuccessfullyAdded, setPostSuccessfullyAdded] = useState(false);
 
   const handleConfirmClick = () => {
-    setFormConfig(true);
+    setPostSuccessfullyAdded(true);
+    localStorage.removeItem("previewPost");
+    localStorage.removeItem("previewPost");
+    localStorage.removeItem("imgOneURL");
+    localStorage.removeItem("imgTwoURL");
+    localStorage.removeItem("imgThreeURL");
+
+    setTimeout(() => {
+      navigate("/main");
+    }, 3000);
   };
 
   const handleBack = () => {
-    setPreview(false)
-  }
+    navigate(-1);
+
+    // (localStorage.setItem("previewPost", JSON.stringify()))
+    // setPreview(false);
+  };
 
   return (
-    <div>
-      {formConfig && (
-        <HandleFormConfig
-          message={"Sucsessfull add a new advertisement"}
-          navigatePage={"/main/accountAdverticer"}
-        />
-      )}
+    <>
+      {console.log("setPreview", data)}
+      {postSuccessfullyAdded && <MessagePostOnModeration />}
+      {!postSuccessfullyAdded && (
+        <div>
+          {/* <div className={css.top_container}>
+            <GoBackButton to="/main/addPost" imgSrc={back} imgAlt="Go back" />
+            <p className={css.title}>Advertisement preview</p>
+          </div> */}
+          <p className={css.title}>Advertisement preview</p>
+          {data &&
+            [data]?.map(({ banner }) => (
+              <>
+                <Swiper
+                  slidesPerView={1}
+                  spaceBetween={30}
+                  loop={true}
+                  pagination={{ el: ".swiper-pagination", clickable: true }}
+                  navigation={{
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                    clickable: true,
+                  }}
+                  modules={[EffectCoverflow, Pagination, Navigation]}
+                  className={css.swiper_container}
+                >
+                  {banner.map(({ img, id }) => (
+                    <SwiperSlide
+                      key={id}
+                      style={{
+                        width: "80%",
+                      }}
+                      className={css.swiper_slide}
+                    >
+                      <img src={img} alt="" className={css.img} />
+                    </SwiperSlide>
+                  ))}
+                  <div className="slider-controler">
+                    <div
+                      className="swiper-button-prev slider-arrow"
+                      style={{ color: "transparent" }}
+                    ></div>
+                    <div
+                      className="swiper-button-next slider-arrow"
+                      style={{ color: "transparent" }}
+                    ></div>
 
-      <div className={css.top_container}>
-        <GoBackButton to="/main/addPost" imgSrc={back} imgAlt="Go back"  />
-        <h1 className={css.title}>Advertisement preview</h1>
-      </div>
+                    <div
+                      className="swiper-pagination"
+                      style={{
+                        position: "relative",
+                        bottom: "2px",
+                      }}
+                    ></div>
+                  </div>
+                </Swiper>
 
-      {
-        /* { post?.map(() => ( */
-        <>
-          <Swiper
-            effect={"coverflow"}
-            grabCursor={true}
-            centeredSlides={true}
-            loop={true}
-            slidesPerView={"auto"}
-            coverflowEffect={{
-              rotate: 0,
-              stretch: 0,
-              depth: 100,
-              modifier: 2.5,
-            }}
-            pagination={{ el: ".swiper-pagination", clickable: true }}
-            navigation={{
-              nextEl: ".swiper-button-next",
-              prevEl: ".swiper-button-prev",
-              clickable: true,
-            }}
-            modules={[EffectCoverflow, Pagination, Navigation]}
-            className={css.swiper_container}
-          >
-            {[...Array(3)].map((slide, idx) => (
-              <SwiperSlide
-                key={idx}
-                style={{
-                  width: "80%",
-                }}
-                className={css.swiper_slide}
-              >
-                <img src={slide} alt="" className={css.img} />
-              </SwiperSlide>
+                <PostsAdverticer data={data} />
+              </>
             ))}
-            <div className="slider-controler">
-              <div
-                className="swiper-button-prev slider-arrow"
-                style={{ color: "transparent" }}
-              ></div>
-              <div
-                className="swiper-button-next slider-arrow"
-                style={{ color: "transparent" }}
-              ></div>
 
-              <div
-                className="swiper-pagination"
-                style={{
-                  position: "relative",
-                  bottom: "2px",
-                }}
-              ></div>
-            </div>
-          </Swiper>
+          <div className={css.btn_container}>
+            {/* <NavLink to="/main/addPost/"> */}
+            <button type="button" className={css.btn} onClick={handleBack}>
+              <span className={css.btn_back}> Back to editing</span>
+            </button>
+            {/* </NavLink> */}
 
-          <PostsAdverticer />
-        </>
-        //       {/* )
-        // )  */}
-      }
-
-<div className={css.btn_container}>
-        <button type="button" className={css.btn} onClick={handleConfirmClick}>
-         <span className={css.btn_back}> Back to editing</span>
-        </button>
-  
-        <button type="button" className={`${css.btn} ${css.btn_active}`} onClick={handleConfirmClick}>
-          <span className={css.btn_back_active}>Publish</span>
-        </button>
-</div>
-    </div>
+            <button
+              type="button"
+              className={`${css.btn} ${css.btn_active}`}
+              onClick={handleConfirmClick}
+            >
+              <span className={css.btn_back_active}>Publish</span>
+            </button>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 
