@@ -22,13 +22,21 @@ const Layout = () => {
               <NavLink to="search">⚪</NavLink>
             </li>
             <li className={css.item}>
-              {drafts ? (
+              {!token ? (
+                <NavLink to="registrationCheck"> ➕</NavLink>  
+              ) : drafts ? (
+                <NavLink to="/main/drafts"> ➕</NavLink>
+              ) : (
+                <NavLink to="addPost"> ➕</NavLink>
+              )}
+
+              {/* {drafts ? (
                 <NavLink to="/main/drafts"> ➕</NavLink>
               ) : token ? (
                 <NavLink to="addPost"> ➕</NavLink>
               ) : (
                 <NavLink to="registrationCheck"> ➕</NavLink>
-              )}
+              )} */}
             </li>
 
             <li className={css.item}>

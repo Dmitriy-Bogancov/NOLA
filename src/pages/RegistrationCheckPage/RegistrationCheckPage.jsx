@@ -6,31 +6,27 @@ import registrationCheck from "../../assets/icons/registrationCheck.svg";
 const RegistrationCheckPage = ({ setRegistrationCheck }) => {
   return (
     <div>
-      <p className={css.title}>Add an advertisement</p>
+      <p className={`${css.title} dark:text-white`}>Add an advertisement</p>
       <div className={css.registrationCheck_container}>
         <img src={registrationCheck} alt="registrationCheck" />
-        <p className={css.description}>
+        <p className={`${css.description} dark:text-white`}>
           Unfortunately, at the moment you can`t post your ads
         </p>
 
         <p className={css.authorizationCheck}>
           <NavLink to="/main/authorization" className={css.authorizationLinks}>
             Log in
-          </NavLink>{" "}
-          or{" "}
+          </NavLink>
+         <span className={`dark:text-white`}> or </span>
           <NavLink
             to="/main/authorization/registration"
             className={css.authorizationLinks}
           >
             create an account
           </NavLink>{" "}
-          to start posting ads.
+         <span className={`dark:text-white`}>to start posting ads.</span> 
         </p>
       </div>
-
-      <NavLink to="/main/drafts">
-        <button type="button">Drafts</button>
-      </NavLink>
     </div>
   );
 };

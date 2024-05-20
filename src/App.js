@@ -80,6 +80,7 @@ const ChangePasswordPage = lazy(() =>
   import("./pages/ChangePasswordPage/ChangePasswordPage")
 );
 const DraftsPage = lazy(() => import("./pages/DraftsPage/DraftsPage"));
+const EditDraftsPage = lazy(() => import("./pages/EditDraftsPage/EditDraftsPage"))
 
 function App() {
   const dispatch = useDispatch();
@@ -167,6 +168,13 @@ function App() {
                   />
                 }
               />
+
+              <Route path="drafts/:editDraftsId" element={
+                  <PrivateRoute
+                    component={<EditDraftsPage />}
+                    redirectTo="/main/authorization"
+                  />
+                }/>
 
               <Route
                 path="addPost/previewAdvertisemet"
