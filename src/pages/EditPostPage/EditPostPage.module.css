@@ -1,0 +1,35 @@
+.btn_container {
+  margin-top: auto;
+  margin-top: 48px;
+  padding-bottom: 72px;
+}
+
+.btn,
+.btn_active {
+  width: 100%;
+  border-radius: 15px;
+
+  border: 1px solid #9e9e9e;
+  background-color: #9e9e9e;
+  cursor: pointer;
+}
+
+.btn_active {
+  background-color: #eccd43;
+  margin-top: 16px;
+  border: transparent;
+}
+
+.btn_back,
+.btn_back_active {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 48px;
+  align-items: center;
+  color: #ffffff;
+}
+
+.btn_back_active {
+  font-weight: 500;
+  color: #333333;
+}

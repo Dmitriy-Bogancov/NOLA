@@ -4,55 +4,106 @@ import { useEffect, useState } from "react";
 
 import css from "./AddCallToAction.module.css";
 import callToActionJson from "../../assets/json/callToAction.json";
+import { useCustomContext } from "../../services/Context/Context";
 
 export const AddCallToAction = ({ setPost, post }) => {
+  const { theme } = useCustomContext();
   const [callToAction, setCallToAction] = useState([]);
+
+  const [findCallToAction, setFindCallToAction] = useState(() => {
+    return (
+      post.callToAction ??
+      JSON.parse(localStorage.getItem("previewPost"))?.callToAction
+    );
+  });
+  const [callToActionIndex, setCallToActionIndex] = useState(null);
 
   useEffect(() => {
     setCallToAction(callToActionJson);
-  }, [callToAction]);
 
-  const handleCallToAction = (callToAction) => {
-    console.log("callToAction", callToAction.label);
+    const findIndex = callToAction.findIndex(
+      ({ label }) => label === findCallToAction
+    );
+    setCallToActionIndex(findIndex);
+  }, [callToAction, findCallToAction]);
+
+  const handleCallToAction = (callToActionLabel) => {
+    const callToActionFindIndex = callToAction.findIndex(
+      (item) => item.label === callToActionLabel.label
+    );
+
     setPost({
       ...post,
-      callToAction: callToAction.label,
+      callToAction: callToActionLabel.label,
     });
 
-    localStorage.setItem("previewPost", JSON.stringify(post));
+    setCallToActionIndex(callToActionFindIndex);
   };
 
   const handleCallToActionLinks = ({ target }) => {
-    console.log("callToActionLinks", target.value);
     const { value } = target;
     setPost({
       ...post,
       callToActionLinks: value,
     });
-
-    localStorage.setItem("previewPost", JSON.stringify(post));
   };
+
+  const themeSelect = (theme) => ({
+    ...theme,
+    colors: {
+      ...theme.colors,
+      primary: "#ECCD43",
+    },
+  });
+
+  const selected_option = callToAction[callToActionIndex] ?? {
+    id: "1",
+    value: "read_more",
+    label: "Read more",
+  };
+
 
   return (
     <ul className={css.links_list}>
       <li className={`${css.links_list_item} ${css.action_links}`}>
         <textarea
           name="callToActionLinks"
-          value={post.callToActionLinks}
-          className={css.callToActionLinks}
+          value={post?.callToActionLinks}
+          className={`${css.callToActionLinks}   dark:bg-black dark:border-white dark:text-white`}
           onChange={handleCallToActionLinks}
         ></textarea>
       </li>
 
       <li className={css.links_list_item}>
-        <Select
-          styles={{
-            control: () => ({}),
-          }}
-          defaultValue={callToActionJson[0]}
-          options={callToAction}
-          onChange={handleCallToAction}
-        />
+        {theme === "dark" ? (
+          <Select
+            styles={{
+              control: (baseStyles, state) => ({
+                ...baseStyles,
+                padding: "8px 24px",
+                backgroundColor: "rgb(30 28 28)",
+              }),
+            }}
+            theme={themeSelect}
+            value={selected_option}
+            options={callToAction}
+            onChange={handleCallToAction}
+          />
+        ) : (
+          <Select
+            styles={{
+              control: (baseStyles, state) => ({
+                ...baseStyles,
+                padding: "8px 24px",
+              }),
+            }}
+            className={`dark:bg-black dark:border-white dark:text-white`}
+            theme={themeSelect}
+            value={selected_option}
+            options={callToAction}
+            onChange={handleCallToAction}
+          />
+        )}
       </li>
     </ul>
   );

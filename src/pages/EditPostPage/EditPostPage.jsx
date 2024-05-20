@@ -1,47 +1,42 @@
+import css from "./EditPostPage.module.css";
 import { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
-import AddPostPage from "../AddPostPage/AddPostPage";
 import { getPostApi, patchPostApi } from "../../services/https/https";
-import { useCustomContext } from "../../services/Context/Context";
-
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import { HandleFormConfig } from "../../components/HandleFormConfig/HandleFormConfig";
 import { ToastError } from "../../services/ToastError/ToastError";
+import { CreatePost } from "../../components/CreatePost/CreatePost";
 
 const EditPostPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { token, setToken } = useCustomContext();
   const params = useParams();
   const [formConfig, setFormConfig] = useState(false);
-  const [post, setPost] = useState({
-    id: "",
-    description: "",
-    title: "",
-    category: { index: null, title: "" },
-    subcategory: { index: null, title: "" },
-    callToAction: "" || "Read more",
-    callToActionLinks: "",
-    links: [],
-    banner: [],
-    addLinks: [],
-  });
+  const [data, setData] = useState([]);
+  const [post, setPost] = useState(
+    data.length !== 0 || {
+      description: "",
+      title: "",
+      category: { index: null, title: "" },
+      subcategory: { index: null, title: "" },
+      callToAction: "" || "Read more",
+      callToActionLinks: "",
+      banners: [],
+    }
+  );
 
   useEffect(() => {
     const getData = (async () => {
       try {
-        await getPostApi(token, params.editPostId)
-          .then((response) => {
-            return response.json();
-          })
-          .then((data) => {
-            setPost({ ...post, ...data });
-          });
+        const data = await getPostApi(params.editPostId);
+        setData(data);
       } catch (error) {
         console.log(error);
       }
     })();
-  }, [params, token]);
+
+    localStorage.setItem("previewPost", JSON.stringify(post));
+  }, [params, post]);
 
   const handleChangePost = ({ target }) => {
     const { name, value } = target;
@@ -54,24 +49,12 @@ const EditPostPage = () => {
   const handleSubmitPost = async (e) => {
     e.preventDefault();
     setFormConfig(true); // delete later
-
+    console.log("editPost", post);
     try {
-      await patchPostApi(token, post.id, {
-        name: post.name,
-        textarea: post.textarea,
-      })
-        .then((response) => {
-          return response.json();
-        })
-        .then((data) => {
-          setPost(data);
-          // setFormConfig(true);
-          return data;
-        });
+      await patchPostApi(post.id, post);
     } catch (error) {
-      // ToastError(error.message)
+      ToastError(error.message);
     }
-    return;
   };
 
   return (
@@ -85,61 +68,22 @@ const EditPostPage = () => {
         />
       )}
       <div>
-        <AddPostPage postEdit={post} setPostEdit={setPost} />
-        {/* <form onSubmit={handleSubmitPost}>
-          <NavLink to="">
-            <button type="button">Add Bunner</button>
-          </NavLink>
+        <form onSubmit={handleSubmitPost}>
+          {/* post={data} setPost={setData} */}
+          <CreatePost post={post} setPost={setPost} />
 
-          <input
-            type="text"
-            name="name"
-            value={post.name}
-            onChange={handleChangePost}
-          />
-          <textarea
-            name="textarea"
-            cols="30"
-            rows="10"
-            value={post.textarea}
-            onChange={handleChangePost}
-          ></textarea>
-          <div>
-            <ul>
-              <li>
-                <NavLink
-                  to="/main/accountAdverticer/adverticerEdit/links/addLinks"
-                  state={location}
-                >
-                  Link
-                </NavLink>
-              </li>
+          <div className={css.btn_container}>
+            <NavLink to="/main/addPost/previewAdvertisemet">
+              <button type="button" className={css.btn}>
+                <span className={css.btn_back}> Preview</span>
+              </button>
+            </NavLink>
 
-              <li>
-                <NavLink
-                  to="/main/accountAdverticer/adverticerEdit/links/addLinks"
-                  state={location}
-                >
-                  Link
-                </NavLink>
-              </li>
-
-              <li>
-                <NavLink
-                  to="/main/accountAdverticer/adverticerEdit/links/addLinks"
-                  state={location}
-                >
-                  Link
-                </NavLink>
-              </li>
-            </ul>
-
-            <button>Confirm</button>
+            <button type="submit" className={`${css.btn} ${css.btn_active}`}>
+              <span className={css.btn_back_active}>Publish</span>
+            </button>
           </div>
         </form>
-        <NavLink to="/main/accountAdverticer">
-          <button type="button">Cancel </button>
-        </NavLink> */}
       </div>
     </div>
   );

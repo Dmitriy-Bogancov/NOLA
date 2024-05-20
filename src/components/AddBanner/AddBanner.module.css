@@ -68,3 +68,27 @@
 .turn {
   transform: rotate(90deg);
 }
+
+@media screen and (min-width: 400px) {
+  .addPhoto_item {
+  width: 110px;
+  height: 110px;
+}
+
+.banner {
+  width: 110px;
+  height: 110px;
+}
+
+.underBanner {
+  bottom: 14px;
+}
+
+  .img_menu_container {
+  bottom: 33px;
+}
+
+.underBanner_description {
+  bottom: 8px;
+}
+}

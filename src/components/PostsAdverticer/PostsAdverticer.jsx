@@ -7,32 +7,27 @@ export const PostsAdverticer = ({ data }) => {
   return (
     <>
       {data &&
-        [data].map(
+        [data]?.map(
           ({
-            callToAction,
-            callToActionLinks,
-            category,
             description,
-            links,
-            subcategory,
             title,
           }) => (
             <>
               <div className={css.logo_container}>
                 <img src="" alt="" className={css.logo} />
-                <p className={css.logo_description}>{title}</p>
+                <p className={`${css.logo_description} dark:text-white`}>{title}</p>
               </div>
 
-              <p className={css.title}>{title}</p>
+              <p className={`${css.title} dark:text-white`}>{title}</p>
 
-              <p className={css.descriptionTest}>{description}</p>
+              <p className={`${css.descriptionTest} dark:text-white`}>{description}</p>
 
-              <p className={css.links}>Links:</p>
+              {data?.links && <p className={`${css.links} dark:text-white`}>Links:</p>}
               <ul>
-                {data?.links.map(({ id, postLinks, postLinksName }) => (
-                  <li key={id} className={css.links_item}>
+                {data?.links?.map(({ id, url, name }) => (
+                  <li key={id} className={`${css.links_item} dark:text-white`}>
                     <img src="" alt="" className={css.link_img} />
-                    {postLinksName}
+                    {name}
                   </li>
                 ))}
               </ul>
