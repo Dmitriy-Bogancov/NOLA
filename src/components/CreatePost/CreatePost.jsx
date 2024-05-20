@@ -161,6 +161,6 @@ export const CreatePost = ({ setPost, post, links, setLinks }) => {
 CreatePost.propTypes = {
   post: PropTypes.object,
   setPost: PropTypes.func,
-  links: PropTypes.object,
+  links: PropTypes.array,
   setLinks: PropTypes.func,
 };
