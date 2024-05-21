@@ -1,51 +1,63 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaFacebook } from "react-icons/fa";
 import { GoogleLogin } from 'react-google-login';
+import FacebookLogin from "react-facebook-login";
+import { Navigate } from 'react-router-dom'; 
 import css from "./GoogleAndFacebookButton.module.css";
 
-const GoogleOAuthButton = () => {
-  const handleSuccess = (response) => {
-    console.log("Google login successful", response);
- 
-  };
-
-  const handleFailure = (error) => {
-    console.error("Google login failed", error);
-    
-  };
-
-  return (
-    <GoogleLogin
-      clientId="822829836759-lc386epct4tvjun8d918v940adcar9rc.apps.googleusercontent.com"
-      buttonText="Continue with Google"
-      onSuccess={handleSuccess}
-      onFailure={handleFailure}
-      cookiePolicy={'single_host_origin'}
-      className={css.buttonForm}
-    />
-  );
-};
 
 const GoogleAndFacebookButton = () => {
-  const handleContinueWithFacebook = () => {
-    console.log("Continue with Apple clicked");
+
+  const [redirect, setRedirect] = useState(false); 
+
+
+  const handleGoogleSuccess = (response) => {
+    console.log("Google login successful", response);
+    setRedirect(true); 
   };
 
+  const handleGoogleFailure = (error) => {
+    console.error("Google login failed", error);
+  };
+
+  const handleFacebookSuccess = (response) => {
+    console.log("Facebook login successful", response);
+    setRedirect(true); 
+  };
+
+  const handleFacebookFailure = (error) => {
+    console.error("Facebook login failed", error);
+  };
+
+  if (redirect) {
+    return <Navigate to="/main/accountAdverticer" />; 
+  }
 
   return (
     <div className={css.buttonContainer}>
       <div className={css.separatorLine}></div>
-      <div className={`${css.orText} dark:bg-black`}>or</div>
-
-      <button className={css.buttonForm} onClick={handleContinueWithFacebook}>
-        <FaFacebook className={css.icon} />
-        Continue with Facebook
-      </button>
-
-       <GoogleOAuthButton/>
-     
+      <div className={css.orText}>or</div>
+      <GoogleLogin
+         clientId="822829836759-lc386epct4tvjun8d918v940adcar9rc.apps.googleusercontent.com"
+         buttonText="Continue with Google"
+        onSuccess={handleGoogleSuccess}
+        onFailure={handleGoogleFailure}
+        cookiePolicy={'single_host_origin'}
+        className={css.buttonForm}
+      />
+      <FacebookLogin
+        appId="366622046395430"
+        autoLoad={false}
+        fields="name,email,picture"
+        callback={handleFacebookSuccess}
+        onFailure={handleFacebookFailure}
+        icon={<FaFacebook />} 
+        textButton="Continue with Facebook"
+        cssClass={css.facebook} 
+      />
     </div>
   );
 };
 
 export default GoogleAndFacebookButton;
+
