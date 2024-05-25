@@ -67,7 +67,6 @@ export const CreatePost = ({ setPost, post, links, setLinks }) => {
           const filterLink = links?.filter(
             (item) => item.url.length !== 0 && item.name.length !== 0
           );
-
           return setPost((prev) => ({
             ...post,
             links: filterLink,

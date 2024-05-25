@@ -14,6 +14,7 @@ import { Modal } from "../../components/Modal/Modal";
 import { MessagePostOnModeration } from "../../components/MessagePostOnModeration/MessagePostOnModeration";
 import { ToastContainer } from "react-toastify";
 import { nanoid } from "nanoid";
+import axios from "axios";
 
 const EditDraftsPage = () => {
   const navigate = useNavigate();
@@ -21,11 +22,12 @@ const EditDraftsPage = () => {
   const [isModal, setIsModal] = useState(false);
   const [postSuccessfullyAdded, setPostSuccessfullyAdded] = useState(false);
   const [data, setData] = useState([]);
-
+  const [dataApi, setDataApi] = useState(
+    () => JSON.parse(localStorage.getItem("dataApi")) ?? false
+  );
   const [links, setLinks] = useState(() => {
     return (
-      (data.links ||
-        JSON.parse(localStorage.getItem("previewPost"))?.links) ?? [
+      JSON.parse(localStorage.getItem("previewPost"))?.links || [
         { id: nanoid(), url: "", name: "" },
       ]
     );
@@ -50,13 +52,31 @@ const EditDraftsPage = () => {
 
   useEffect(() => {
     const getData = (async () => {
-      // const data =await getDraftsPostId(params.editDraftsId);
-      const data = await JSON.parse(localStorage.getItem("backend"));
+      try {
+        if (dataApi) {
+          const data = await JSON.parse(localStorage.getItem("previewPost"));
 
-      setData(data);
+          setData(data);
+          return;
+        }
+        // const data =await getDraftsPostId(params.editDraftsId);
+        const data = await JSON.parse(localStorage.getItem("backend"));
 
-      localStorage.setItem("previewPost", JSON.stringify(data));
+        setPost(data);
+        setData(data);
+
+        setDataApi(localStorage.setItem("dataApi", true));
+
+        post?.links?.map(({ name, url }) => {
+          if (name?.length === 0 || url?.length === 0) {
+            setLinks(data.links);
+          }
+        });
+      } catch (error) {
+        ToastError(error?.response?.statusText || error.message);
+      }
     })();
+    // eslint-disable-next-line
   }, []);
 
   useEffect(() => {
@@ -65,9 +85,8 @@ const EditDraftsPage = () => {
 
   useEffect(() => {
     post.links = links;
-    localStorage.setItem("previewPost", JSON.stringify(post));
+    // localStorage.setItem("previewPost", JSON.stringify(post));
   }, [links, post]);
-
 
   const handleToggleModal = () => {
     setIsModal((prev) => !prev);
@@ -81,6 +100,7 @@ const EditDraftsPage = () => {
   const cancelAddPost = () => {
     localStorage.removeItem("previewPost");
     localStorage.removeItem("filterCategory");
+    localStorage.removeItem("dataApi");
     navigate("/main");
     setIsModal((prev) => !prev);
   };
@@ -92,6 +112,7 @@ const EditDraftsPage = () => {
 
       localStorage.removeItem("previewPost");
       localStorage.removeItem("filterCategory");
+      localStorage.removeItem("dataApi");
       navigate("/main");
       setIsModal((prev) => !prev);
     } catch (error) {
@@ -124,8 +145,7 @@ const EditDraftsPage = () => {
         <p className={`${css.title_back} dark:text-white`}>New advertisement</p>
       </div>
       <form onSubmit={handleSubmitPost}>
-      
-        {data.length !== 0 && (
+        {data?.length !== 0 && (
           <CreatePost
             post={post}
             setPost={setPost}
