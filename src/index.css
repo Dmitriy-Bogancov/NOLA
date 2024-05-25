@@ -119,10 +119,8 @@ button:focus {
 }
 
 .css-1u9des2-indicatorSeparator,
-/* .css-1xc3v61-indicatorContainer, */
 .css-894a34-indicatorSeparator
-/* .css-1xc3v61-indicatorContainer, */
-/* .css-tj5bde-Svg */ {
+ {
   width: 0;
   display: none;
 }
@@ -139,9 +137,7 @@ button:focus {
  {
   border-radius: 12px !important;
   border: 1px solid #8d8d8d !important;
-  /* outline: none !important; */
   box-shadow: 0 0 0 0 transparent !important;
-  /* border-color: #8d8d8d !important; */
 }
 
 
@@ -188,12 +184,6 @@ button:focus {
   box-shadow: 0 0 0 0 transparent !important;
 }
 
-/* .css-aaske1-control:hover,
-.css-ax1btm-control:hover{
-    border: 1px solid #f0ecec !important;
-      border-color: #f0ecec !important;
-} */
-
 .css-1nmdiq5-menu {
   font-weight: 500;
   font-size: 12px;
@@ -201,42 +191,3 @@ button:focus {
   background-color: #eccd43;
   color: #8d8d8d;
 }
-
-/* :root{
---bg-secondary: red
-}
-
-
- .react-select-container .react-select__control {
-    background-color: var(--bg-secondary);
-    border-color: var(--border-color);
-    transition: none;
- }
-
-   .react-select-container .react-select__control:hover {
-      border-color: var(--border-color);
-    }
-  
-
- .react-select-container .react-select__menu {
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-  }
-
- .react-select-container .react-select__option {
-    background-color: var(--bg-secondary);
- }
-
-     .react-select-container .react-select__option:hover {
-      background-color: var(--bg-primary);
-    
-  }
-
- .react-select-container .react-select__indicator-separator {
-    background-color: var(--border-color);
-  }
-
- .react-select-container .react-select__placeholder,
- .react-select-container .react-select__single-value {
-    color: var(--text-primary);
-  } */

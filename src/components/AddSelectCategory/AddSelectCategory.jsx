@@ -15,8 +15,7 @@ export const AddSelectCategory = ({ setPost, post }) => {
   const [categoryIndex, setCategoryIndex] = useState(null);
   const [findCategory, setFindCategory] = useState(() => {
     return (
-      post.category ??
-      JSON.parse(localStorage.getItem("previewPost"))?.category
+      post.category ?? JSON.parse(localStorage.getItem("previewPost"))?.category
     );
   });
 
@@ -52,7 +51,6 @@ export const AddSelectCategory = ({ setPost, post }) => {
 
       setCategoryIndex(findCategoryIndex);
 
-
       const findSubcategoryIndex = subcategorySelect.findIndex(
         ({ label }) => label === post?.subcategory
       );
@@ -64,7 +62,6 @@ export const AddSelectCategory = ({ setPost, post }) => {
       return;
     }
 
-
     const findCategoryIndex = categorySelect?.findIndex(
       ({ label }) => label === findCategory
     );
@@ -74,7 +71,7 @@ export const AddSelectCategory = ({ setPost, post }) => {
       ({ label }) => label === findSubcategory
     );
     setSubcategoryIndex(findSubcategoryIndex);
-    // eslint-disable-next-line 
+    // eslint-disable-next-line
   }, [categorySelect, findCategory, findSubcategory]);
 
   const handleSelectCategoryPost = (categoryOption) => {
@@ -138,6 +135,11 @@ export const AddSelectCategory = ({ setPost, post }) => {
                 padding: "8px 24px",
                 backgroundColor: "rgb(30 28 28)",
               }),
+              menuList: (styles) => ({
+                ...styles,
+                backgroundColor: "rgb(137 132 132)",
+                color: "white",
+              }),
             }}
             theme={themeSelect}
             onChange={handleSelectCategoryPost}
@@ -168,6 +170,11 @@ export const AddSelectCategory = ({ setPost, post }) => {
                 ...baseStyles,
                 padding: "8px 24px",
                 backgroundColor: !state.isDisabled ? "" : "#363232",
+              }),
+              menuList: (styles) => ({
+                ...styles,
+                backgroundColor: "rgb(137 132 132)",
+                color: "white",
               }),
             }}
             theme={themeSelect}

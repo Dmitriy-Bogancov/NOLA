@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import css from "./AddBanner.module.css";
 import add from "../../assets/icons/addBaner.svg";
 import remove from "../../assets/icons/delete.svg";
@@ -22,28 +22,40 @@ export const AddBanner = ({ setPost, post }) => {
 
   const [imgOneURL, setImgOneURL] = useState(() => {
     return (
-      post?.banners[0] ||
       JSON.parse(localStorage.getItem("previewPost"))?.banners[0] ||
+      post?.banners[0] ||
       ""
     );
   });
   const [imgTwoURL, setImgTwoURL] = useState(() => {
     return (
-      post?.banners[1] ||
       JSON.parse(localStorage.getItem("previewPost"))?.banners[1] ||
+      post?.banners[1] ||
       ""
     );
   });
   const [imgThreeURL, setImgThreeURL] = useState(() => {
     return (
-      post?.banners[2] ||
       JSON.parse(localStorage.getItem("previewPost"))?.banners[2] ||
+      post?.banners[2] ||
       ""
     );
   });
 
   const upload_presets = "j0hj8hjd";
   const api_key = "984292171139147";
+
+  useEffect(() => {
+    if (post?.banners[0] === "") {
+      setBlockOneUpdate(false);
+    }
+    if (post?.banners[1] === "") {
+      setBlockTwoUpdate(false);
+    }
+    if (post?.banners[2] === "") {
+      setBlockThreeUpdate(false);
+    }
+  }, [post?.banners]);
 
   const handleUpdateBannersOne = async (e) => {
     const filesOne = e.target.files[0];

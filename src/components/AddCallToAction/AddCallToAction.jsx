@@ -62,7 +62,6 @@ export const AddCallToAction = ({ setPost, post }) => {
     label: "Read more",
   };
 
-
   return (
     <ul className={css.links_list}>
       <li className={`${css.links_list_item} ${css.action_links}`}>
@@ -82,6 +81,11 @@ export const AddCallToAction = ({ setPost, post }) => {
                 ...baseStyles,
                 padding: "8px 24px",
                 backgroundColor: "rgb(30 28 28)",
+              }),
+              menuList: (styles) => ({
+                ...styles,
+                backgroundColor: "rgb(137 132 132)",
+                color: "white",
               }),
             }}
             theme={themeSelect}
