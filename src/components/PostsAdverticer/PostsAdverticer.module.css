@@ -65,3 +65,8 @@
   background-color: darkgrey;
   margin-right: 8px;
 }
+
+.url{
+  color: #07145B;
+  cursor: pointer;
+}

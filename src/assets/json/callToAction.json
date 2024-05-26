@@ -1,9 +1,4 @@
 [{
-    "id": "1",
-    "value": "read_more",
-    "label": "Read more"
-  },
-{
     "id": "2",
     "value": "learn_more",
     "label": "Learn more"

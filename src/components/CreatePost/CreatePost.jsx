@@ -7,7 +7,6 @@ import { AddPostLinks } from "../AddPostLinks/AddPostLinks";
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 
-
 export const CreatePost = ({ setPost, post, links, setLinks }) => {
   const [symbolsTitleCount, setSymbolsTitleCount] = useState(0);
   const [symbolspostDescriptionCount, setSymbolspostDescriptionCount] =
@@ -36,6 +35,10 @@ export const CreatePost = ({ setPost, post, links, setLinks }) => {
       return;
     }
 
+    setPost((prev) => ({
+      ...post,
+      links: [...prev.links, { id: nanoid(), url: "", name: "" }],
+    }));
     setLinks((prev) => [...prev, { id: nanoid(), url: "", name: "" }]);
   };
 
@@ -63,9 +66,9 @@ export const CreatePost = ({ setPost, post, links, setLinks }) => {
       });
 
       links?.map(({ name, url }) => {
-        if (name?.length === 0 || url?.length === 0) {
+        if (name?.length === 0 && url?.length === 0) {
           const filterLink = links?.filter(
-            (item) => item.url.length !== 0 && item.name.length !== 0
+            (item) => item.url.length !== 0 || item.name.length !== 0
           );
           return setPost((prev) => ({
             ...post,
