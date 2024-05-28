@@ -42,7 +42,8 @@
   cursor: pointer;
 }
 
-.btn_active {
+.btn_active,
+.btn_disabled {
   background-color: #eccd43;
   margin-top: 16px;
   border: transparent;
@@ -60,4 +61,8 @@
 .btn_back_active {
   font-weight: 500;
   color: #333333;
+}
+
+.btn_disabled {
+  background-color: #8a7a33;
 }

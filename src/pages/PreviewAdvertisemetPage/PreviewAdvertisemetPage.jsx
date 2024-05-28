@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import css from "./PreviewAdvertisemetPage.module.css";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -13,16 +13,25 @@ import { MessagePostOnModeration } from "../../components/MessagePostOnModeratio
 
 const PreviewAdvertisemetPage = ({ setPreview }) => {
   const navigate = useNavigate();
+  const [validForm, setValidForm] = useState(false);
   const [data, setData] = useState(() => {
-    return  JSON.parse(localStorage.getItem("previewPost")) || "";
+    return JSON.parse(localStorage.getItem("previewPost")) || "";
   });
 
   const [postSuccessfullyAdded, setPostSuccessfullyAdded] = useState(false);
 
+  useEffect(() => {
+    if (data.title !== "" && data.category !== "" && data.subcategory !== "") {
+      setValidForm(true);
+    } else {
+      setValidForm(false);
+    }
+  }, [data.category, data.subcategory, data.title]);
+
   const handleConfirmClick = () => {
     setPostSuccessfullyAdded(true);
     localStorage.removeItem("previewPost");
-   localStorage.removeItem("filterCategory")
+    localStorage.removeItem("filterCategory");
 
     setTimeout(() => {
       navigate("/main");
@@ -120,12 +129,20 @@ const PreviewAdvertisemetPage = ({ setPreview }) => {
           </div>
           <div className={css.btn_container}>
             <button type="button" className={css.btn} onClick={handleBack}>
-              <span className={`${css.btn_back} dark:text-white dark:border-white`}> Back to editing</span>
+              <span
+                className={`${css.btn_back} dark:text-white dark:border-white`}
+              >
+                {" "}
+                Back to editing
+              </span>
             </button>
 
             <button
               type="button"
-              className={`${css.btn} ${css.btn_active}`}
+              className={`${css.btn} ${
+                validForm ? css.btn_active : css.btn_disabled
+              }`}
+              disabled={validForm ? false : true}
               onClick={handleConfirmClick}
             >
               <span className={css.btn_back_active}>Publish</span>
