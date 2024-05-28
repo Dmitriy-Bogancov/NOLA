@@ -21,6 +21,7 @@ const EditDraftsPage = () => {
   const params = useParams();
   const [isModal, setIsModal] = useState(false);
   const [postSuccessfullyAdded, setPostSuccessfullyAdded] = useState(false);
+  const [validForm, setValidForm] = useState(false);
   const [data, setData] = useState([]);
   const [dataApi, setDataApi] = useState(
     () => JSON.parse(localStorage.getItem("dataApi")) ?? false
@@ -120,6 +121,14 @@ const EditDraftsPage = () => {
     }
   };
 
+  useEffect(() => {
+    if (post.title !== "" && post.category !== "" && post.subcategory !== "") {
+      setValidForm(true);
+    } else {
+      setValidForm(false);
+    }
+  }, [post.category, post.subcategory, post.title]);
+
   const handleSubmitPost = async (e) => {
     e.preventDefault();
     console.log("EditDrafts", post);
@@ -160,7 +169,13 @@ const EditDraftsPage = () => {
             </button>
           </NavLink>
 
-          <button type="submit" className={`${css.btn} ${css.btn_active}`}>
+          <button
+            type="submit"
+            className={`${css.btn} ${
+              validForm ? css.btn_active : css.btn_disabled
+            }`}
+            disabled={validForm ? false : true}
+          >
             <span className={css.btn_back_active}>Publish</span>
           </button>
         </div>

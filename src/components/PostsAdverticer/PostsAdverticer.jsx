@@ -7,33 +7,38 @@ export const PostsAdverticer = ({ data }) => {
   return (
     <>
       {data &&
-        [data]?.map(
-          ({
-            description,
-            title,
-          }) => (
-            <>
-              <div className={css.logo_container}>
-                <img src="" alt="" className={css.logo} />
-                <p className={`${css.logo_description} dark:text-white`}>{title}</p>
-              </div>
+        [data]?.map(({ description, title }) => (
+          <>
+            <div className={css.logo_container}>
+              <img src="" alt="" className={css.logo} />
+              <p className={`${css.logo_description} dark:text-white`}>
+                {title}
+              </p>
+            </div>
 
-              <p className={`${css.title} dark:text-white`}>{title}</p>
+            <p className={`${css.title} dark:text-white`}>{title}</p>
 
-              <p className={`${css.descriptionTest} dark:text-white`}>{description}</p>
+            <p className={`${css.descriptionTest} dark:text-white`}>
+              {description}
+            </p>
 
-              {data?.links && <p className={`${css.links} dark:text-white`}>Links:</p>}
-              <ul>
-                {data?.links?.map(({ id, url, name }) => (
-                  <li key={id} className={`${css.links_item} dark:text-white`}>
+            {data?.links && (
+              <p className={`${css.links} dark:text-white`}>Links:</p>
+            )}
+            <ul>
+              {data?.links?.map(({ id, url, name }) =>
+                name.length !== 0 ? (
+                  <li key={id} className={`${css.links_item}`}>
                     <img src="" alt="" className={css.link_img} />
-                    {name}
-                  </li>
-                ))}
-              </ul>
-            </>
-          )
-        )}
+                      <a href={url} className={`${css.url} dark:text-white`} > {name}</a>
+                    </li>
+                ) : (
+                  ""
+                )
+              )}
+            </ul>
+          </>
+        ))}
     </>
   );
 };

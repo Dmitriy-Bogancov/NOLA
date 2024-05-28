@@ -52,16 +52,13 @@ export const AddCallToAction = ({ setPost, post }) => {
     ...theme,
     colors: {
       ...theme.colors,
+      primary25: "transparent",
       primary: "#ECCD43",
     },
   });
 
-  const selected_option = callToAction[callToActionIndex] ?? {
-    id: "1",
-    value: "read_more",
-    label: "Read more",
-  };
-
+  const selected_option = callToAction[callToActionIndex]
+  
   return (
     <ul className={css.links_list}>
       <li className={`${css.links_list_item} ${css.action_links}`}>

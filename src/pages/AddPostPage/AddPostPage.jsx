@@ -20,6 +20,7 @@ const AddPostPage = ({ postEdit, setPostEdit, draftsEdit, setDraftsEdit }) => {
   const [isModal, setIsModal] = useState(false);
   const [formConfig, setFormConfig] = useState(false);
   const [postSuccessfullyAdded, setPostSuccessfullyAdded] = useState(false);
+  const [validForm, setValidForm] = useState(false);
   const [links, setLinks] = useState(() => {
     return (
    JSON.parse(localStorage.getItem("previewPost"))?.links ||  [
@@ -74,6 +75,15 @@ const AddPostPage = ({ postEdit, setPostEdit, draftsEdit, setDraftsEdit }) => {
     }
   };
 
+useEffect(() => {
+  if (post.title !== "" && post.category !== "" && post.subcategory !== "") {
+setValidForm(true)
+  }
+    else {
+     setValidForm(false)    
+    }
+}, [post.category, post.subcategory, post.title])
+
   const handleBack = () => {
     setIsModal((prev) => !prev);
   };
@@ -123,7 +133,7 @@ const AddPostPage = ({ postEdit, setPostEdit, draftsEdit, setDraftsEdit }) => {
                 </button>
               </NavLink>
 
-              <button type="submit" className={`${css.btn} ${css.btn_active}`}>
+              <button type="submit" className={`${css.btn} ${validForm ? css.btn_active : css.btn_disabled}`} disabled={validForm ? false : true}>
                 <span className={css.btn_back_active}>Publish</span>
               </button>
             </div>
