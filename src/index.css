@@ -1,6 +1,26 @@
 @import "~normalize.css";
 @tailwind utilities;
 
+:root {
+  --primary-color: #8d8d8d;
+  --primary-bg: #eccd43;
+  --secondary-bg: #9e9e9e;
+  --primary-color: #8d8d8d;
+  --primary-letter: -0.41px;
+}
+
+.primary_text_style {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 21px;
+}
+
+.secondary_text_style {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
 * {
   margin: 0;
   padding-left: 0;
@@ -98,8 +118,7 @@ button:focus {
 .css-1mepkov-control,
 .css-ax1btm-control,
 .css-aaske1-control,
-.css-1mth05l-control
- {
+.css-1mth05l-control {
   display: flex;
   font-weight: 500;
   font-size: 12px;
@@ -107,11 +126,10 @@ button:focus {
   border-radius: 12px !important;
   border: 1px solid #8d8d8d;
   padding: 8px 24px;
-  
 }
 
-.css-ax1btm-control{
-    border: 1px solid rgb(255 255 255);
+.css-ax1btm-control {
+  border: 1px solid rgb(255 255 255);
 }
 
 .css-1fdsijx-ValueContainer {
@@ -119,8 +137,7 @@ button:focus {
 }
 
 .css-1u9des2-indicatorSeparator,
-.css-894a34-indicatorSeparator
- {
+.css-894a34-indicatorSeparator {
   width: 0;
   display: none;
 }
@@ -133,13 +150,11 @@ button:focus {
 .css-ax1btm-control,
 .css-4kykm2-control,
 .css-1mth05l-control,
-.css-13lgg0t-control
- {
+.css-13lgg0t-control {
   border-radius: 12px !important;
   border: 1px solid #8d8d8d !important;
   box-shadow: 0 0 0 0 transparent !important;
 }
-
 
 .css-1dimb5e-singleValue {
   color: #8d8d8d !important;
@@ -164,9 +179,9 @@ button:focus {
 
 .css-ax1btm-control,
 .css-4kykm2-control,
-.css-13lgg0t-control{
-      border: 1px solid #f0ecec !important;
-      border-color: #f0ecec !important;
+.css-13lgg0t-control {
+  border: 1px solid #f0ecec !important;
+  border-color: #f0ecec !important;
 }
 
 .css-13cymwt-control:hover,
@@ -175,8 +190,7 @@ button:focus {
 .css-1856o3w-control:hover,
 .css-7pfxy0-control:hover,
 .css-1cy7ion-control:hover,
-.css-ffxk2k-control:hover
- {
+.css-ffxk2k-control:hover {
   font-weight: 500;
   font-size: 12px;
   line-height: 18px;
