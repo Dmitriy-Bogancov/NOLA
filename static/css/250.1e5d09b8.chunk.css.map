@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/250.1e5d09b8.chunk.css","mappings":"AAAA,4BAEE,kBAAmB,CADnB,YAEF,CAEA,mCACE,cAAe,CACf,gBACF","sources":["components/GoBackButton/GoBackButton.module.css"],"sourcesContent":[".goBack {\r\n  display: flex;\r\n  align-items: center;\r\n}\r\n\r\n.titleRecovery {\r\n  font-size: 20px;\r\n  margin-left: 70px;\r\n}\r\n"],"names":[],"sourceRoot":""}
