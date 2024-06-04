@@ -4,11 +4,6 @@
   justify-content: space-between;
 }
 
-.empty_block {
-  width: 120px;
-  height: 1px;
-}
-
 .form_container {
   display: flex;
   flex-direction: column;
@@ -17,13 +12,6 @@
 
 .form {
   flex-grow: 1;
-}
-
-.title {
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 48px;
-  letter-spacing: var(--primary-letter);
 }
 
 .photo_container {

@@ -78,7 +78,6 @@ const AdverticerEditPage = () => {
     localStorage.setItem("account", JSON.stringify(account));
   }, [account]);
 
-
   const handleForm = (e) => {
     const { name, value } = e.target;
     setAccount((prev) => ({
@@ -136,7 +135,6 @@ const AdverticerEditPage = () => {
     navigation("/main/accountAdverticer");
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -171,15 +169,14 @@ const AdverticerEditPage = () => {
 
   return (
     <div className={css.adverticerEdit_container}>
-      <div className={css.back_container} onClick={handlerBackBtn}>
+      <div onClick={handlerBackBtn}>
         <GoBackButton
           imgSrc={back}
           imgAlt="Go back"
           imgWidth="50px"
           imgHeight="50px"
+          title="Account"
         />
-        <h2 className={css.title}>Account</h2>
-        <p className={css.empty_block}></p>
       </div>
 
       <div className={css.photo_container}>
