@@ -204,7 +204,7 @@ function App() {
             <Route path="/:advertiserId" element={<AdvertiserDetailsPage />} />
 
             <Route
-              path="/recoverPasswordPage"
+              path="/reset-password/:email/:token"
               element={<RecoverPasswordPage />}
             />
             <Route path="/recovery" element={<RecoveryPage />} />

@@ -13,7 +13,6 @@ import back from "../../assets/images/back.jpg";
 import { Modal } from "../../components/Modal/Modal";
 import { CreatePost } from "../../components/CreatePost/CreatePost";
 
-
 const AddPostPage = ({ postEdit, setPostEdit, draftsEdit, setDraftsEdit }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -23,22 +22,21 @@ const AddPostPage = ({ postEdit, setPostEdit, draftsEdit, setDraftsEdit }) => {
   const [validForm, setValidForm] = useState(false);
   const [links, setLinks] = useState(() => {
     return (
-   JSON.parse(localStorage.getItem("previewPost"))?.links ||  [
+      JSON.parse(localStorage.getItem("previewPost"))?.links || [
         { id: nanoid(), url: "", name: "" },
       ]
     );
   });
   const [post, setPost] = useState(() => {
     return (
-      JSON.parse(localStorage.getItem("previewPost")) ??
-      // postEdit ??
+      JSON.parse(localStorage.getItem("previewPost")) ?? // postEdit ??
       // draftsEdit ??
       {
         id: nanoid(),
         description: "",
         title: "",
-        category:  "" ,
-        subcategory:  "" ,
+        category: "",
+        subcategory: "",
         callToAction: "" || "Read more",
         callToActionLinks: "",
         banners: [],
@@ -63,11 +61,11 @@ const AddPostPage = ({ postEdit, setPostEdit, draftsEdit, setDraftsEdit }) => {
   const createPostDrafts = async () => {
     try {
       // const data = await postDraftsPost(post)
-     
+
       localStorage.setItem("backend", JSON.stringify(post));
 
       localStorage.removeItem("previewPost");
-      localStorage.removeItem("filterCategory")
+      localStorage.removeItem("filterCategory");
       navigate("/main");
       setIsModal((prev) => !prev);
     } catch (error) {
@@ -75,14 +73,13 @@ const AddPostPage = ({ postEdit, setPostEdit, draftsEdit, setDraftsEdit }) => {
     }
   };
 
-useEffect(() => {
-  if (post.title !== "" && post.category !== "" && post.subcategory !== "") {
-setValidForm(true)
-  }
-    else {
-     setValidForm(false)    
+  useEffect(() => {
+    if (post.title !== "" && post.category !== "" && post.subcategory !== "") {
+      setValidForm(true);
+    } else {
+      setValidForm(false);
     }
-}, [post.category, post.subcategory, post.title])
+  }, [post.category, post.subcategory, post.title]);
 
   const handleBack = () => {
     setIsModal((prev) => !prev);
@@ -92,10 +89,10 @@ setValidForm(true)
     e.preventDefault();
     console.log("post", post);
     try {
-      const data = await postPostApi(post);
+      // const data = await postPostApi(post);
       setPostSuccessfullyAdded(true);
       localStorage.removeItem("previewPost");
-      localStorage.removeItem("filterCategory")
+      localStorage.removeItem("filterCategory");
 
       setTimeout(() => {
         navigate("/main");
@@ -116,14 +113,21 @@ setValidForm(true)
               navigatePage={"/main/accountAdverticer"}
             />
           )}
-          <div className={css.top_container} onClick={handleBack}>
-            <GoBackButton to="" imgSrc={back} imgAlt="Go back" />
-            <p className={`${css.title_back} dark:text-white`}>New advertisement</p>
+          <div onClick={handleBack}>
+            <GoBackButton
+              to=""
+              imgSrc={back}
+              imgAlt="Go back"
+              title="New advertisement"
+            />
           </div>
 
           <form onSubmit={handleSubmitPost}>
-            <CreatePost setPost={setPost} post={post}
-              links={links} setLinks={setLinks}
+            <CreatePost
+              setPost={setPost}
+              post={post}
+              links={links}
+              setLinks={setLinks}
             />
 
             <div className={css.btn_container}>
@@ -133,7 +137,13 @@ setValidForm(true)
                 </button>
               </NavLink>
 
-              <button type="submit" className={`${css.btn} ${validForm ? css.btn_active : css.btn_disabled}`} disabled={validForm ? false : true}>
+              <button
+                type="submit"
+                className={`${css.btn} ${
+                  validForm ? css.btn_active : css.btn_disabled
+                }`}
+                disabled={validForm ? false : true}
+              >
                 <span className={css.btn_back_active}>Publish</span>
               </button>
             </div>
@@ -151,7 +161,12 @@ setValidForm(true)
           </button>
         </Modal>
       )}
-      {postSuccessfullyAdded && <MessagePostOnModeration />}
+      {postSuccessfullyAdded && (
+        <MessagePostOnModeration>
+          Advertisement is under moderation. <br />
+          It will take about 15 minutes.
+        </MessagePostOnModeration>
+      )}
     </div>
   );
 };

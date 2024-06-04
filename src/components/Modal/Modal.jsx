@@ -12,7 +12,7 @@ export const Modal = ({ children, handleToggleModal }) => {
   return (
     <div className={css.backdrop} onClick={handleCloseBackdrop}>
       <div className={`${css.modal} dark:bg-black`}>
-        <div>{children}</div>
+        <div className={css.children}>{children}</div>
       </div>
     </div>
   );

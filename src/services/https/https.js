@@ -95,6 +95,36 @@ export const deleteDraftsPostId = async (id) => {
   }
 };
 
+// ---------RecoverPassword-------
+
+export const postForgotPassword = async (email) => {
+  const { data } = await instance.post(
+    `/Account/forgot-password?email=${email}`
+  );
+  return data;
+};
+
+export const postResetPassword = async (
+  body
+  // token, email, password, confirmPassword
+) => {
+  try {
+    const data = await instance.post(`/Account/reset-password`, body);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getResetPassword = async () => {
+  try {
+    const data = await instance.post(`/Account/reset-password`);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // -----------POST-------------
 export const getAllAdverticerPostApi = async (token) => {
   try {

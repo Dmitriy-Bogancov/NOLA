@@ -18,7 +18,7 @@ const GoBackButton = ({
       <Link to={to} onClick={onClick}>
         <img src={imgSrc} alt={imgAlt} width={imgWidth} height={imgHeight} />
       </Link>
-      <h3 className={css.titleRecovery}>{title}</h3>
+      <h3 className={`${css.titleRecovery} dark:text-white`}>{title}</h3>
     </div>
   );
 };
