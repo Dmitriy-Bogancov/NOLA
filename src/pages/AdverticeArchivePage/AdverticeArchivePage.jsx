@@ -11,7 +11,6 @@ import { ToastError } from "../../services/ToastError/ToastError";
 import GoBackButton from "../../components/GoBackButton/GoBackButton";
 import back from "../../assets/images/back.jpg";
 
-
 const AdverticeArchivePage = () => {
   const [post, setPost] = useState([]);
   const [isModal, setIsModal] = useState(false);
@@ -23,6 +22,7 @@ const AdverticeArchivePage = () => {
 
   const [postActiveId, setPostActiveId] = useState("");
   const [showPost, setShowPost] = useState(false);
+  const [menuActive, setMenuActive] = useState(false);
 
   useEffect(() => {
     const getData = (async () => {
@@ -36,7 +36,7 @@ const AdverticeArchivePage = () => {
     })();
   }, []);
 
-      const handleBack = () => {
+  const handleBack = () => {
     setShowPost(false);
   };
 
@@ -74,6 +74,7 @@ const AdverticeArchivePage = () => {
   };
 
   const postMenuActive = (id) => {
+    setMenuActive((prev) => !prev);
     setPostActiveId(id);
   };
 
@@ -81,23 +82,22 @@ const AdverticeArchivePage = () => {
     setShowPost(post.filter((item) => item.id === id));
   };
 
-
-
   return (
     <div>
       <ToastContainer />
       <ul className={css.card}>
         {!showPost &&
-          post?.map(({ id, title, description, banner }) => (
+          post?.map(({ id, title, description, banners }) => (
             <li key={id} className={css.post_container}>
               <img
-                src={banner}
+                src={banners}
                 alt=""
                 className={css.img}
                 onClick={() => handlePost(id)}
               />
               <h2 className={css.title}>{title}</h2>
               <PostsAdverticerMenu
+                menuActive={menuActive}
                 setShowMenuActive={false}
                 postMenuActive={postMenuActive}
                 id={id}
@@ -140,33 +140,29 @@ const AdverticeArchivePage = () => {
       )}
       <ul className={css.list}>
         {showPost &&
-          
-          showPost?.map(({ id, title, description, banner }) => (
-
-
+          showPost?.map(({ id, title, description, banners, links }) => (
             <li key={id}>
-                                 <div className={css.top_container}>
-          <GoBackButton
-            imgSrc={back}
-            imgAlt="Go back"
-            imgWidth="50px"
-            imgHeight="50px"
-            onClick={handleBack}
-  
-          />
-  
-          <p className={css.return}>Return to the feed</p>
-              </div>
-               <img src={banner} alt="" className={css.img} />
-                <PostsAdverticer
-                  id={id}
-                  name={title}
-                  banner={banner}
-                  description={description}
-                  setShowPost={setShowPost}
+              <div className={css.top_container}>
+                <GoBackButton
+                  imgSrc={back}
+                  imgAlt="Go back"
+                  imgWidth="50px"
+                  imgHeight="50px"
+                  onClick={handleBack}
                 />
-              </li>
 
+                <p className={css.return}>Return to the feed</p>
+              </div>
+              <img src={banners} alt="" className={css.img} />
+              <PostsAdverticer
+                id={id}
+                title={title}
+                description={description}
+                links={links}
+                banner={banners}
+                setShowPost={setShowPost}
+              />
+            </li>
           ))}
       </ul>
     </div>
