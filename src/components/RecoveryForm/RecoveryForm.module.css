@@ -34,7 +34,7 @@
 .formContainer {
   display: flex;
   flex-direction: column;
-  height: 55vh;
+  height: 50vh;
 }
 
 .inputForm {
@@ -70,8 +70,6 @@
   font-size: 12px;
   position: absolute;
   top: 54px;
-
-  background-color: white;
   padding: 0 5px;
   z-index: 1;
 }
@@ -88,9 +86,4 @@
 .btn_container {
   flex-shrink: 0;
   margin-bottom: 32px;
-}
-
-.modal_title {
-  display: flex;
-  justify-content: center;
 }

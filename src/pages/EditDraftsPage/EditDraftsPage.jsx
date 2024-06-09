@@ -150,7 +150,7 @@ const EditDraftsPage = () => {
       <ToastContainer />
       <p>EditDraftsPage</p>
       <div className={css.top_container} onClick={handleBack}>
-        <GoBackButton to="" imgSrc={back} imgAlt="Go back" />
+        <GoBackButton to="" imgWidth="50px" imgHeight="50px" imgAlt="Go back" />
         <p className={`${css.title_back} dark:text-white`}>New advertisement</p>
       </div>
       <form onSubmit={handleSubmitPost}>

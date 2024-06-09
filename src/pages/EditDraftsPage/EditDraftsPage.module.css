@@ -1,15 +1,13 @@
 .top_container {
-  position: relative;
   display: flex;
   align-items: center;
-  margin-left: -13px;
 }
 
 .title_back {
   position: relative;
   top: 0;
-  left: 20%;
-  transform: translate(-50%, 0);
+  left: 33%;
+  transform: translate(-35%, 0);
   font-weight: 500;
   font-size: 24px;
   line-height: 24px;

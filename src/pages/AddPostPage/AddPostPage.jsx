@@ -29,8 +29,7 @@ const AddPostPage = ({ postEdit, setPostEdit, draftsEdit, setDraftsEdit }) => {
   });
   const [post, setPost] = useState(() => {
     return (
-      JSON.parse(localStorage.getItem("previewPost")) ?? // postEdit ??
-      // draftsEdit ??
+      JSON.parse(localStorage.getItem("previewPost")) ?? // draftsEdit ?? // postEdit ??
       {
         id: nanoid(),
         description: "",
@@ -113,13 +112,16 @@ const AddPostPage = ({ postEdit, setPostEdit, draftsEdit, setDraftsEdit }) => {
               navigatePage={"/main/accountAdverticer"}
             />
           )}
-          <div onClick={handleBack}>
+          <div className={css.top_container} onClick={handleBack}>
             <GoBackButton
               to=""
-              imgSrc={back}
+              imgWidth="50px"
+              imgHeight="50px"
               imgAlt="Go back"
-              title="New advertisement"
             />
+            <p className={`${css.title_back} dark:text-white`}>
+              New advertisement
+            </p>
           </div>
 
           <form onSubmit={handleSubmitPost}>

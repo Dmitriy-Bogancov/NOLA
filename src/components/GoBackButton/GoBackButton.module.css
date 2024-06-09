@@ -2,17 +2,18 @@
   position: relative;
   display: flex;
   align-items: center;
+  margin-left: -13px;
 }
 
 .titleRecovery {
   position: absolute;
   top: 50%;
-  left: 34%;
+  left: 50%;
   transform: translate(-50%, -50%);
   font-size: 16px;
   font-weight: 500;
   line-height: 48px;
   letter-spacing: var(--primary-letter);
   text-align: center;
-  margin-left: 70px;
+  /* margin-left: 70px; */
 }

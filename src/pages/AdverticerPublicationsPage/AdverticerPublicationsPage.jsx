@@ -192,7 +192,6 @@ const AdverticerPublicationsPage = () => {
             <li key={id}>
                                  <div className={css.top_container}>
           <GoBackButton
-            imgSrc={back}
             imgAlt="Go back"
             imgWidth="50px"
             imgHeight="50px"
