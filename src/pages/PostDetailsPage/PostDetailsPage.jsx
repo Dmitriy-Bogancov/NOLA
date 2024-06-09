@@ -13,6 +13,7 @@ const PostDetailsPage = () => {
     const fetchData = (async () => {
       try {
         const { data } = await getPostIdApi(postId);
+        // data.advertiserId
         setPost(data);
         console.log(data);
       } catch (error) {
@@ -27,13 +28,17 @@ const PostDetailsPage = () => {
       <h1>PostDetailsPage</h1>
       {post && (
         <div key={post.id}>
-          <NavLink to={`/${post.id}`}>Advertiser Header {`${postId}`}</NavLink>
+          <NavLink
+          // to={`/${post.id}`}
+          >
+            Advertiser Header {`${postId}`}
+          </NavLink>
 
           <p>{`${post.title}`}</p>
 
-          <a href="/" className={css.link}>
+          <NavLink to="/:advertiserId" className={css.link}>
             Site/Profile
-          </a>
+          </NavLink>
 
           <p>Description</p>
 

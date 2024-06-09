@@ -1,8 +1,15 @@
-.cutString {
+.cutString,
+.cutStringDark {
   font-weight: 400;
   font-size: 14px;
   line-height: 21px;
   background: linear-gradient(#000000, #2c2a2a, #fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cutStringDark {
+  background: linear-gradient(#fff, #b3b1b1, #6e6d6d);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

@@ -17,3 +17,7 @@
   text-align: center;
   /* margin-left: 70px; */
 }
+
+.iconDark svg path{
+  stroke:  #ffffff
+}
