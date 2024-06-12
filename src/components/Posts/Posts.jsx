@@ -67,7 +67,7 @@ export const Posts = ({ id, url, title, handleSavePost }) => {
 };
 
 Posts.propTypes = {
-  url: PropTypes.string,
+  url: PropTypes.array,
   title: PropTypes.string,
   id: PropTypes.string,
   handleSavePost: PropTypes.func,

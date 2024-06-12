@@ -1,18 +1,20 @@
-.links_container{
-    display: flex;
-    align-items: center;
+.links_container {
+  display: flex;
+  align-items: center;
 }
 
 .post_container {
   resize: none;
-  overflow-x: scroll;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: #ebebeb #f9f9f9;
   white-space: nowrap;
   width: calc(100% - 52px);
   height: 32px;
   font-weight: 500;
   font-size: 12px;
   line-height: 18px;
-
   color: #8d8d8d;
   border: 1px solid #8d8d8d;
   border-radius: 12px;

@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import css from "./PostsAdverticerMenu.module.css";
 import { NavLink } from "react-router-dom";
-
+import { useState } from "react";
 
 export const PostsAdverticerMenu = ({
   setShowMenuActive = true,
@@ -11,12 +11,11 @@ export const PostsAdverticerMenu = ({
   postMenuActive,
   handlePostArchivationMessage,
   handlePostStoppingMessage,
-    handlePostLaunchAgainMessage,
-  
-    handleRecoverePostMessage,
-    handleDeletePostMessage,
+  handlePostLaunchAgainMessage,
+  handleRecoverePostMessage,
+  handleDeletePostMessage,
+  menuActive,
 }) => {
-
   return (
     <>
       <div className={css.post_menu}>
@@ -24,7 +23,7 @@ export const PostsAdverticerMenu = ({
         <p>7</p>
 
         <div
-          className={`${css.container_menu} `}
+          className={menuActive ? css.container_menu : ""}
           onClick={() => postMenuActive(id)}
         >
           ***
@@ -59,8 +58,6 @@ export const PostsAdverticerMenu = ({
               </p>
             </div>
           )}
-                  
-                  
           {!setShowMenuActive && (
             <>
               <div className={`${css.select} `}>
@@ -68,18 +65,12 @@ export const PostsAdverticerMenu = ({
                   <button>Edit</button>
                 </NavLink>
                 <p>
-                  <button
-                   onClick={handleRecoverePostMessage}
-                  >
+                  <button onClick={handleRecoverePostMessage}>
                     Recovere post
                   </button>
                 </p>
                 <p>
-                  <button
-                   onClick={handleDeletePostMessage}
-                  >
-                    Delete
-                  </button>
+                  <button onClick={handleDeletePostMessage}>Delete</button>
                 </p>
               </div>
             </>
@@ -98,8 +89,8 @@ PostsAdverticerMenu.propTypes = {
   handlePostArchivationMessage: PropTypes.func,
   handlePostStoppingMessage: PropTypes.func,
   handlePostLaunchAgainMessage: PropTypes.func,
-    isPostStopped: PropTypes.bool,
-    handleDeletePostMessage: PropTypes.func,
-    handleRecoverePostMessage: PropTypes.func,
-  
+  isPostStopped: PropTypes.bool,
+  handleDeletePostMessage: PropTypes.func,
+  handleRecoverePostMessage: PropTypes.func,
+  menuActive: PropTypes.bool,
 };

@@ -19,18 +19,13 @@
   left: 50%;
   z-index: 2;
   transform: translate(-50%, -40%);
-  color: white;
-  background-color: #ca7979;
-  min-width: 35%;     
-  min-height: 15%;
-  padding: 15px;
+  width: 70%;
+  max-width: 390px;
+  border-radius: 16px;
+  background-color: #ffffff;
+  padding: 40px 32px;
 }
 
-.svg {
-  position: absolute;
-  top: 20px;
-  right: 25px;
-  width: 30px;
-  height: 30px;
-  background-color: black;
+.children {
+  margin: 0 auto;
 }

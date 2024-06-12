@@ -1,339 +1,460 @@
 import PropTypes from "prop-types";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import css from "./AddBanner.module.css";
-import { Toastify } from "../../services/Toastify/Toastify";
 import add from "../../assets/icons/addBaner.svg";
 import remove from "../../assets/icons/delete.svg";
-import turn from "../../assets/icons/turn.svg";
-import { nanoid } from "nanoid";
+import updateImg from "../../assets/icons/turn.svg";
+import { postImg } from "../../services/cloudinary/cloudinary";
+import { ToastError } from "../../services/ToastError/ToastError";
+import { ToastContainer } from "react-toastify";
 
 export const AddBanner = ({ setPost, post }) => {
-  const [selestedFile, setSelestedFile] = useState(false);
-  const [uploaded, setUploaded] = useState(false);
-  const [formatPost, setFormatPost] = useState(null);
+  const [update, setUpdate] = useState(false);
+  const [blockOneUpdate, setBlockOneUpdate] = useState(
+    post?.banners[0] !== undefined ? true : false
+  );
+  const [blockTwoUpdate, setBlockTwoUpdate] = useState(() =>
+    post?.banners[1]?.length !== undefined ? true : false
+  );
+  const [blockThreeUpdate, setBlockThreeUpdate] = useState(() =>
+    post?.banners[2]?.length !== undefined ? true : false
+  );
 
   const [imgOneURL, setImgOneURL] = useState(() => {
-    return localStorage.getItem("imgOneURL") ?? "";
-    // return JSON.parse(localStorage.getItem("previewPost")) ?? "";
+    return (
+      JSON.parse(localStorage.getItem("previewPost"))?.banners[0] ||
+      post?.banners[0] ||
+      ""
+    );
   });
   const [imgTwoURL, setImgTwoURL] = useState(() => {
-    return localStorage.getItem("imgTwoURL") ?? "";
-    // return JSON.parse(localStorage.getItem("previewPost")) ?? "";
+    return (
+      JSON.parse(localStorage.getItem("previewPost"))?.banners[1] ||
+      post?.banners[1] ||
+      ""
+    );
   });
   const [imgThreeURL, setImgThreeURL] = useState(() => {
-    return localStorage.getItem("imgThreeURL") ?? "";
-    // return JSON.parse(localStorage.getItem("previewPost")) ?? "";
+    return (
+      JSON.parse(localStorage.getItem("previewPost"))?.banners[2] ||
+      post?.banners[2] ||
+      ""
+    );
   });
-  const [addPostPhoto, setAddPostPhoto] = useState(false);
-  const [img, setImg] = useState(false);
-  const [addImg, setAddImg] = useState(false);
-  const [turnImg, setTurnImg] = useState([]);
-  const [turnLengthImg, setTurnLengthImg] = useState(null);
 
-  const fileReader = new FileReader();
+  const upload_presets = "j0hj8hjd";
+  const api_key = "984292171139147";
 
   useEffect(() => {
-    localStorage.setItem("imgOneURL", imgOneURL);
-    localStorage.setItem("imgTwoURL", imgTwoURL);
-    localStorage.setItem("imgThreeURL", imgThreeURL);
-
-    // setPost({
-    //   ...post,
-    //   banner: [
-    //     { id: nanoid(), img: imgOneURL },
-    //     { id: nanoid(), img: imgTwoURL },
-    //     { id: nanoid(), img: imgThreeURL },
-    //   ],
-    // });
-  }, [imgOneURL, imgTwoURL, imgThreeURL, setPost]);
-
-  const handleChange = async (e) => {
-    const files = e.target.files;
-    // files.map((item) => console.log(item))
-    console.log(files);
-    const imgFormat = files[0]?.type?.split("/").splice(1, 1).join();
-    const acceptFormat = e.target.accept.split(",.");
-
-    const results = acceptFormat.find((el) => el === imgFormat);
-
-    // if (!selestedFile) {
-    //   Toastify("Please select a file");
-    //   return;
-    // }
-
-    //   setImg(files)
-    // fileReader.readAsDataURL(files)
-
-    if (results) {
-      Toastify("Photo downloаding");
-      setSelestedFile(results);
-
-      return;
+    if (post?.banners[0] === "") {
+      setBlockOneUpdate(false);
     }
-    Toastify("Photo has not suitable format");
-  };
+    if (post?.banners[1] === "") {
+      setBlockTwoUpdate(false);
+    }
+    if (post?.banners[2] === "") {
+      setBlockThreeUpdate(false);
+    }
+  }, [post?.banners]);
 
-  const handleAddBanerOne = (e) => {
+  const handleUpdateBannersOne = async (e) => {
     const filesOne = e.target.files[0];
 
     if (filesOne) {
-      setImg(filesOne);
-      fileReader.readAsDataURL(filesOne);
+      const imgFormat = filesOne?.type?.split("/").splice(1, 1).join();
+      const acceptFormat = e.target.accept.split(",.");
+      const results = acceptFormat.find((el) => el === imgFormat);
 
-      fileReader.onloadend = () => {
-        setPost((prev) => ({
-          ...post,
-          banner: [...prev.banner, { id: nanoid(), img: fileReader.result }],
-        }));
-        setImgOneURL(fileReader.result);
-      };
+      if (results) {
+        const formData = new FormData();
+        formData.append("file", filesOne);
+        formData.append("api_key", api_key);
+        formData.append("upload_preset", upload_presets);
 
-      setAddImg(true);
+        try {
+          setUpdate(true);
+          const data = await postImg(formData);
+
+          if (post?.banners[0]?.length !== 0) {
+            setPost((prev) => ({
+              ...post,
+              banners: prev.banners.toSpliced(0, 1, data?.data?.url),
+            }));
+            setImgOneURL(data?.data?.url);
+
+            return;
+          }
+        } catch (error) {
+          ToastError(error.message);
+        } finally {
+          setUpdate(false);
+        }
+        return;
+      }
+      ToastError("Photo has not suitable format");
     }
   };
 
-  const handleAddBanerTwo = (e) => {
-    const filesTwo = e.target.files[0];
+  const handleUpdateBannersTwo = async (e) => {
+    const filesOne = e.target.files[0];
 
-    if (filesTwo) {
-      setImg(filesTwo);
-      fileReader.readAsDataURL(filesTwo);
+    if (filesOne) {
+      const imgFormat = filesOne?.type?.split("/").splice(1, 1).join();
+      const acceptFormat = e.target.accept.split(",.");
+      const results = acceptFormat.find((el) => el === imgFormat);
 
-      fileReader.onloadend = () => {
-        setPost((prev) => ({
-          ...post,
-          banner: [...prev.banner, { id: nanoid(), img: fileReader.result }],
-        }));
+      if (results) {
+        const formData = new FormData();
+        formData.append("file", filesOne);
+        formData.append("api_key", api_key);
+        formData.append("upload_preset", upload_presets);
 
-        setImgTwoURL(fileReader.result);
-      };
+        try {
+          setUpdate(true);
+          const data = await postImg(formData);
+          if (post?.banners[1]?.length !== 0) {
+            setPost((prev) => ({
+              ...post,
+              banners: prev.banners.toSpliced(1, 1, data?.data?.url),
+            }));
 
-      setAddImg(true);
-
-      return;
+            setImgTwoURL(data?.data?.url);
+            return;
+          }
+        } catch (error) {
+          ToastError(error.message);
+        } finally {
+          setUpdate(false);
+        }
+        return;
+      }
+      ToastError("Photo has not suitable format");
     }
   };
 
-  const handleAddBanerThree = (e) => {
-    const filesThree = e.target.files[0];
+  const handleUpdateBannersThree = async (e) => {
+    const filesOne = e.target.files[0];
 
-    if (filesThree) {
-      setImg(filesThree);
-      fileReader.readAsDataURL(filesThree);
+    if (filesOne) {
+      const imgFormat = filesOne?.type?.split("/").splice(1, 1).join();
+      const acceptFormat = e.target.accept.split(",.");
+      const results = acceptFormat.find((el) => el === imgFormat);
 
-      fileReader.onloadend = () => {
-        setPost((prev) => ({
-          ...post,
-          banner: [...prev.banner, { id: nanoid(), img: fileReader.result }],
-        }));
+      if (results) {
+        const formData = new FormData();
+        formData.append("file", filesOne);
+        formData.append("api_key", api_key);
+        formData.append("upload_preset", upload_presets);
 
-        setImgThreeURL(fileReader.result);
-      };
+        try {
+          setUpdate(true);
+          const data = await postImg(formData);
 
-      setAddImg(true);
-      return;
+          if (post?.banners[2]?.length !== 0) {
+            setPost((prev) => ({
+              ...post,
+              banners: prev.banners.toSpliced(2, 1, data?.data?.url),
+            }));
+            setImgThreeURL(data?.data?.url);
+            return;
+          }
+        } catch (error) {
+          ToastError(error.message);
+        } finally {
+          setUpdate(false);
+        }
+        return;
+      }
+      ToastError("Photo has not suitable format");
     }
+  };
+
+  const handleAddBaner = async (e) => {
+    const filesOne = e.target.files[0];
+
+    if (filesOne) {
+      const imgFormat = filesOne?.type?.split("/").splice(1, 1).join();
+      const acceptFormat = e.target.accept.split(",.");
+      const results = acceptFormat.find((el) => el === imgFormat);
+
+      if (results) {
+        const formData = new FormData();
+        formData.append("file", filesOne);
+        formData.append("api_key", api_key);
+        formData.append("upload_preset", upload_presets);
+        try {
+          setUpdate(true);
+          const data = await postImg(formData);
+
+          if (post?.banners?.length === 0 || post?.banners[0]?.length === 0) {
+            addOneImg(data);
+            return;
+          }
+
+          if (post?.banners?.length === 1 || post?.banners[1]?.length === 0) {
+            addTwoImg(data);
+            return;
+          }
+
+          if (post?.banners?.length === 2 || post?.banners[2]?.length === 0) {
+            addThreeImg(data);
+            return;
+          }
+        } catch (error) {
+          ToastError(error.message);
+        } finally {
+          setUpdate(false);
+        }
+        return;
+      }
+      ToastError("Photo has not suitable format");
+    }
+  };
+
+  const addOneImg = (data) => {
+    if (post?.banners[0]?.length === 0) {
+      setImgOneURL(data?.data?.url);
+      setBlockOneUpdate(true);
+
+      return setPost((prev) => ({
+        ...post,
+        banners: prev.banners.toSpliced(0, 1, data?.data?.url),
+      }));
+    }
+
+    setImgOneURL(data?.data?.url);
+    setBlockOneUpdate(true);
+    return setPost((prev) => ({
+      ...post,
+      banners: [...prev.banners, data?.data?.url],
+    }));
+  };
+
+  const addTwoImg = (data) => {
+    if (post?.banners[1]?.length === 0) {
+      setImgTwoURL(data?.data?.url);
+      setBlockTwoUpdate(true);
+      return setPost((prev) => ({
+        ...post,
+        banners: prev.banners.toSpliced(1, 1, data?.data?.url),
+      }));
+    }
+
+    setImgTwoURL(data?.data?.url);
+    setBlockTwoUpdate(true);
+    return setPost((prev) => ({
+      ...post,
+      banners: [...prev.banners, data?.data?.url],
+    }));
+  };
+
+  const addThreeImg = (data) => {
+    if (post?.banners[2]?.length === 0) {
+      setImgThreeURL(data?.data?.url);
+      setBlockThreeUpdate(true);
+      return setPost((prev) => ({
+        ...post,
+        banners: prev.banners.toSpliced(2, 1, data?.data?.url),
+      }));
+    }
+
+    setImgThreeURL(data?.data?.url);
+    setBlockThreeUpdate(true);
+    return setPost((prev) => ({
+      ...post,
+      banners: [...prev.banners, data?.data?.url],
+    }));
   };
 
   const handleRemoveImg = (e) => {
-    let deleteImg = null;
     switch (e) {
-      case "imgOneURL":
-        deleteImg = post.banner.filter(({ img }) => img !== imgOneURL);
-
-        // setImgOneURL(fileReader.result);
+      case imgOneURL:
+        // eslint-disable-next-line no-case-declarations
+        const deleteOneImg = post.banners.filter((el) => el !== imgOneURL);
 
         setPost((prev) => ({
           ...post,
-          banner: [...deleteImg],
+          banners: prev.banners.toSpliced(0, 1, ""),
         }));
-
-        localStorage.removeItem("imgOneURL");
         setImgOneURL("");
+        setBlockOneUpdate(false);
         break;
 
-      case "imgTwoURL":
-        deleteImg = post.banner.filter(({ img }) => img !== imgTwoURL);
-        // setImgTwoURL(fileReader.result);
+      case imgTwoURL:
+        // eslint-disable-next-line no-case-declarations
+        const deleteTwoImg = post.banners.filter((el) => el !== imgTwoURL);
 
         setPost((prev) => ({
           ...post,
-          banner: [...deleteImg],
+          banners: prev.banners.toSpliced(1, 1, ""),
         }));
-
-        localStorage.removeItem("imgTwoURL");
         setImgTwoURL("");
+        setBlockTwoUpdate(false);
         break;
 
-      case "imgThreeURL":
-        deleteImg = post.banner.filter(({ img }) => img !== imgThreeURL);
-        // setImgThreeURL(fileReader.result);
+      case imgThreeURL:
+        // eslint-disable-next-line no-case-declarations
+        const deleteThreeImg = post.banners.filter((el) => el !== imgThreeURL);
 
         setPost((prev) => ({
           ...post,
-          banner: [...deleteImg],
+          banners: prev.banners.toSpliced(2, 1, ""),
         }));
-        localStorage.removeItem("imgThreeURL");
         setImgThreeURL("");
+        setBlockThreeUpdate(false);
         break;
 
       default:
-        post.banner[e] = "";
+        post.banners[e] = "";
         break;
     }
   };
 
-  const handleTurnImg = (e) => {
-    console.log(e);
-
-    setTurnImg((prev) => prev + 1);
-    setTurnLengthImg(turnImg.length);
-  };
-
-  const handleAddPost = () => {
-    setAddPostPhoto(true);
-  };
-
-  const handleUploadClick = () => {
-    // if (!selestedFile) {
-    //   Toastify("Please select a file");
-    //   return;
-    // }
-
-    // const formAddPostPhoto = new FormData();
-    // // file ?
-    // formAddPostPhoto.append("file", selestedFile);
-    // setUploaded(true);
-    // setPost({
-    //   ...post,
-    //   banner: formAddPostPhoto,
-    // });
-
-    // const res = await fetch("", {method: "POST", body: formAddPostPhoto, Authorization: {}})
-    // const data = await res.json()
-    // setUploaded(data)
-
-    setAddPostPhoto(false);
-  };
-
   return (
-    <ul className={css.addPhoto_container}>
-      <p className={`${css.title} ${css.overBanner}`}>Add banners</p>
+    <>
+      {update && <p>Photo downloаding</p>}
+      <ToastContainer />
+      <ul className={`${css.addPhoto_container} dark:bg-gray`}>
+        <p className={`${css.title} ${css.overBanner}`}>Add banners</p>
+        <li className={css.addPhoto_item}>
+          <label>
+            {imgOneURL ? (
+              <img
+                src={imgOneURL}
+                alt="addBaner"
+                className={`${css.banner} 
+                    `}
+              />
+            ) : (
+              <img src={add} alt="addBaner" />
+            )}
 
-      <li className={css.addPhoto_item}>
-        <label>
-          {imgOneURL ? (
-            <img
-              src={imgOneURL}
-              alt="addBaner"
-              className={`${css.banner}  ${
-                turnImg.length > turnLengthImg && css.turn
-              } 
-              `}
-            />
-          ) : (
-            <img src={add} alt="addBaner" />
+            {!blockOneUpdate && (
+              <input
+                className={css.addPhoto}
+                type="file"
+                accept="image/*  ,.png,.jpg,.jpeg,.gif,.webp,.svg,.pdf"
+                onChange={handleAddBaner}
+                // onChange={handleAddBanerOne}
+              />
+            )}
+          </label>
+          {imgOneURL && (
+            <div className={css.img_menu_container}>
+              <div
+                className={css.img_menu}
+                onClick={() => handleRemoveImg(imgOneURL)}
+              >
+                <img src={remove} alt="remove" />
+              </div>
+              <div className={css.img_menu}>
+                <label>
+                  <img src={updateImg} alt="update" />
+                  <input
+                    className={css.addPhoto}
+                    type="file"
+                    accept="image/*  ,.png,.jpg,.jpeg,.gif,.webp,.svg,.pdf"
+                    onChange={handleUpdateBannersOne}
+                  />
+                </label>
+              </div>
+            </div>
           )}
+        </li>
 
-          <input
-            className={css.addPhoto}
-            type="file"
-            accept="image/*  ,.png,.jpg,.jpeg,.gif,.webp,.svg,.pdf"
-            // onChange={handleChange}
-            onChange={handleAddBanerOne}
-          />
-        </label>
-        {imgOneURL && (
-          <div className={css.img_menu_container}>
-            <div
-              className={css.img_menu}
-              onClick={() => handleRemoveImg("imgOneURL")}
-            >
-              <img src={remove} alt="remove" />
-            </div>
-            <div
-              className={css.img_menu}
-              onClick={
-                handleTurnImg
-                // styles={{transform: "rotate(90deg)"}}
-              }
-            >
-              <img src={turn} alt="turn" />
-            </div>
-          </div>
-        )}
-      </li>
+        <li className={css.addPhoto_item}>
+          <label>
+            {imgTwoURL ? (
+              <img src={imgTwoURL} alt="addBaner" className={css.banner} />
+            ) : (
+              <img src={add} alt="addBaner" />
+            )}
+            {!blockTwoUpdate && (
+              <input
+                className={css.addPhoto}
+                type="file"
+                accept="image/*  ,.png,.jpg,.jpeg,.gif,.webp,.svg,.pdf"
+                onChange={handleAddBaner}
+                // onChange={handleAddBanerTwo}
+              />
+            )}
+          </label>
 
-      <li className={css.addPhoto_item}>
-        <label>
-          {imgTwoURL ? (
-            <img src={imgTwoURL} alt="addBaner" className={css.banner} />
-          ) : (
-            <img src={add} alt="addBaner" />
+          {imgTwoURL && (
+            <div className={css.img_menu_container}>
+              <div
+                className={css.img_menu}
+                onClick={() => handleRemoveImg(imgTwoURL)}
+              >
+                <img src={remove} alt="remove" />
+              </div>
+              <div className={css.img_menu}>
+                <label>
+                  <img src={updateImg} alt="update" />
+                  <input
+                    className={css.addPhoto}
+                    type="file"
+                    accept="image/*  ,.png,.jpg,.jpeg,.gif,.webp,.svg,.pdf"
+                    onChange={handleUpdateBannersTwo}
+                  />
+                </label>
+              </div>
+            </div>
           )}
-          <input
-            className={css.addPhoto}
-            type="file"
-            accept="image/*  ,.png,.jpg,.jpeg,.gif,.webp,.svg,.pdf"
-            onChange={handleAddBanerTwo}
-          />
-        </label>
+        </li>
+        <li className={css.addPhoto_item}>
+          <label>
+            {imgThreeURL ? (
+              <img src={imgThreeURL} alt="addBaner" className={css.banner} />
+            ) : (
+              <img src={add} alt="addBaner" />
+            )}
+            {!blockThreeUpdate && (
+              <input
+                className={css.addPhoto}
+                type="file"
+                accept="image/*  ,.png,.jpg,.jpeg,.gif,.webp,.svg,.pdf"
+                onChange={handleAddBaner}
+                // onChange={handleAddBanerThree}
+              />
+            )}
+          </label>
 
-        {imgTwoURL && (
-          <div className={css.img_menu_container}>
-            <div
-              className={css.img_menu}
-              onClick={() => handleRemoveImg("imgTwoURL")}
-            >
-              <img src={remove} alt="remove" />
+          {imgThreeURL && (
+            <div className={css.img_menu_container}>
+              <div
+                className={css.img_menu}
+                onClick={() => handleRemoveImg(imgThreeURL)}
+              >
+                <img src={remove} alt="remove" />
+              </div>
+              <div className={css.img_menu}>
+                <label>
+                  <img src={updateImg} alt="update" />
+                  <input
+                    className={css.addPhoto}
+                    type="file"
+                    accept="image/*  ,.png,.jpg,.jpeg,.gif,.webp,.svg,.pdf"
+                    onChange={handleUpdateBannersThree}
+                  />
+                </label>
+              </div>
             </div>
-            <div className={css.img_menu}>
-              <img src={turn} alt="turn" />
-            </div>
-          </div>
-        )}
-      </li>
-      <li className={css.addPhoto_item}>
-        <label>
-          {imgThreeURL ? (
-            <img src={imgThreeURL} alt="addBaner" className={css.banner} />
-          ) : (
-            <img src={add} alt="addBaner" />
           )}
-          <input
-            className={css.addPhoto}
-            type="file"
-            accept="image/*  ,.png,.jpg,.jpeg,.gif,.webp,.svg,.pdf"
-            onChange={handleAddBanerThree}
-          />
-        </label>
+        </li>
 
-        {imgThreeURL && (
-          <div className={css.img_menu_container}>
-            <div
-              className={css.img_menu}
-              onClick={() => handleRemoveImg("imgThreeURL")}
-            >
-              <img src={remove} alt="remove" />
-            </div>
-            <div className={css.img_menu}>
-              <img src={turn} alt="turn" />
-            </div>
-          </div>
+        {!imgOneURL && !imgTwoURL && !imgThreeURL ? (
+          <p className={`${css.underBanner} dark:text-white`}>
+            Supported types of images: JPEG, PNG, GIF, WEBP, SVG. <br /> You can
+            upload up to 3 images. Recommended image size 1080x1080
+          </p>
+        ) : (
+          <p className={`${css.underBanner} dark:text-white`}>
+            You first picture will be the main picture.
+          </p>
         )}
-      </li>
-
-      {!imgOneURL && !imgTwoURL && !imgThreeURL ? (
-        <p className={css.underBanner}>
-          Supported types of images: JPEG, PNG, GIF, WEBP, SVG. <br /> You can
-          upload up to 3 images.
-        </p>
-      ) : (
-        <p className={css.underBanner}>
-          You first picture will be the main picture.
-        </p>
-      )}
-    </ul>
+      </ul>
+    </>
   );
 };
 

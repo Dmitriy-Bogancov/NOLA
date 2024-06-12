@@ -69,11 +69,11 @@ const MainPage = () => {
 
       {loading && <h2>LOADING...</h2>}
       <ul>
-        {data.map(({ id, title, banner }) => (
+        {data.map(({ id, title, banners }) => (
           <Posts
             key={id}
             data={data}
-            url={banner}
+            url={banners}
             title={title}
             id={id}
             handleSavePost={handleSavePost}

@@ -4,6 +4,7 @@ import edit from "../../assets/icons/edit.svg";
 import deletePost from "../../assets/icons/deletePost.svg";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { deleteDraftsPostId, getDraftsPost } from "../../services/https/https";
 
 const DraftsPage = () => {
   const navigate = useNavigate();
@@ -12,7 +13,7 @@ const DraftsPage = () => {
   useEffect(() => {
     const getData = (async () => {
       try {
-        // const {data} = await getDraftPost()
+        // const { data } = await getDraftsPost()
         // setData(data)
         setData(JSON.parse(localStorage.getItem("backend")));
       } catch (error) {
@@ -26,16 +27,17 @@ const DraftsPage = () => {
   };
 
   const handleEditPost = (idPost) => {
-    navigate(`/main/addPost/${idPost}`);
+    navigate(`/main/drafts/${idPost}`);
   };
 
   const handleDeletePost = (idPost) => {
     console.log("handleDeletePost", idPost);
+    // deleteDraftsPostId()
   };
 
   return (
     <div className={css.drafts_container}>
-      <p className={css.title}>Add an advertisement</p>
+      <p className={`${css.title} dark:text-white `}>Add an advertisement</p>
       <div className={css.draftsList_container}>
         <ul className={css.drafts_list}>
           <li
@@ -50,10 +52,10 @@ const DraftsPage = () => {
           </li>
 
           {data &&
-            [data]?.map((_, idx) => (
-              <li key={idx} className={css.drafts_item}>
+            [data]?.map(({ id }) => (
+              <li key={id} className={css.drafts_item}>
                 <img
-                  src={data?.banner[0]?.img}
+                  src={data?.banners[0] || data?.banners[1] || data?.banners[2]}
                   alt=""
                   className={`${css.drafts_img} ${css.img_back}`}
                 />
@@ -65,12 +67,12 @@ const DraftsPage = () => {
                     src={edit}
                     alt="edit post"
                     className={css.edit}
-                    onClick={() => handleEditPost(idx)}
+                    onClick={() => handleEditPost(id)}
                   />
                   <img
                     src={deletePost}
                     alt="delete post"
-                    onClick={() => handleDeletePost(idx)}
+                    onClick={() => handleDeletePost(id)}
                   />
                 </div>
               </li>
@@ -78,7 +80,7 @@ const DraftsPage = () => {
         </ul>
       </div>
 
-      <p className={css.attention}>
+      <p className={`${css.attention} dark:text-white `}>
         Drafts are stored for 14 days. After that, they are permanently deleted.
       </p>
     </div>

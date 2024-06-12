@@ -4,7 +4,8 @@
   gap: 100px;
 }
 
-.auth {
+.auth,
+.authDark {
   text-decoration: none;
   padding: 30px 0;
   font-weight: 500;
@@ -18,13 +19,24 @@
   transition: color 0.3s ease;
 }
 
+.authDark {
+  color: #ffffff;
+}
+
 .auth:hover,
 .auth.active {
   font-weight: 600;
   color: #333333;
 }
 
-.auth::after {
+.authDark:hover,
+.authDark.activeDark {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.auth::after,
+.authDark::after {
   content: "";
   display: block;
   position: absolute;
@@ -38,8 +50,36 @@
   transition: height 0.3s ease, background-color 0.3s ease;
 }
 
+.authDark::after {
+  background-color: rgb(150, 145, 145);
+}
+
 .auth.active::after,
 .auth:hover::after {
   height: 4px;
   background-color: #333333;
+}
+
+.authDark.activeDark::after,
+.authDark:hover::after {
+  height: 4px;
+  background-color: #ffffff;
+}
+
+.iconDark,
+.icon {
+  position: absolute;
+  top: 26px;
+  right: -30px;
+
+  display: flex;
+  align-items: center;
+}
+
+.iconDark svg path {
+  stroke: #ffffff;
+}
+
+.icon svg path {
+  stroke: #18171780;
 }

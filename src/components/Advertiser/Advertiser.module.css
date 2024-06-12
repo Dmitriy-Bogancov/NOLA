@@ -1,0 +1,82 @@
+.main {
+  display: flex;
+  align-items: center;
+  margin-top: 17px;
+}
+
+.title {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0.75%;
+}
+
+.count {
+  font-weight: 500;
+  font-size: 12;
+  line-height: 16px;
+  letter-spacing: 075%;
+}
+
+.icon {
+  border: solid 2px #656565;
+  border-radius: 50%;
+  margin-bottom: 8px;
+}
+
+.account {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.footer,
+.iconDark {
+  margin-top: 16px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.icon_links {
+  margin-right: 8px;
+}
+
+.links,
+.linksDark {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: -0.75%;
+  color: #07145b;
+}
+
+.linksDark {
+  color: rgb(20, 52, 230);
+}
+
+.description {
+  text-align: justify;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  margin: 16px 0;
+}
+
+.footer_btn,
+.footerDark_btn {
+  display: block;
+  border: transparent;
+  background-color: transparent;
+  color: #07145b;
+  margin-top: 8px;
+  margin-bottom: 26px;
+}
+
+.footerDark_btn {
+  color: rgb(20, 52, 230);
+}
+
+.iconDark svg path {
+  stroke: rgb(20, 52, 230);
+}

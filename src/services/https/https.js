@@ -2,7 +2,6 @@ import axios from "axios";
 import { instance } from "../axios";
 // 1234567A-z
 
-
 // ----------Account---------
 export const getAccountApi = async () => {
   const data = await instance.get("/Account", {});
@@ -11,25 +10,23 @@ export const getAccountApi = async () => {
 
 // =======
 export const postAccoutApi = async (body) => {
-  const {data} = await instance.post("https://.../account", body);
-return data
+  const { data } = await instance.post("https://.../account", body);
+  return data;
 };
 
 export const patchAccoutApi = async (id, { ...body }) => {
-  const {data} = await instance.put(`https://.../account/${id}`, body);
-return data
+  const { data } = await instance.put(`https://.../account/${id}`, body);
+  return data;
 };
 // =======
 
-
-
 // -----------POSTS-------------
 export const getAllPostApi = async () => {
-  return await instance.get("/advertisements");
+  return await instance.get("/Advertisements");
 };
 
 export const getPostIdApi = async (id) => {
-  return await instance.get(`/advertisements/${id}`);
+  return await instance.get(`/Advertisements/${id}`);
 };
 
 export const postPostApi = async (post) => {
@@ -37,9 +34,13 @@ export const postPostApi = async (post) => {
   return data;
 };
 
-export const patchPostApi = async (id, { ...body }) => {
-  const data = await instance.patch(`/Advertisements/${id}`, body, {});
-  return data;
+export const patchPostApi = async (id, body) => {
+  try {
+    const { data } = await instance.put(`/Advertisements/${id}`, body);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const deletePostApi = async (id) => {
@@ -47,7 +48,74 @@ export const deletePostApi = async (id) => {
   return data;
 };
 
+// -----------DRAFTS-------------
 
+export const postDraftsPost = async (body) => {
+  try {
+    const { data } = await instance.post(`/Drafts`, body);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getDraftsPost = async () => {
+  try {
+    const { data } = await instance.get(`/Drafts`);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getDraftsPostId = async (id) => {
+  try {
+    const { data } = await instance.get(`/Drafts/${id}`);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const patchDraftsPostId = async (id, body) => {
+  try {
+    const { data } = await instance.put(`/Drafts/${id}`, body);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteDraftsPostId = async (id) => {
+  try {
+    const { data } = await instance.delete(`/Drafts/${id}`);
+    return data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// ---------RecoverPassword-------
+
+export const postForgotPassword = async (email) => {
+      const { data } = await instance.post(
+    `/Account/forgot-password?email=${email}`
+  );
+  return data;
+};
+
+export const postResetPassword = async (
+  body
+) => {
+   const data = await instance.post(`/Account/reset-password`, body);
+     return data;
+
+};
+
+export const getResetPassword = async (email, token) => {
+    const data = await instance.get(`/Account/reset-password?${email}&${token}`);
+    return data;
+};
 
 // -----------POST-------------
 export const getAllAdverticerPostApi = async (token) => {

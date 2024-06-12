@@ -15,15 +15,14 @@ const AuthorizationPage = () => {
 
   return (
     <div>
-      <div className={css.top_container}>
-        <GoBackButton
+      <GoBackButton
           to=""
-          imgSrc={back}
           imgAlt="Go back"
+          imgWidth="50px"
+          imgHeight="50px"
+          title="Account login"
           onClick={handleBack}
         />
-        <h1 className={`${css.title} ${css.return}`}>Account login</h1>
-      </div>
       <ScrollBar
         labelOne="Sign In"
         pathnameOne="/main/authorization"
