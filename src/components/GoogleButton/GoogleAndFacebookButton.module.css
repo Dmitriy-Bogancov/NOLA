@@ -1,0 +1,38 @@
+.buttonContainer {
+  position: relative;
+}
+
+.buttonForm {
+  width: 100% !important;
+  border-radius: 12px  !important;;
+  border: 2px solid !important;;
+  padding: 15px 24px !important;;
+  margin-top: 40px !important;;
+  margin-bottom: 18px !important;;
+  color: black  !important;;
+  display: flex !important; ;
+}
+
+.separatorLine {
+  top: -26px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #9e9e9e;
+  
+}
+
+.orText {
+  position: absolute;
+  left: 220px;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 0 10px;
+  color: #9e9e9e;
+}
+.icon {
+  height: 20px  !important;;
+  width: 20px  !important;;
+  margin-right: 10px  !important;;
+  color: blue  !important;;
+}

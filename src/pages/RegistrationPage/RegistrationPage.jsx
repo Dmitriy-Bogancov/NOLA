@@ -1,11 +1,11 @@
 import RegistrationForm from "../../components/RegistrationForm";
-import GoogleAndAppleButton from "../../components/GoogleButton/GoogleAndAppleButton";
+import GoogleAndFacebookButton from "../../components/GoogleButton/GoogleAndFacebookButton";
 
 const RegistrationPage = () => {
   return (
     <div className="">
       <RegistrationForm />
-      <GoogleAndAppleButton />
+      <GoogleAndFacebookButton />
     </div>
   );
 };
