@@ -1,3 +1,60 @@
+import React, { useState } from "react";
+import { FaFacebook } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
+import FacebookLogin from "react-facebook-login";
+import { useNavigate } from 'react-router-dom'; 
+import css from "./GoogleAndFacebookButton.module.css";
+import {  useGoogleLogin } from "@react-oauth/google";
+
+const GoogleAndFacebookButton = () => {
+  const navigate = useNavigate();
+  const [redirect, setRedirect] = useState(false); 
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      console.log("Google login successful", tokenResponse);
+      setRedirect(true); 
+      navigate("/main/accountAdverticer");
+    },
+    onError: (error) => {
+      console.error("Google login failed", error);
+    },
+  });
+
+  const handleFacebookSuccess = (response) => {
+    console.log("Facebook login successful", response);
+    setRedirect(true); 
+    navigate("/main/accountAdverticer");
+  };
+
+  const handleFacebookFailure = (error) => {
+    console.error("Facebook login failed", error);
+  };
+
+  return (
+      <div className={css.buttonContainer}>
+        <div className={css.separatorLine}></div>
+        <div className={css.orText}>or</div>
+        <button onClick={() => googleLogin()} className={css.buttonForm}>
+          <FcGoogle className={css.icon} />
+          Continue with Google
+        </button>
+        <FacebookLogin
+          appId="366622046395430"
+          autoLoad={false}
+          fields="name,email,picture"
+          callback={handleFacebookSuccess}
+          onFailure={handleFacebookFailure}
+          icon={<FaFacebook className={css.icon}/>} 
+          textButton="Continue with Facebook"
+          cssClass={css.buttonForm}
+        />
+      </div>
+  );
+};
+
+export default GoogleAndFacebookButton;
+
 // import React, { useState, useEffect } from "react";
 // import { FaFacebook } from "react-icons/fa";
 // import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
@@ -82,71 +139,3 @@
 // export default GoogleAndFacebookButton;
 
 
-import React, { useState } from "react";
-import { FaFacebook } from "react-icons/fa";
-import { FcGoogle } from "react-icons/fc";
-import { GoogleLogin } from 'react-google-login';
-import FacebookLogin from "react-facebook-login";
-import { useNavigate } from 'react-router-dom'; 
-import css from "./GoogleAndFacebookButton.module.css";
-
-const GoogleAndFacebookButton = () => {
-  const navigate = useNavigate();
-  const [redirect, setRedirect] = useState(false); 
-
-  const handleGoogleSuccess = (response) => {
-    console.log("Google login successful", response);
-    setRedirect(true); 
-    navigate("/main/accountAdverticer"); // Перенаправлення
-  };
-
-  const handleGoogleFailure = (error) => {
-    console.error("Google login failed", error);
-  };
-
-  const handleFacebookSuccess = (response) => {
-    console.log("Facebook login successful", response);
-    setRedirect(true); 
-    navigate("/main/accountAdverticer"); // Перенаправлення
-  };
-
-  const handleFacebookFailure = (error) => {
-    console.error("Facebook login failed", error);
-  };
-
-  // if (redirect) {
-  //   return <Navigate to="/main/accountAdverticer" />; 
-  // }
-
-  return (
-    <div className={css.buttonContainer}>
-      <div className={css.separatorLine}></div>
-      <div className={css.orText}>or</div>
-      <GoogleLogin
-         clientId="816846792743-3cmg8t2bhfvr19bvu60r65slnrjon8ko.apps.googleusercontent.com"
-         render={(renderProps) => (
-          <button className={css.buttonForm} onClick={renderProps.onClick} disabled={renderProps.disabled}>
-            <FcGoogle className={css.icon} />
-           Continue with Google
-          </button>
-        )}
-         buttonText="Continue with Google"
-        onSuccess={handleGoogleSuccess}
-        onFailure={handleGoogleFailure}
-        cookiePolicy={'single_host_origin'}
-      />
-      <FacebookLogin
-        appId="366622046395430"
-        autoLoad={false}
-        fields="name,email,picture"
-        callback={handleFacebookSuccess}
-        onFailure={handleFacebookFailure}
-        icon={<FaFacebook className={css.icon}/>} 
-        textButton="Continue with Facebook"
-        cssClass={css.buttonForm}
-      />
-    </div>
-  );
-};
-
-export default GoogleAndFacebookButton;
