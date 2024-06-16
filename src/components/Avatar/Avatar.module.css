@@ -1,0 +1,28 @@
+.photo_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 17px 0;
+}
+
+.addPhoto {
+  display: none;
+}
+
+.photo_containner{
+  width: 100px;
+  height: 100px;
+  border: solid 2px #656565;
+  border-radius: 50%;
+ overflow: hidden; 
+} 
+
+
+.photo_title {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 48px;
+  letter-spacing: var(--primary-letter);
+  color: var(--primary-color);
+}

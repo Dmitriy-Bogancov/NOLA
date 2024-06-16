@@ -62,12 +62,12 @@ export const AddCallToAction = ({ setPost, post }) => {
   return (
     <ul className={css.links_list}>
       <li className={`${css.links_list_item} ${css.action_links}`}>
-        <textarea
+        <input
           name="callToActionLinks"
           value={post?.callToActionLinks}
           className={`${css.callToActionLinks}   dark:bg-black dark:border-white dark:text-white`}
           onChange={handleCallToActionLinks}
-        ></textarea>
+        />
       </li>
 
       <li className={css.links_list_item}>
