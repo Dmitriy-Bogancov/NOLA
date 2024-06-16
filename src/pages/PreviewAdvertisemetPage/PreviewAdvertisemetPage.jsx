@@ -122,17 +122,23 @@ const PreviewAdvertisemetPage = ({ setPreview }) => {
                       ></div>
                     </div>
                   </Swiper>
-
-                  <PostsAdverticer data={data} />
+                  {[data]?.map(({ title, description, links }) => (
+                    <>
+                      <PostsAdverticer
+                        title={title}
+                        description={description}
+                        links={links}
+                      />
+                    </>
+                  ))}
                 </>
               ))}
           </div>
           <div className={css.btn_container}>
-            <button type="button" className={css.btn} onClick={handleBack}>
+            <button type="button" className={css.btn_back_container} onClick={handleBack}>
               <span
                 className={`${css.btn_back} dark:text-white dark:border-white`}
               >
-                {" "}
                 Back to editing
               </span>
             </button>

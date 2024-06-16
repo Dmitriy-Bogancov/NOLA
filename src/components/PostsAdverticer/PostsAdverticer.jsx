@@ -1,7 +1,5 @@
 import PropTypes from "prop-types";
 import css from "./PostsAdverticer.module.css";
-import GoBackButton from "../GoBackButton/GoBackButton";
-import back from "../../assets/images/back.jpg";
 
 export const PostsAdverticer = ({ title, description, links }) => {
   return (
@@ -15,7 +13,7 @@ export const PostsAdverticer = ({ title, description, links }) => {
 
       <p className={`${css.descriptionTest} dark:text-white`}>{description}</p>
 
-      {links.length > 0 && (
+      {links?.length > 0 && (
         <p className={`${css.links} dark:text-white`}>Links:</p>
       )}
       <ul>

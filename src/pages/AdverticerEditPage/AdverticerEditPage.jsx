@@ -3,8 +3,7 @@ import GoBackButton from "../../components/GoBackButton/GoBackButton";
 import back from "../../assets/images/back.jpg";
 import add from "../../assets/icons/addBaner.svg";
 import deleteLink from "../../assets/icons/deleteLink.svg";
-import { NavLink, useNavigate } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import { useEffect, useState } from "react";
 import {
@@ -13,15 +12,14 @@ import {
   postAccoutApi,
 } from "../../services/https/https";
 import * as yup from "yup";
-import addLinks from "../../assets/icons/addBaner.svg";
 import attention from "../../assets/icons/circle-exclamation-mark.svg";
 import { useCustomContext } from "../../services/Context/Context";
 import { Modal } from "../../components/Modal/Modal";
-import { AddPostLinks } from "../../components/AddPostLinks/AddPostLinks";
 import { ToastError } from "../../services/ToastError/ToastError";
 import { nanoid } from "nanoid";
-import { postImg } from "../../services/cloudinary/cloudinary";
 import { ToastContainer } from "react-toastify";
+import { Avatar } from "../../components/Avatar/Avatar";
+
 
 const schema = yup.object().shape({
   name: yup.string().min(1).required("Name is required"),
@@ -30,15 +28,12 @@ const schema = yup.object().shape({
 
 const AdverticerEditPage = () => {
   const navigation = useNavigate();
+  const { theme, setTheme } = useCustomContext();
   const [data, setData] = useState([]);
   const { token, setToken } = useCustomContext();
   const [errors, setErrors] = useState({});
   const [validForm, setValidForm] = useState(false);
   const [isModal, setIsModal] = useState(false);
-  const [photo, setPhoto] = useState(() => {
-    return JSON.parse(localStorage.getItem("account"))?.photo ?? "";
-  });
-  const [update, setUpdate] = useState(false);
 
   const [links, setLinks] = useState(() => {
     return (
@@ -61,8 +56,6 @@ const AdverticerEditPage = () => {
   const [symbolspostDescriptionCount, setSymbolspostDescriptionCount] =
     useState(account?.description?.length || 0);
 
-  const upload_presets = "j0hj8hjd";
-  const api_key = "984292171139147";
 
   useEffect(() => {
     errors;
@@ -104,31 +97,6 @@ const AdverticerEditPage = () => {
   useEffect(() => {
     localStorage.setItem("account", JSON.stringify(account));
   }, [account]);
-
-  const handleAddPhoto = async (e) => {
-    const filesOne = e.target.files[0];
-
-    const formData = new FormData();
-    formData.append("file", filesOne);
-    formData.append("api_key", api_key);
-    formData.append("upload_preset", upload_presets);
-
-    if (filesOne) {
-      try {
-        setUpdate(true);
-        const data = await postImg(formData);
-        setAccount((prev) => ({
-          ...account,
-          photo: data?.data?.url,
-        }));
-        setPhoto(data?.data?.url);
-      } catch (error) {
-        ToastError(error.message);
-      } finally {
-        setUpdate(false);
-      }
-    }
-  };
 
   const handleLinkAdd = () => {
     if (
@@ -293,22 +261,9 @@ const AdverticerEditPage = () => {
             title="Account"
           />
         </div>
-        {update && <p>Photo downloаding</p>}
-        <div className={css.photo_container}>
-          <label>
-            <img src={photo} className={`${css.icon}`} />
-
-            <input
-              className={css.addPhoto}
-              type="file"
-              onChange={handleAddPhoto}
-            />
-          </label>
-
-          <p className={`${css.photo_title} dark:text-white`}>Add photo</p>
-        </div>
 
         <form className={css.form_container} onSubmit={handleSubmit}>
+          <Avatar setAccount={setAccount} account={account}/>
           <div className={css.form}>
             <label className={`${css.post_description} dark:text-white`}>
               Name*
@@ -328,48 +283,63 @@ const AdverticerEditPage = () => {
                 onChange={handleForm}
               />
             </label>
-
+            <p className={`${css.post_description} dark:text-white`}>Links*</p>
             {links &&
               links?.map(({ id, url, name }) => (
                 <div key={id} className={css.links_container}>
-                  <textarea
+                  <input
                     value={url}
                     name="links"
                     placeholder="url"
                     className={`${
-                      css.post_container
-                    }   dark:bg-black dark:border-white dark:text-white 
+                    css.post_container
+                    }   dark:bg-black dark:text-white 
                    ${
-                     account?.links?.length > 0 && url.length === 0
-                       ? `${css.error_placeholder} ${css.error_links} dark:border-red`
-                       : ""
+                     account?.links?.length > 0 && url.length === 0 
+                      ? ` ${css.error_placeholder} ${css.error_links} dark:border-red`
+                     : `dark:border-white`
+                       
                    }
-                `}
+
+                 
+                `
+ 
+                    }
                     onChange={(e) => handleLinkChange(id, e.target.value, name)}
                   />
-                  <textarea
+                  <input
                     value={name}
                     name="links"
                     onChange={(e) => handleLinkChange(id, url, e.target.value)}
                     placeholder="name"
                     onBlur={() => handleBlur("links")}
-                    className={`${
+                    className={`dark:bg-black 
+                       dark:text-white 
+                    ${
                       css.post_container
-                    }   dark:bg-black dark:border-white dark:text-white
+                    }   
                     ${
                       account?.links?.length > 0 && name.length === 0
-                        ? `${css.error_placeholder} ${css.error_links} dark:border-red`
-                        : ""
+                      ? `${css.error_placeholder} ${css.error_links} 
+             
+                      dark:border-red`
+                        :  `dark:border-white`
                     }
                 `}
                   />
 
                   {el.id === id ? (
-                    <img src={add} alt="add link" onClick={handleLinkAdd} />
+                    <img
+                      src={add}
+                      alt="add link"
+                      className={css.img}
+                      onClick={handleLinkAdd}
+                    />
                   ) : (
                     <img
                       src={deleteLink}
                       alt="delete link"
+                      className={css.img}
                       onClick={() => handleLinkDelete(id)}
                     />
                   )}
@@ -399,7 +369,7 @@ const AdverticerEditPage = () => {
                 onChange={handleForm}
               ></textarea>
               <p className={`${css.symbols} dark:text-white`}>
-                Symbols left
+                Symbols
                 <span>{symbolspostDescriptionCount}/500</span>
               </p>
             </label>

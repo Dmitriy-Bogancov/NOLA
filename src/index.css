@@ -43,6 +43,7 @@ code {
 
 button {
   padding: 0;
+  cursor: pointer;
 }
 
 .container {
@@ -66,6 +67,7 @@ p {
 
 img {
   display: block;
+  image-rendering: -webkit-optimize-contrast;
 }
 
 a {

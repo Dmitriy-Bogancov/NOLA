@@ -9,7 +9,6 @@ import { ToastError } from "../../services/ToastError/ToastError";
 import { HandleFormConfig } from "../../components/HandleFormConfig/HandleFormConfig";
 import { MessagePostOnModeration } from "../../components/MessagePostOnModeration/MessagePostOnModeration";
 import GoBackButton from "../../components/GoBackButton/GoBackButton";
-import back from "../../assets/images/back.jpg";
 import { Modal } from "../../components/Modal/Modal";
 import { CreatePost } from "../../components/CreatePost/CreatePost";
 
@@ -134,8 +133,8 @@ const AddPostPage = ({ postEdit, setPostEdit, draftsEdit, setDraftsEdit }) => {
 
             <div className={css.btn_container}>
               <NavLink to="/main/addPost/previewAdvertisemet">
-                <button type="button" className={css.btn}>
-                  <span className={css.btn_back}> Preview</span>
+                <button type="button" className={css.btn_preview_container}>
+                  <span className={css.btn_preview}> Preview</span>
                 </button>
               </NavLink>
 
@@ -154,13 +153,14 @@ const AddPostPage = ({ postEdit, setPostEdit, draftsEdit, setDraftsEdit }) => {
       )}
       {isModal && (
         <Modal handleToggleModal={handleToggleModal}>
-          <p>Add post to drafts?</p>
-          <button type="button" onClick={createPostDrafts}>
-            Yes
+          <h2 className={css.modal_title}>Add post to draft?</h2>
+          <p className={css.modal_descr}>You can come back to edit later.</p>
+          <button type="button"  className={css.modal_btn} onClick={createPostDrafts}>
+           Confirm
           </button>
-          <button type="button" onClick={cancelAddPost}>
-            No
-          </button>
+          <p type="button"  className={`${css.modal_text} dark:text-white`} onClick={cancelAddPost}>
+           Cancel
+          </p>
         </Modal>
       )}
       {postSuccessfullyAdded && (
