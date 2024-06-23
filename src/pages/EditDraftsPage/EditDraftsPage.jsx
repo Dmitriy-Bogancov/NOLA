@@ -164,8 +164,8 @@ const EditDraftsPage = () => {
         )}
         <div className={css.btn_container}>
           <NavLink to="/main/addPost/previewAdvertisemet">
-            <button type="button" className={css.btn}>
-              <span className={css.btn_back}> Preview</span>
+            <button type="button" className={css.btn_preview_container}>
+              <span className={css.btn_preview}> Preview</span>
             </button>
           </NavLink>
 
@@ -181,15 +181,13 @@ const EditDraftsPage = () => {
         </div>
       </form>
       {isModal && (
-        <Modal handleToggleModal={handleToggleModal}>
-          <p>Save a draft?</p>
-          <button type="button" onClick={createPostDrafts}>
-            Yes
-          </button>
-          <button type="button" onClick={cancelAddPost}>
-            No
-          </button>
-        </Modal>
+        <Modal
+          handleToggleModal={handleToggleModal}
+          confirm={createPostDrafts}
+          cancel={cancelAddPost}
+          title="Save a draft?"
+          description="You can come back to edit later."
+        ></Modal>
       )}
       {postSuccessfullyAdded && <MessagePostOnModeration />}
     </>

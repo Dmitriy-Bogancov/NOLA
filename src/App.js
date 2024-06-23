@@ -63,11 +63,15 @@ const AdverticeArchivePage = lazy(() =>
 const LinksPage = lazy(() => import("./pages/LinksPage/LinksPage"));
 const AddLinksPage = lazy(() => import("./pages/AddLinksPage/AddLinksPage"));
 const AddPostPage = lazy(() => import("./pages/AddPostPage/AddPostPage"));
+const QuestionsPage = lazy(() => import("./pages/QuestionsPage/QuestionsPage"));
 const AboutServicePage = lazy(() =>
   import("./pages/AboutServicePage/AboutServicePage")
 );
-const ContactServicePage = lazy(() =>
+const PolicyAndPrivecyPage = lazy(() =>
   import("./pages/PolicyAndPrivecyPage/PolicyAndPrivecyPage")
+);
+const FeedbackPage = lazy(() =>
+  import("./pages/FeedbackPage/FeedbackPage")
 );
 const EditPostPage = lazy(() => import("./pages/EditPostPage/EditPostPage"));
 const PreviewAdvertisemetPage = lazy(() =>
@@ -239,27 +243,30 @@ function App() {
               }
             />
 
-            <Route
-              path="/main/settingAdverticer"
-              element={
-                <PrivateRoute
-                  component={<SettingAdverticerPage />}
-                  redirectTo="/main/authorization"
-                />
-              }
-            />
-            <Route path="/main/setting" element={<SettingPage />} />
+            <Route path="/setting" element={<SettingPage />} />
+
             <Route path="/main/setting/language" element={<LanguagePage />} />
             <Route path="/main/setting/theme" element={<ThemePage />} />
+
+            <Route
+              path="/main/setting/questions"
+              element={<QuestionsPage />}
+            />
+
             <Route
               path="/main/setting/aboutService"
               element={<AboutServicePage />}
             />
 
             <Route
-              path="/main/setting/aboutService/contactService"
-              element={<ContactServicePage />}
+              path="/main/setting/policyAndPrivecy"
+              element={<PolicyAndPrivecyPage />}
             />
+
+           <Route
+              path="/main/setting/feedback"
+              element={<FeedbackPage />}
+            />           
             <Route
               path="/main/settingAdverticer/changePassword"
               element={

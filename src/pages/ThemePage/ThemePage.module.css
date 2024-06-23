@@ -1,0 +1,41 @@
+.top_container {
+  margin-bottom: 18px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 48px;
+  letter-spacing: var(--primary-letter);
+  color: #292929;
+  margin-left: 19px;
+  cursor: pointer;
+}
+
+.check {
+  margin-left: auto;
+}
+
+.item_check_dark {
+  position: relative;
+}
+
+.check_dark {
+  position: absolute;
+  top: -40px;
+  right: 5px;
+}
+
+.iconDark svg path,
+.iconDark svg circle {
+  stroke: #ffffff;
+}
+
+.iconDarkBlack svg path {
+  fill: #ffffff;
+}

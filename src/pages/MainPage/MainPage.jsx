@@ -61,7 +61,10 @@ const MainPage = () => {
   return (
     <div>
       <ToastContainer />
-      <NavLink to="setting">
+      <NavLink
+        // to="setting"
+        to="/setting"
+      >
         <button type="button" onClick={handleSetting}>
           Setting
         </button>
