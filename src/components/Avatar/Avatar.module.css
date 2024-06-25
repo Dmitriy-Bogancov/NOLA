@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   margin: 17px 0;
+  cursor: pointer;
 }
 
 .addPhoto {
@@ -31,11 +32,19 @@
   align-items: center;
   text-align: center;
   position: absolute;
-  top: 50%;
+  top: 45%;
   left: 50%;
   z-index: 2;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -45%);
   border-radius: 16px;
   background-color: #fffefe;
   box-shadow: 10px 5px 5px rgb(163 160 160), -0.5em 0 0.4em rgb(163 160 160);
 }
+
+/* .avatar div div{
+  border-radius: 50% !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  border: solid 2px #656565 !important;
+  background-color: black;
+} */
