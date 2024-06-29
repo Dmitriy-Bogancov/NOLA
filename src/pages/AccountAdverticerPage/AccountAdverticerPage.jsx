@@ -32,7 +32,8 @@ const AccountAdverticerPage = () => {
     <div>
       <div className={css.nav}>
         <NavLink
-          to="/main/settingAdverticer"
+          // to="/main/settingAdverticer"
+          to="/setting"
           className={theme === "dark" ? css.iconDark : css.icon}
           onClick={handleSetting}
         >

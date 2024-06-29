@@ -1,0 +1,37 @@
+.top_container {
+  margin-bottom: 24px;
+}
+
+.policy_container {
+  margin-bottom: 24px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 22px;
+  text-align: left;
+  margin-top: 24px;
+}
+
+.descr {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  text-align: left;
+  margin-top: 8px;
+}
+
+.list_title {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  text-align: left;
+  margin-top: 24px;
+}
+
+.empty_str {
+  display: block;
+  width: 100%;
+  height: 8px;
+}

@@ -18,7 +18,7 @@ import { Modal } from "../../components/Modal/Modal";
 import { ToastError } from "../../services/ToastError/ToastError";
 import { nanoid } from "nanoid";
 import { ToastContainer } from "react-toastify";
-import { Avatar } from "../../components/Avatar/Avatar";
+import { AvatarUser } from "../../components/Avatar/Avatar";
 
 
 const schema = yup.object().shape({
@@ -263,7 +263,7 @@ const AdverticerEditPage = () => {
         </div>
 
         <form className={css.form_container} onSubmit={handleSubmit}>
-          <Avatar setAccount={setAccount} account={account}/>
+          <AvatarUser setAccount={setAccount} account={account}/>
           <div className={css.form}>
             <label className={`${css.post_description} dark:text-white`}>
               Name*
@@ -402,27 +402,14 @@ const AdverticerEditPage = () => {
           </div>
         </form>
         {isModal && (
-          <Modal handleToggleModal={handleToggleModal}>
-            <h2 className={`${css.modal_title} dark:text-white`}>
-              Your profile is incomplete!{" "}
-            </h2>
-            <p className={`${css.modal_descr} dark:text-white`}>
-              You won’t be able to publish announcements until you complete the
-              profile
-            </p>
-            <button
-              type="button"
-              className={css.modal_btn}
-              onClick={handlerContinue}
-            >
-              Continue entering data
-            </button>
-            <p
-              className={`${css.modal_text} dark:text-white`}
-              onClick={handlerLater}
-            >
-              Continue later
-            </p>
+          <Modal handleToggleModal={handleToggleModal}
+          confirm={handlerContinue}
+          cancel={handlerLater}
+          title="Your profile is incomplete!"
+            description="You won’t be able to publish announcements until you complete the profile"
+            btn_text_confirm="Continue entering data" 
+             btn_text_cancel="Continue later"
+          >
           </Modal>
         )}
       </div>

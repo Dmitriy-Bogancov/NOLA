@@ -1,0 +1,30 @@
+.top_container {
+  margin-bottom: 18px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 48px;
+  letter-spacing: var(--primary-letter);
+  color: #292929;
+  margin-left: 19px;
+  cursor: pointer;
+}
+
+.language {
+  font-weight: 600;
+}
+
+.check {
+  margin-left: auto;
+}
+
+.iconDark svg path {
+  stroke: #ffffff;
+}

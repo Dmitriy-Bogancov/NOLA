@@ -28,8 +28,7 @@ const AddPostPage = ({ postEdit, setPostEdit, draftsEdit, setDraftsEdit }) => {
   });
   const [post, setPost] = useState(() => {
     return (
-      JSON.parse(localStorage.getItem("previewPost")) ?? // draftsEdit ?? // postEdit ??
-      {
+      JSON.parse(localStorage.getItem("previewPost")) ?? { // draftsEdit ?? // postEdit ??
         id: nanoid(),
         description: "",
         title: "",
@@ -152,15 +151,21 @@ const AddPostPage = ({ postEdit, setPostEdit, draftsEdit, setDraftsEdit }) => {
         </>
       )}
       {isModal && (
-        <Modal handleToggleModal={handleToggleModal}>
+        <Modal
+          handleToggleModal={handleToggleModal}
+          confirm={createPostDrafts}
+          cancel={cancelAddPost}
+          title="Add post to draft?"
+          description="You can come back to edit later."
+        >
           <h2 className={css.modal_title}>Add post to draft?</h2>
           <p className={css.modal_descr}>You can come back to edit later.</p>
-          <button type="button"  className={css.modal_btn} onClick={createPostDrafts}>
+          {/* <button type="button"  className={css.modal_btn} onClick={createPostDrafts}>
            Confirm
           </button>
           <p type="button"  className={`${css.modal_text} dark:text-white`} onClick={cancelAddPost}>
            Cancel
-          </p>
+          </p> */}
         </Modal>
       )}
       {postSuccessfullyAdded && (

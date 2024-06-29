@@ -1,6 +1,10 @@
-import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import css from "./ThemePage.module.css";
 import { useCustomContext } from "../../services/Context/Context";
+
+import { ReactComponent as Icon_Light } from "../../assets/icons/sun_light.svg";
+import { ReactComponent as Icon_Dark } from "../../assets/icons/moon_light.svg";
+import GoBackButton from "../../components/GoBackButton/GoBackButton";
+import { ReactComponent as Icon_Check } from "../../assets/icons/setting_check.svg";
 
 const ThemePage = () => {
   const { theme, setTheme } = useCustomContext();
@@ -14,23 +18,50 @@ const ThemePage = () => {
   };
   return (
     <div>
-      {/* <NavLink to={"/main/setting"}>
-        <button type="button">BACK</button>
-      </NavLink> */}
-      <h2>Theme</h2>
+      <div className={css.top_container}>
+        <GoBackButton
+          to="/setting"
+          imgWidth="50px"
+          imgHeight="50px"
+          imgAlt="Go back"
+          title="Theme"
+        />
+      </div>
+
       <ul>
-        <li>
-          <button type="button" onClick={handleThemeLight}>
+        <li className={`${css.item} ${theme === "dark" ? css.iconDark : ""}`}>
+          <Icon_Light />
+          <p
+            className={`${css.title} dark:text-white`}
+            onClick={handleThemeLight}
+          >
             Light
-          </button>
-          {theme === "light" ? <span>+</span> : ""}
+          </p>
+          <div className={css.check}>
+            {theme === "light" ? <Icon_Check /> : ""}
+          </div>
         </li>
 
-        <li>
-          <button type="button" onClick={handleThemeDark}>
+        <li
+          className={`${css.item} ${theme === "dark" ? css.iconDarkBlack : ""}`}
+        >
+          <Icon_Dark />
+          <p
+            className={`${css.title} dark:text-white`}
+            onClick={handleThemeDark}
+          >
             Dark
-          </button>
-          {theme === "dark" ? <span>+</span> : ""}
+          </p>
+        </li>
+
+        <li className={css.item_check_dark}>
+          <div
+            className={`${css.check_dark} ${
+              theme === "dark" ? css.iconDark : ""
+            }`}
+          >
+            {theme === "dark" ? <Icon_Check /> : ""}
+          </div>
         </li>
       </ul>
     </div>

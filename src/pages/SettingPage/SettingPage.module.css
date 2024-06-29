@@ -1,0 +1,60 @@
+.top_container {
+  margin-bottom: 18px;
+}
+
+.setting_container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.list {
+  flex-grow: 1;
+}
+
+.item,
+.footer {
+  display: flex;
+  align-items: center;
+}
+
+.title,
+.footer_title {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 48px;
+  letter-spacing: var(--primary-letter);
+  color: #292929;
+  margin-left: 8px;
+}
+
+.footer {
+  flex-shrink: 0;
+  margin-bottom: 50px;
+}
+
+.footer_title {
+  color: #435bd7;
+}
+
+.btn_password {
+  display: block;
+}
+
+.icon {
+  margin-top: 5px;
+}
+
+.iconDark svg path,
+.iconDark svg circle,
+.iconDark svg ellipse {
+  stroke: #ffffff;
+}
+
+.iconDarkTheme svg path {
+  fill: #ffffff;
+}
+
+.iconDarkSign svg path {
+  stroke: #435bd7;
+}
