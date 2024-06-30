@@ -98,6 +98,7 @@ export const AvatarUser = ({ setAccount, account }) => {
   const handleAvatar = (e) => {
    const { target, currentTarget } = e;
     if (target === currentTarget) {
+      setSrc(photo ? photo : null);
       setModal(prev => !prev);
     }
   };
