@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunknola=self.webpackChunknola||[]).push([[380],{4380:(l,i,n)=>{n.r(i),n.d(i,{default:()=>e});var s=n(184);const e=()=>(0,s.jsxs)("div",{children:[(0,s.jsx)("h2",{children:"Language"}),(0,s.jsxs)("ul",{children:[(0,s.jsx)("li",{children:"English"}),(0,s.jsx)("li",{children:"Ukrainian"}),(0,s.jsx)("li",{children:"German"}),(0,s.jsx)("li",{children:"Polish"})]})]})}}]);
-//# sourceMappingURL=380.293af147.chunk.js.map
