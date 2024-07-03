@@ -40,7 +40,7 @@ const AccountAdverticerPage = () => {
           <Icon_Settings />
         </NavLink>
 
-        <p>Friendly Study</p>
+        <p className={css.title}>Friendly Study</p>
 
         <NavLink
           to="adverticerEdit"

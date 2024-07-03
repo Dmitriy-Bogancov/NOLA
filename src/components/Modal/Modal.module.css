@@ -39,15 +39,13 @@
 
 .modal_descr {
   font-size: 12px;
-  font-weight: 400;
-  line-height: 14px;
+  line-height: 16px;
   color: var(--primary-color);
   margin-bottom: 20px;
 }
 
 .modal_btn {
   font-size: 14px;
-  font-weight: 400;
   line-height: 22px;
   text-align: center;
   min-width: 150px;

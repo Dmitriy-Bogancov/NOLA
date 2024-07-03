@@ -9,7 +9,6 @@
   font-weight: 500;
   font-size: 16px;
   line-height: 24px;
-  letter-spacing: -0.75%;
   color: #000000;
   margin-bottom: 16px;
 }
@@ -86,7 +85,6 @@
 
 .attention {
   flex-shrink: 0;
-  font-weight: 400;
   font-size: 12px;
   line-height: 14px;
   color: #8d8d8d;

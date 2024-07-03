@@ -5,18 +5,23 @@ import PropTypes from "prop-types";
 // import { thumbnail } from "@cloudinary/url-gen/actions/resize";
 // import { focusOn } from "@cloudinary/url-gen/qualifiers/gravity";
 // import { FocusOn } from "@cloudinary/url-gen/qualifiers/focusOn";
+import image_account from "../../assets/icons/image.svg";
+import { ReactComponent as Icon_Image } from "../../assets/icons/image.svg";
 import { useEffect, useState } from "react";
 import { ToastError } from "../../services/ToastError/ToastError";
 import Avatar from "react-avatar-edit";
 import { postImg } from "../../services/cloudinary/cloudinary";
+import { useCustomContext } from "../../services/Context/Context";
 
 export const AvatarUser = ({ setAccount, account }) => {
+  const { theme, setTheme } = useCustomContext();
   const [photo, setPhoto] = useState(() => {
     return JSON.parse(localStorage.getItem("account"))?.photo ?? "";
   });
   const [update, setUpdate] = useState(false);
   const [src, setSrc] = useState(null);
   const [modal, setModal] = useState(false);
+    const [image, setImage] = useState(false);
 
   // const cld = new Cloudinary({
   //   cloud: {
@@ -92,13 +97,16 @@ export const AvatarUser = ({ setAccount, account }) => {
   };
 
   const onCrop = async (i) => {
+    setImage(true)
     setSrc(i);
   };
 
   const handleAvatar = (e) => {
-   const { target, currentTarget } = e;
+    const { target, currentTarget } = e;
     if (target === currentTarget) {
-      setModal(prev => !prev);
+      setSrc(photo ? photo : null);
+      setImage(false)
+      setModal((prev) => !prev);
     }
   };
 
@@ -107,14 +115,24 @@ export const AvatarUser = ({ setAccount, account }) => {
       {update && <p>Photo downloаding</p>}
       <div className={css.photo_container}>
         {modal && (
-          <div className={css.modal}>
-            <div className={css.avatar}>
-              <Avatar
-                width={300}
-                height={250}
-                onCrop={onCrop}
-                onClose={onClose}
-              />
+          <div className={css.backdrop} onClick={handleAvatar}>
+            <div
+              className={`${css.modal} ${
+                theme === "dark" ? css.modal_dark : ""
+              }`}
+            >
+              <div
+                className={`${css.avatar} ${
+                  theme === "dark" ? css.avatar_dark : ""
+                }`}
+              >
+                <Avatar
+                  width={300}
+                  height={210}
+                  onCrop={onCrop}
+                  onClose={onClose}
+                />
+              </div>
             </div>
           </div>
         )}
@@ -122,9 +140,15 @@ export const AvatarUser = ({ setAccount, account }) => {
         <img
           src={!src ? photo : src}
           alt=""
-          className={css.photo_containner}
+          className={`${css.src_container} dark:border-white `}
           onClick={handleAvatar}
         />
+        {!photo ? (
+          <div className={`${css.icon} ${image ? css.invisible : ""}`} onClick={handleAvatar}>
+            <Icon_Image />
+          </div> 
+        ) : "" }
+
         {/* <label>
           <div className={css.photo_containner}>
             {imgRes && <AdvancedImage cldImg={imgRes} />}

@@ -8,14 +8,15 @@
   font-weight: 500;
   font-size: 20px;
   line-height: 24px;
-  letter-spacing: 0.75%;
+  letter-spacing: var(--primary-letter);
 }
 
 .count {
   font-weight: 500;
-  font-size: 12;
+  font-size: 12px;
   line-height: 16px;
-  letter-spacing: 075%;
+  color: var(--primary-color);
+  margin-left: -25px;
 }
 
 .icon {
@@ -47,7 +48,7 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 16px;
-  letter-spacing: -0.75%;
+  letter-spacing: var(--primary-letter);
   color: #07145b;
 }
 
@@ -57,7 +58,6 @@
 
 .description {
   text-align: justify;
-  font-weight: 400;
   font-size: 14px;
   line-height: 21px;
   margin: 16px 0;

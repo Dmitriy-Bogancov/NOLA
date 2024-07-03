@@ -270,7 +270,7 @@ const AdverticerEditPage = () => {
               <input
                 name="name"
                 type="text"
-                placeholder="Name"
+                placeholder="Agency \ Brand \ Service"
                 value={account?.name}
                 onBlur={() => handleBlur("name")}
                 style={{
@@ -291,7 +291,7 @@ const AdverticerEditPage = () => {
                     value={url}
                     name="links"
                     placeholder="url"
-                    className={`${
+                    className={`secondary_text_style ${
                     css.post_container
                     }   dark:bg-black dark:text-white 
                    ${
@@ -313,7 +313,7 @@ const AdverticerEditPage = () => {
                     onChange={(e) => handleLinkChange(id, url, e.target.value)}
                     placeholder="name"
                     onBlur={() => handleBlur("links")}
-                    className={`dark:bg-black 
+                    className={`secondary_text_style dark:bg-black 
                        dark:text-white 
                     ${
                       css.post_container
@@ -381,7 +381,7 @@ const AdverticerEditPage = () => {
             !validForm ? (
               <div className={css.attention_container}>
                 <img src={attention} alt="attention" />
-                <p className={css.attention_descr}>
+                <p className={`secondary_text_style ${css.attention_descr}`}>
                   Fill in all required fields for input
                 </p>
               </div>

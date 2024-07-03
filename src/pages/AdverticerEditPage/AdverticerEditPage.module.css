@@ -7,7 +7,7 @@
 .form_container {
   display: flex;
   flex-direction: column;
-  min-height: 70vh;
+  min-height: 85vh;
 }
 
 .form {
@@ -23,6 +23,7 @@
   resize: none;
   display: block;
   border-radius: 12px;
+  color:  var(--primary-color);
   border: 1px solid var(--primary-color);
   width: calc(100% - 52px);
   margin-top: 4px;
@@ -76,7 +77,6 @@
   display: flex;
   justify-content: space-between;
   font-size: 10px;
-  font-weight: 400;
   line-height: 16px;
   color: #666666;
 }
@@ -94,9 +94,6 @@
 }
 
 .attention_descr {
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 18px;
   color: #dd3636;
 }
 

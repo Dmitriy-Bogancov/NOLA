@@ -41,7 +41,7 @@ const SavedPostsPage = () => {
           {posts.map((post) => (
             <li key={post.id} className={css.item}>
               <NavLink to={`/main/${post.id}`}>
-                <img src={post.banner} alt="" className={css.img} />
+                <img src={post.banners} alt="" className={css.img} />
               </NavLink>
               <div className={css.item_footer}>
                 <div>
