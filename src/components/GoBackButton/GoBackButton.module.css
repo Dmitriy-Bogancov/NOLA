@@ -3,6 +3,7 @@
   display: flex;
   align-items: center;
   margin-left: -13px;
+  margin-top: -15px;
 }
 
 .titleRecovery {
@@ -11,7 +12,7 @@
   left: 52%;
   transform: translate(-55%, -50%);
   font-size: 16px;
-  font-weight: 500;
+  /* font-weight: 500; */
   line-height: 48px;
   letter-spacing: var(--primary-letter);
   text-align: center;

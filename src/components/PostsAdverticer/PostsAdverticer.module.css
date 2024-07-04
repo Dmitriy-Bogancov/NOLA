@@ -35,7 +35,6 @@
 .descriptionTest {
   width: 100%;
   padding: 16px;
-  font-weight: 400;
   font-size: 14px;
   line-height: 21px;
   margin-bottom: 16px;
@@ -51,10 +50,8 @@
 .links_item {
   display: flex;
   align-items: center;
-  font-weight: 400;
   font-size: 11px;
   line-height: 16px;
-  letter-spacing: -0.75%;
   margin-bottom: 4px;
 }
 
