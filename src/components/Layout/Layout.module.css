@@ -25,7 +25,54 @@
 }
 
 .item {
+  position: relative;
   display: inline-block;
+  width: 75px;
+  height: 83px;
+}
+
+.icon_save svg {
+  position: absolute;
+  top: 20px;
+  left: 58%;
+  height: 32px;
+  transform: translate(-55%, -2px);
+}
+
+.iconDark svg path {
+  stroke: #ffffff;
+}
+
+.iconDark svg rect {
+  fill: rgb(28 26 26);
+}
+
+.iconDark svg circle {
+  stroke: #ffffff;
+}
+
+.iconActive svg {
+  fill: #ffffff;
+}
+
+.iconDarkActive svg {
+  fill: rgb(28 26 26);
+}
+
+.iconDarkActiveWidth svg path {
+  stroke-width: 4;
+}
+
+.iconActiveWidth svg path {
+  stroke-width: 4;
+}
+
+.iconDarkActiveWidth svg circle {
+  stroke-width: 4;
+}
+
+.iconActiveWidth svg circle {
+  stroke-width: 4;
 }
 
 @media screen and (max-width: 370px) {
