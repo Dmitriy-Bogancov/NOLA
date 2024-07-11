@@ -165,7 +165,9 @@ const EditDraftsPage = () => {
         <div className={css.btn_container}>
           <NavLink to="/main/addPost/previewAdvertisemet">
             <button type="button" className={css.btn_preview_container}>
-              <span className={css.btn_preview}> Preview</span>
+              <span className={`${css.btn_preview} dark:text-white`}>
+                Preview
+              </span>
             </button>
           </NavLink>
 

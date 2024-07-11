@@ -12,6 +12,8 @@ export const Context = ({ children }) => {
     return localStorage.getItem("theme") ?? "light";
   });
 
+  const [postsId, setPostsId] = useState("");
+
   useEffect(() => {
     if (theme === "dark") {
       document.documentElement.classList.add("dark");
@@ -29,6 +31,8 @@ export const Context = ({ children }) => {
       value={{
         theme,
         setTheme,
+        postsId,
+        setPostsId,
       }}
     >
       {children}

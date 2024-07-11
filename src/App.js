@@ -7,6 +7,7 @@ import { refreshUserThunk } from "./redux/auth/authThunk";
 import { useAuth } from "./services/hooks/useAuth";
 import { RestrictedRout } from "./components/AuthRouts/RestrictedRout";
 import { PrivateRoute } from "./components/AuthRouts/PrivateRout";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 
 const Layout = lazy(() => import("./components/Layout/Layout"));
 const LoadingPage = lazy(() => import("./pages/LoadingPage/LoadingPage"));
@@ -96,6 +97,7 @@ function App() {
 
   return (
     <div className="App">
+      <ScrollToTop/>
       {!isRefreshing && (
         <Suspense fallback={null}>
           <Routes>

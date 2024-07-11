@@ -15,7 +15,6 @@ import Button from "../../components/Button";
 const LinksPage = () => {
   const location = useLocation();
   const navigation = useNavigate();
-  const [isModal, setIsModal] = useState(false);
 
   const [account, setAccount] = useState(() => {
     return JSON.parse(localStorage.getItem("account")) ?? {};

@@ -6,8 +6,10 @@ import { AddCallToAction } from "../AddCallToAction/AddCallToAction";
 import { AddPostLinks } from "../AddPostLinks/AddPostLinks";
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
+import { LoaderSpiner } from "../../services/loaderSpinner/LoaderSpinner";
 
 export const CreatePost = ({ setPost, post, links, setLinks }) => {
+  const [update, setUpdate] = useState(false);
   const [symbolsTitleCount, setSymbolsTitleCount] = useState(0);
   const [symbolspostDescriptionCount, setSymbolspostDescriptionCount] =
     useState(0);
@@ -83,6 +85,11 @@ export const CreatePost = ({ setPost, post, links, setLinks }) => {
 
   return (
     <>
+      {update && (
+        <div className={css.loader}>
+          <LoaderSpiner />
+        </div>
+      )}
       {post?.length !== 0 && <AddBanner setPost={setPost} post={post} />}
       <p className={`${css.title} dark:text-white`}>Fill in the details</p>
 

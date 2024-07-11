@@ -12,6 +12,7 @@ import { ToastError } from "../../services/ToastError/ToastError";
 import { ToastContainer } from "react-toastify";
 import { postForgotPassword } from "../../services/https/https";
 import { useCustomContext } from "../../services/Context/Context";
+import { Toastify } from "../../services/Toastify/Toastify";
 
 const schema = yup.object().shape({
   email: yup
@@ -70,10 +71,15 @@ const RecoveryForm = () => {
         try {
           console.log("Form submitted with data:", formData);
           // const data = await postForgotPassword(formData.email);
+          Toastify("New password sent by email");
           handleToggleModal();
         } catch (error) {
           console.log(error);
-          ToastError(error?.response?.data || error?.response?.statusText || error.message);
+          ToastError(
+            error?.response?.data ||
+              error?.response?.statusText ||
+              error.message
+          );
         }
         // setFormData({
         //   email: "",
@@ -138,7 +144,9 @@ const RecoveryForm = () => {
         />
 
         <img src={email} alt="Logo" className={css.imageForm} />
-        <h3 className={`${css.titleForm} dark:text-white`}>Update your password</h3>
+        <h3 className={`${css.titleForm} dark:text-white`}>
+          Update your password
+        </h3>
         <p className={`${css.infoForm} dark:text-white`}>
           Enter your username or email address and <br />
           select “Send Email”
@@ -151,7 +159,9 @@ const RecoveryForm = () => {
             )}
             <input
               className={`${css.inputForm} ${
-                errors?.email?.length === 0 && theme === "light" ? css.active : ""
+                errors?.email?.length === 0 && theme === "light"
+                  ? css.active
+                  : ""
               }
               secondary_text_style
               dark:bg-black dark:border-white dark:text-white
@@ -183,14 +193,14 @@ const RecoveryForm = () => {
           </div>
         </form>
 
-        {isModal && (
+        {/* {isModal && (
           <Modal
             handleToggleModal={handleToggleModal}
           >
             <p className={css.modal_title}>New password sent by email </p>
 
           </Modal>
-        )}
+        )} */}
       </div>
     </>
   );

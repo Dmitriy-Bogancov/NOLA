@@ -47,6 +47,7 @@ const PreviewAdvertisemetPage = ({ setPreview }) => {
       {console.log("setPreview", data)}
       {postSuccessfullyAdded && <MessagePostOnModeration />}
       {!postSuccessfullyAdded && (
+        <>
         <div className={css.preview_container}>
           <div className={css.previewMain}>
             <p className={css.title}>Advertisement preview</p>
@@ -134,8 +135,14 @@ const PreviewAdvertisemetPage = ({ setPreview }) => {
                 </>
               ))}
           </div>
+          </div>
+
           <div className={css.btn_container}>
-            <button type="button" className={css.btn_back_container} onClick={handleBack}>
+          <button
+            type="button"
+            className={`${css.btn_back_container}`}
+            onClick={handleBack}
+            >
               <span
                 className={`${css.btn_back} dark:text-white dark:border-white`}
               >
@@ -154,7 +161,7 @@ const PreviewAdvertisemetPage = ({ setPreview }) => {
               <span className={css.btn_back_active}>Publish</span>
             </button>
           </div>
-        </div>
+        </>
       )}
     </>
   );

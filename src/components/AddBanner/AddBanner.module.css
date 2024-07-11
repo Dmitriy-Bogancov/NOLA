@@ -1,3 +1,15 @@
+.loader {
+  position: absolute;
+  top: 240px;
+  left: -1%;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 30vh;
+}
+
 .addPhoto_container {
   position: relative;
   display: flex;
@@ -34,7 +46,7 @@
 
 .underBanner {
   position: absolute;
-  bottom: 24px;
+  bottom: 10px;
   left: 16px;
   font-weight: 400;
   font-size: 10px;
@@ -71,24 +83,24 @@
 
 @media screen and (min-width: 400px) {
   .addPhoto_item {
-  width: 110px;
-  height: 110px;
-}
+    width: 110px;
+    height: 110px;
+  }
 
-.banner {
-  width: 110px;
-  height: 110px;
-}
+  .banner {
+    width: 110px;
+    height: 110px;
+  }
 
-.underBanner {
-  bottom: 14px;
-}
+  .underBanner {
+    bottom: 14px;
+  }
 
   .img_menu_container {
-  bottom: 33px;
-}
+    bottom: 33px;
+  }
 
-.underBanner_description {
-  bottom: 8px;
-}
+  .underBanner_description {
+    bottom: 8px;
+  }
 }

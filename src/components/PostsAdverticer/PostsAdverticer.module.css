@@ -33,7 +33,7 @@
 }
 
 .descriptionTest {
-  width: 100%;
+  /* width: 100%; */
   padding: 16px;
   font-size: 14px;
   line-height: 21px;
@@ -63,7 +63,7 @@
   margin-right: 8px;
 }
 
-.url{
-  color: #07145B;
+.url {
+  color: #07145b;
   cursor: pointer;
 }

@@ -9,6 +9,8 @@ export const Modal = ({
   handleToggleModal,
   btn_text_confirm = "Confirm",
   btn_text_cancel = "Cancel",
+  childrenEl = false,
+  children,
 }) => {
   const handleCloseBackdrop = (e) => {
     const { target, currentTarget } = e;
@@ -21,20 +23,25 @@ export const Modal = ({
     <div className={css.backdrop} onClick={handleCloseBackdrop}>
       <div className={`${css.modal} dark:bg-black`}>
         <div className={css.children}>
-          {/* {children}  */}
-          <h2 className={css.modal_title}>{title}</h2>
-          <p className={css.modal_descr}>{description}</p>
+          {childrenEl ? (
+            children
+          ) : (
+            <>
+              <h2 className={css.modal_title}>{title}</h2>
+              <p className={css.modal_descr}>{description}</p>
 
-          <button type="button" className={css.modal_btn} onClick={confirm}>
-            {btn_text_confirm}
-          </button>
-          <p
-            type="button"
-            className={`${css.modal_text} dark:text-white`}
-            onClick={cancel}
-          >
-            {btn_text_cancel}
-          </p>
+              <button type="button" className={css.modal_btn} onClick={confirm}>
+                {btn_text_confirm}
+              </button>
+              <p
+                type="button"
+                className={`${css.modal_text} dark:text-white`}
+                onClick={cancel}
+              >
+                {btn_text_cancel}
+              </p>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -42,10 +49,11 @@ export const Modal = ({
 };
 
 Modal.propTypes = {
-  // children: PropTypes.node.isRequired,
+  children: PropTypes.node,
+  childrenEl: PropTypes.bool,
   handleToggleModal: PropTypes.func.isRequired,
-  confirm: PropTypes.func.isRequired,
-  cancel: PropTypes.func.isRequired,
+  confirm: PropTypes.func,
+  cancel: PropTypes.func,
   title: PropTypes.string,
   description: PropTypes.string,
   btn_text_confirm: PropTypes.string,

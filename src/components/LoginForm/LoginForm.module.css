@@ -24,10 +24,11 @@
 
 .link_forgot {
   display: block;
-  width: 80px;
+  width: 100px;
   padding: 8px 0;
   margin-left: auto;
   margin-top: -20px;
+  margin-right: -10px;
   cursor: pointer;
 }
 
@@ -79,7 +80,7 @@
   position: absolute;
   bottom: 4px;
   left: 0;
-  background-color: white;
+  /* background-color: white; */
   padding: 0 5px;
   z-index: 1;
 }

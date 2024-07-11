@@ -34,8 +34,8 @@ const GoogleAndFacebookButton = () => {
   return (
       <div className={css.buttonContainer}>
         <div className={css.separatorLine}></div>
-        <div className={css.orText}>or</div>
-        <button onClick={() => googleLogin()} className={css.buttonForm}>
+        <div className={`${css.orText} dark:bg-black`}>or</div>
+        <button onClick={() => googleLogin()} className={`${css.buttonForm} dark:bg-black dark:border-white dark:text-white`}>
           <FcGoogle className={css.icon} />
           Continue with Google
         </button>
@@ -47,7 +47,7 @@ const GoogleAndFacebookButton = () => {
           onFailure={handleFacebookFailure}
           icon={<FaFacebook className={css.icon}/>} 
           textButton="Continue with Facebook"
-          cssClass={css.buttonForm}
+          cssClass={`${css.buttonForm} dark:bg-black dark:border-white dark:text-white`}
         />
       </div>
   );

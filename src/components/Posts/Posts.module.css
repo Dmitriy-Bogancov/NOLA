@@ -1,14 +1,97 @@
 .img {
   width: 100%;
+  aspect-ratio: 1.6;
 }
 
 .card {
   max-width: 100%;
   aspect-ratio: 1;
-  margin-top: 15px;
+  border-radius: 20px;
+  border: 1px solid rgba(230, 230, 230, 1);
+  margin-top: 16px;
+  overflow: hidden;
 }
 
-.action{
-  padding: 10px;
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 21px;
+  letter-spacing: -0.0075em;
+  color: #000000;
+  text-align: left;
+}
 
+.post_header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+}
+
+.line {
+  display: block;
+  width: 93%;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.15);
+  margin: 0 auto;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+}
+
+.icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #e0dede;
+  margin-right: 12px;
+}
+
+.footer_title {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  letter-spacing: -0.0075em;
+  text-align: left;
+}
+
+.count {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: -0.0075em;
+  text-align: left;
+}
+
+.action {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 16px;
+  letter-spacing: -0.0075em;
+  margin-left: auto;
+  color: #000000;
+}
+
+.save_btn {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.iconDark svg path {
+  stroke: #ffffff;
+}
+
+@media screen and (min-width: 400px) {
+  .img {
+    aspect-ratio: 1.5;
+  }
+}
+
+@media screen and (min-width: 450px) {
+  .img {
+    aspect-ratio: 1.4;
+  }
 }

@@ -33,7 +33,7 @@ GoBackButton.propTypes = {
   to: PropTypes.string,
   title: PropTypes.string,
   imgSrc: PropTypes.string,
-  imgAlt: PropTypes.string.isRequired,
+  imgAlt: PropTypes.string,
   imgWidth: PropTypes.string,
   imgHeight: PropTypes.string,
   onClick: PropTypes.func,

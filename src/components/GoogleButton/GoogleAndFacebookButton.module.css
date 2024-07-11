@@ -9,7 +9,7 @@
   padding: 15px 24px !important;;
   margin-top: 40px !important;;
   margin-bottom: 18px !important;;
-  color: black  !important;;
+  /* color: black  !important;; */
   display: flex !important; ;
 }
 
@@ -24,7 +24,7 @@
 
 .orText {
   position: absolute;
-  left: 220px;
+  left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff;
   padding: 0 10px;

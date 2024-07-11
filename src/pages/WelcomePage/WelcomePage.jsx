@@ -15,51 +15,65 @@ import searching from "../../assets/images/searching.png";
 
 const WelcomePage = () => {
   return (
-    <div>
-      <h1 className={css.title}>Welcome to NOLA!</h1>
+    <div className={css.welcome_container}>
+      <div className={css.welcome_main}>
+        <h1 className={css.title}>Welcome to NOLA!</h1>
 
-      <p className={css.description}>"No One Likes Advertisement" But we do!</p>
+        <p className={css.description}>
+          "No One Likes Advertisement" <br /> But we do!
+        </p>
 
-      <Swiper
-        slidesPerView={1}
-        spaceBetween={30}
-        loop={true}
-        pagination={{
-          clickable: true,
-        }}
-        navigation={true}
-        modules={[Pagination, Navigation]}
-        className="mySwiper"
-      >
-        <SwiperSlide className={css.swiper_slide}>
-          <img src={learn} alt="learnsearching" className={css.img} />
-          <div className={css.specification}>
-            <h3 className={css.swiper_title}>Diverse e-catalog</h3>
-            <p>
-              Events, webinars, courses, publicity – all at once in one place
-            </p>
-          </div>
-        </SwiperSlide>
+        <Swiper
+          slidesPerView={1}
+          spaceBetween={30}
+          loop={true}
+          pagination={{
+            clickable: true,
+          }}
+          navigation={true}
+          modules={[Pagination, Navigation]}
+          className="mySwiper"
+        >
+          <SwiperSlide className={css.swiper_slide}>
+            <img src={learn} alt="learnsearching" className={css.img} />
+            <div className={css.specification}>
+              <h3 className={css.swiper_title}>Diverse e-catalog</h3>
+              <p className={`${css.swiper_description} dark:text-white`}>
+                Events, webinars, courses, publicity – all at once in one place
+              </p>
+            </div>
+          </SwiperSlide>
 
-        <SwiperSlide className={css.swiper_slide}>
-          <img src={searching} alt="searchingAdvertising" className={css.img} />
-          <div className={css.specification}>
-            <h3 className={css.swiper_title}>Quick advert search</h3>
-            <p>Easy-to-use subject categories and meta tags</p>
-          </div>
-        </SwiperSlide>
+          <SwiperSlide className={css.swiper_slide}>
+            <img
+              src={searching}
+              alt="searchingAdvertising"
+              className={css.img}
+            />
+            <div className={css.specification}>
+              <h3 className={css.swiper_title}>Quick advert search</h3>
+              <p className={`${css.swiper_description} dark:text-white`}>
+                Easy-to-use subject categories and meta tags
+              </p>
+            </div>
+          </SwiperSlide>
 
-        <SwiperSlide className={css.swiper_slide}>
-          <img src={create} alt="createAdvertising" className={css.img} />
-          <div className={css.specification}>
-            <h3 className={css.swiper_title}>Simple post publication</h3>
-            <p>Quick and free organic advertisement placement</p>
-          </div>
-        </SwiperSlide>
-      </Swiper>
+          <SwiperSlide className={css.swiper_slide}>
+            <img src={create} alt="createAdvertising" className={css.img} />
+            <div className={css.specification}>
+              <h3 className={css.swiper_title}>Simple post publication</h3>
+              <p className={`${css.swiper_description} dark:text-white`}>
+                Quick and free organic advertisement placement
+              </p>
+            </div>
+          </SwiperSlide>
+        </Swiper>
+      </div>
 
-      <NavLink to="/main">
-        <button type="button">continue</button>
+      <NavLink to="/main" className={css.welcome_footer}>
+        <button type="button" className={css.btn}>
+          Continue
+        </button>
       </NavLink>
     </div>
   );

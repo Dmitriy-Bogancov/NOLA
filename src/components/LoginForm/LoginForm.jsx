@@ -130,7 +130,7 @@ const LoginForm = () => {
           <input
             className={`${css.inputForm}  ${
               errors?.email?.length === 0 ? css.active : ""
-            }`}
+            } dark:bg-black dark:border-white dark:text-white`}
             type="email"
             name="email"
             placeholder="Username or Email"
@@ -155,7 +155,7 @@ const LoginForm = () => {
             <input
               className={`${css.inputForm} ${css.passwordInput}  ${
                 errors?.password?.length === 0 ? css.active : ""
-              }`}
+              } dark:bg-black dark:border-white dark:text-white`}
               type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"

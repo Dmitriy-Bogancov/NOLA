@@ -1,3 +1,18 @@
+.welcome_container {
+  display: flex;
+  flex-direction: column;
+  height: 95vh;
+  padding: 0 8px;
+}
+
+.welcome_main {
+  flex-grow: 1;
+}
+
+.welcome_footer {
+  flex-shrink: 0;
+}
+
 .swiper_slide {
   flex-shrink: 0;
   height: 100%;
@@ -15,10 +30,49 @@
 .title,
 .description,
 .specification {
+  font-family: "Manrope", sans-serif;
   text-align: center;
   margin: 16px 0;
 }
 
+.title {
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 22px;
+  letter-spacing: var(--primary-letter);
+}
+
+.description {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: var(--primary-letter);
+}
+
 .swiper_title {
   margin: 40px 0 16px 0;
+}
+
+.swiper_description {
+  width: 295px;
+  color: rgba(0, 0, 0, 0.58);
+  margin: 0 auto;
+}
+
+.specification {
+  margin: 40px 0 32px 0;
+}
+
+.btn {
+  width: 100%;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 48px;
+  letter-spacing: var(--primary-letter);
+  color: #000000;
+  text-align: center;
+  background-color: var(--primary-bg);
+  border-color: transparent;
+  border-radius: 12px;
+  margin-bottom: 45px;
 }
