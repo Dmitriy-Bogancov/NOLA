@@ -28,7 +28,8 @@ const AddPostPage = ({ postEdit, setPostEdit, draftsEdit, setDraftsEdit }) => {
   });
   const [post, setPost] = useState(() => {
     return (
-      JSON.parse(localStorage.getItem("previewPost")) ?? { // draftsEdit ?? // postEdit ??
+      JSON.parse(localStorage.getItem("previewPost")) ?? {
+        // draftsEdit ?? // postEdit ??
         id: nanoid(),
         description: "",
         title: "",
@@ -133,7 +134,9 @@ const AddPostPage = ({ postEdit, setPostEdit, draftsEdit, setDraftsEdit }) => {
             <div className={css.btn_container}>
               <NavLink to="/main/addPost/previewAdvertisemet">
                 <button type="button" className={css.btn_preview_container}>
-                  <span className={css.btn_preview}> Preview</span>
+                  <span className={`${css.btn_preview} dark:text-white`}>
+                    Preview
+                  </span>
                 </button>
               </NavLink>
 
@@ -160,12 +163,6 @@ const AddPostPage = ({ postEdit, setPostEdit, draftsEdit, setDraftsEdit }) => {
         >
           <h2 className={css.modal_title}>Add post to draft?</h2>
           <p className={css.modal_descr}>You can come back to edit later.</p>
-          {/* <button type="button"  className={css.modal_btn} onClick={createPostDrafts}>
-           Confirm
-          </button>
-          <p type="button"  className={`${css.modal_text} dark:text-white`} onClick={cancelAddPost}>
-           Cancel
-          </p> */}
         </Modal>
       )}
       {postSuccessfullyAdded && (

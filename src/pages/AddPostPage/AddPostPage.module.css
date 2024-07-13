@@ -1,11 +1,12 @@
 .top_container {
   display: flex;
   align-items: center;
+  margin-top: 10px;
 }
 
 .title_back {
   position: relative;
-  top: 0;
+  top: -10px;
   left: 33%;
   transform: translate(-35%, 0);
   font-weight: 500;

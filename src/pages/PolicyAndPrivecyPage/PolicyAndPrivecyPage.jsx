@@ -1,19 +1,23 @@
 import css from "./PolicyAndPrivecyPage.module.css";
 import GoBackButton from "../../components/GoBackButton/GoBackButton";
-import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const PolicyAndPrivecyPage = () => {
-  const location = useLocation();
+  const navigate = useNavigate();
 
+  const handleBack = () => {
+    navigate(-1);
+  };
   return (
     <div>
       <div className={css.top_container}>
         <GoBackButton
-          to="/setting"
+          // to="/setting"
           imgWidth="50px"
           imgHeight="50px"
           imgAlt="Go back"
           title=" Privacy policy"
+          onClick={handleBack}
         />
       </div>
 

@@ -7,6 +7,7 @@ import updateImg from "../../assets/icons/turn.svg";
 import { postImg } from "../../services/cloudinary/cloudinary";
 import { ToastError } from "../../services/ToastError/ToastError";
 import { ToastContainer } from "react-toastify";
+import { LoaderSpiner } from "../../services/loaderSpinner/LoaderSpinner";
 
 export const AddBanner = ({ setPost, post }) => {
   const [update, setUpdate] = useState(false);
@@ -42,8 +43,15 @@ export const AddBanner = ({ setPost, post }) => {
     );
   });
 
-  const upload_presets = "j0hj8hjd";
-  const api_key = "984292171139147";
+  // const upload_presets = "j0hj8hjd";
+  // const api_key = "984292171139147";
+
+  // eslint-disable-next-line no-undef
+  const upload_presets = process.env.REACT_APP_UPLOAD_PRESETS;
+  // eslint-disable-next-line no-undef
+  const api_key = process.env.REACT_APP_API_KEY;
+
+
 
   useEffect(() => {
     if (post?.banners[0] === "") {
@@ -312,7 +320,11 @@ export const AddBanner = ({ setPost, post }) => {
 
   return (
     <>
-      {update && <p>Photo downloаding</p>}
+      {update && (
+        <div className={css.loader}>
+          <LoaderSpiner />
+        </div>
+      )}
       <ToastContainer />
       <ul className={`${css.addPhoto_container} dark:bg-gray`}>
         <p className={`${css.title} ${css.overBanner}`}>Add banners</p>

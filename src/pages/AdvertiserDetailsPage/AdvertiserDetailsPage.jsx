@@ -1,15 +1,20 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import css from "./AdvertiserDetailsPage.module.css";
+import { ReactComponent as Icon_Back } from "../../assets/icons/arrow_left.svg";
 import Layout from "../../components/Layout/Layout";
 import { Advertiser } from "../../components/Advertiser/Advertiser";
 import GoBackButton from "../../components/GoBackButton/GoBackButton";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PostsAdverticer } from "../../components/PostsAdverticer/PostsAdverticer";
 import { getAllPostApi } from "../../services/https/https";
+import { useCustomContext } from "../../services/Context/Context";
 
 const AdvertiserDetailsPage = () => {
   const { advertiserId } = useParams();
+  const locationRef = useRef(location.state?.from ?? "/main");
   const navigate = useNavigate();
+  const { postsId, setPostsId } = useCustomContext();
+  const { theme, setTheme } = useCustomContext();
   const [data, setData] = useState([]);
   const [showPost, setShowPost] = useState(false);
 
@@ -30,7 +35,10 @@ const AdvertiserDetailsPage = () => {
   };
 
   const handleGoBack = () => {
+    // if (locationRef.current) return;
     navigate(-1);
+
+    setPostsId(data?.id);
   };
 
   const handlePost = (id) => {
@@ -41,14 +49,25 @@ const AdvertiserDetailsPage = () => {
     <div className={css.container}>
       <h1>AdvertiserDetailsPage</h1>
 
-      <div onClick={handleGoBack}>
+      {/* <div onClick={handleGoBack}>
         <GoBackButton
           imgAlt="Go back"
           imgWidth="50px"
           imgHeight="50px"
           title="Friendly Study"
         />
-      </div>
+      </div> */}
+
+      <NavLink
+        to={locationRef.current}
+        onClick={handleGoBack}
+        className={`${css.back_container} ${
+          theme === "dark" ? css.iconDark : ""
+        }`}
+      >
+        <Icon_Back />
+        <p className={`${css.back_text} dark:text-white`}> Friendly Study</p>
+      </NavLink>
 
       <Advertiser data={data} />
 

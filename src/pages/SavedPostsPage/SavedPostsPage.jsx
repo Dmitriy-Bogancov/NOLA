@@ -1,14 +1,17 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import css from "./SavedPostsPage.module.css";
+import { ReactComponent as Save_Icon } from "../../assets/icons/saved_icon.svg";
 import { useState } from "react";
-import saved_icon from "../../assets/icons/saved_icon.svg";
 import { Toastify } from "../../services/Toastify/Toastify";
 import { ToastContainer } from "react-toastify";
 import { Modal } from "../../components/Modal/Modal";
+import { useCustomContext } from "../../services/Context/Context";
 
 const LOKAL_KEY = "savedPost";
 
 const SavedPostsPage = () => {
+  const location = useLocation()
+  const { theme, setTheme } = useCustomContext();
   const [isModal, setIsModal] = useState(false);
   const [isDeletePost, setDeletePost] = useState("");
   const [posts, setPosts] = useState(() => {
@@ -40,7 +43,7 @@ const SavedPostsPage = () => {
         <ul className={css.list}>
           {posts.map((post) => (
             <li key={post.id} className={css.item}>
-              <NavLink to={`/main/${post.id}`}>
+              <NavLink to={`/main/${post.id}`} state={{from: location}}>
                 <img src={post.banners} alt="" className={css.img} />
               </NavLink>
               <div className={css.item_footer}>
@@ -54,13 +57,15 @@ const SavedPostsPage = () => {
 
                 <button
                   type="button"
-                  className={css.item_btn}
+                  className={`${css.item_btn} ${theme === "dark"
+                  ? css.iconDark : ""}`}
                   onClick={
                     () => handleToggleModal(post.id)
                     // onClick={() => handleDeletePost(post.id)
                   }
                 >
-                  <img src={saved_icon} alt="saved_icon" />
+                  <Save_Icon/>
+                  {/* <img src={saved_icon} alt="saved_icon" /> */}
                 </button>
               </div>
             </li>
@@ -78,20 +83,7 @@ const SavedPostsPage = () => {
       )}
 
       {isModal && (
-        <Modal handleToggleModal={handleToggleModal}>
-          <>
-            "Are you sure you want to delete?"
-            <button type="button" onClick={handleToggleModal}>
-              No
-            </button>
-            <button
-              type="button"
-              onClick={() => handleDeletePost(isDeletePost)}
-            >
-              Yes
-            </button>
-          </>
-        </Modal>
+        <Modal handleToggleModal={handleToggleModal} title="Are you sure you want to delete?" confirm={() => handleDeletePost(isDeletePost)} cancel={handleToggleModal} />
       )}
     </div>
   );

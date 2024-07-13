@@ -14,7 +14,6 @@ const Layout = () => {
   const { token } = useAuth();
   const { theme, setTheme } = useCustomContext();
   const drafts = JSON.parse(localStorage.getItem("backend"));
-  console.log(location.pathname);
   return (
     <div>
       <main className={css.main}>
@@ -64,11 +63,11 @@ const Layout = () => {
                     className={`${css.icon} ${
                       theme === "dark"
                         ? css.iconDark
-                        : location.pathname === "/main/drafts"
+                        : location.pathname === "/main/registrationCheck"
                         ? css.iconDarkActiveWidth
                         : ""
                     } ${
-                      location.pathname === "/main/drafts"
+                      location.pathname === "/main/registrationCheck"
                         ? css.iconActiveWidth
                         : ""
                     }`}
@@ -142,11 +141,15 @@ const Layout = () => {
                   className={`${css.icon} ${
                     theme === "dark"
                       ? css.iconDark
-                      : location.pathname === "/main/accountAdverticer"
+                      : location.pathname === "/main/accountAdverticer" ||
+                        location.pathname === "/main/authorization" ||
+                        location.pathname === "/main/authorization/registration"
                       ? css.iconDarkActive
                       : ""
                   } ${
-                    location.pathname === "/main/accountAdverticer"
+                    location.pathname === "/main/accountAdverticer" ||
+                    location.pathname === "/main/authorization" ||
+                    location.pathname === "/main/authorization/registration"
                       ? css.iconActive
                       : ""
                   }`}

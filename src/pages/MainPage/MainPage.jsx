@@ -1,11 +1,10 @@
-import { NavLink } from "react-router-dom";
-import css from "./MainPage.module.css";
 import { useEffect, useState } from "react";
 import { Toastify } from "../../services/Toastify/Toastify";
 import { ToastError } from "../../services/ToastError/ToastError";
 import { ToastContainer } from "react-toastify";
 import { Posts } from "../../components/Posts/Posts";
 import { getAllPostApi } from "../../services/https/https";
+import { LoaderSpiner } from "../../services/loaderSpinner/LoaderSpinner";
 
 const LOKAL_KEY = "savedPost";
 
@@ -50,27 +49,32 @@ const MainPage = () => {
     setPost((prev) => [...prev, ...savedPost]);
   };
 
-  useEffect(() => {
-    localStorage.removeItem("pathname");
-  }, []);
+  // useEffect(() => {
+  //   localStorage.removeItem("pathname");
+  // }, []);
 
-  const handleSetting = () => {
-    localStorage.setItem("pathname", "/main");
-  };
+  // const handleSetting = () => {
+  //   localStorage.setItem("pathname", "/main");
+  // };
 
   return (
     <div>
       <ToastContainer />
-      <NavLink
+      {/* <NavLink
         // to="setting"
         to="/setting"
       >
         <button type="button" onClick={handleSetting}>
           Setting
         </button>
-      </NavLink>
+      </NavLink> */}
 
-      {loading && <h2>LOADING...</h2>}
+      <p>All courses ({data.length})</p>
+      {loading && (
+        <div className="loader">
+          <LoaderSpiner />
+        </div>
+      )}
       <ul>
         {data.map(({ id, title, banners }) => (
           <Posts

@@ -10,6 +10,7 @@ import { deletePostApi, getAllPostApi } from "../../services/https/https";
 import { ToastError } from "../../services/ToastError/ToastError";
 import GoBackButton from "../../components/GoBackButton/GoBackButton";
 import back from "../../assets/images/back.jpg";
+import { LoaderSpiner } from "../../services/loaderSpinner/LoaderSpinner";
 
 const AdverticeArchivePage = () => {
   const [post, setPost] = useState([]);
@@ -19,12 +20,13 @@ const AdverticeArchivePage = () => {
     recovere: false,
     deleted: false,
   });
-
+  const [loading, setLoading] = useState(false);
   const [postActiveId, setPostActiveId] = useState("");
   const [showPost, setShowPost] = useState(false);
   const [menuActive, setMenuActive] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const getData = (async () => {
       try {
         //  await getAllAdverticerPostApi.status || getAccountApi.status
@@ -32,6 +34,8 @@ const AdverticeArchivePage = () => {
         setPost(data);
       } catch (error) {
         ToastError(error);
+      } finally {
+        setLoading(false);
       }
     })();
   }, []);
@@ -57,14 +61,14 @@ const AdverticeArchivePage = () => {
 
   const handleDeletePost = async (id) => {
     try {
-      await deletePostApi(id);
+      // await deletePostApi(id);
       Toastify("Archived post has been deleted");
       setPost(post.filter((post) => post.id !== id));
     } catch (error) {
       ToastError("Error! Try later");
+    } finally {
+      handleToggleModal();
     }
-
-    handleToggleModal();
   };
 
   const handleRecoverePost = (id) => {
@@ -85,6 +89,11 @@ const AdverticeArchivePage = () => {
   return (
     <div>
       <ToastContainer />
+      {loading && (
+        <div className="loader">
+          <LoaderSpiner />
+        </div>
+      )}
       <ul className={css.card}>
         {!showPost &&
           post?.map(({ id, title, description, banners }) => (
@@ -108,34 +117,39 @@ const AdverticeArchivePage = () => {
           ))}
       </ul>
       {isModal && (
-        <Modal handleToggleModal={handleToggleModal}>
+        <Modal handleToggleModal={handleToggleModal} childrenEl="true">
           {isActive.recovere && (
             <>
-              <p>{isMessage}</p>
+              <p className={css.modal_title}>{isMessage}</p>
               <button
                 type="button"
+                className={css.modal_btn}
                 onClick={() => handleRecoverePost(postActiveId)}
               >
-                Yes
+                Confirm
               </button>
             </>
           )}
 
           {isActive.deleted && (
             <>
-              <p>{isMessage}</p>
+              <p className={css.modal_title}>{isMessage}</p>
               <button
                 type="button"
+                className={css.modal_btn}
                 onClick={() => handleDeletePost(postActiveId)}
               >
-                Yes
+                Confirm
               </button>
             </>
           )}
 
-          <button type="button" onClick={handleToggleModal}>
-            No
-          </button>
+          <p
+            className={`${css.modal_text} dark:text-white`}
+            onClick={handleToggleModal}
+          >
+            Cancel
+          </p>
         </Modal>
       )}
       <ul className={css.list}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import css from "./RegistrationForm.module.css";
 import Button from "../Button";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -21,6 +21,7 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .required("Password is required")
+    .matches(RegExp('[!@#$%^&*(),.?":{}|<>]'), "Special symbols is required")
     .min(8, "Password must be at least 8 characters"),
   confirmPassword: yup
     .string()
@@ -149,7 +150,7 @@ const RegistrationForm = () => {
           <input
             className={`${css.inputForm}  ${
               errors?.email?.length === 0 ? css.active : ""
-            }`}
+            } dark:bg-black dark:border-white dark:text-white`}
             type="email"
             name="email"
             placeholder="Email"
@@ -177,7 +178,7 @@ const RegistrationForm = () => {
             <input
               className={`${css.inputForm} ${css.passwordInput}  ${
                 errors?.password?.length === 0 ? css.active : ""
-              }`}
+              } dark:bg-black dark:border-white dark:text-white`}
               type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
@@ -209,7 +210,7 @@ const RegistrationForm = () => {
             <input
               className={`${css.inputForm} ${css.passwordInput}  ${
                 errors?.confirmPassword?.length === 0 ? css.active : ""
-              }`}
+              } dark:bg-black dark:border-white dark:text-white`}
               type={showConfirmPassword ? "text" : "password"}
               name="confirmPassword"
               placeholder="Confirm Password"
@@ -235,8 +236,10 @@ const RegistrationForm = () => {
 
         <p className={css.textInfo}>
           *By clicking the Register button, I agree to the
-          <span className={css.spanPolicy}>Privacy Policy</span> and give my
-          consent to data processing
+          <NavLink to="/main/setting/policyAndPrivecy">
+            <span className={css.spanPolicy}>Privacy Policy</span>
+          </NavLink>
+          and give my consent to data processing
         </p>
         <div className={`${css.btn_text} ${validForm ? css.btn_valid : ""}`}>
           <Button

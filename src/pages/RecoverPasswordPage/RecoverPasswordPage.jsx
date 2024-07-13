@@ -5,7 +5,6 @@ import {
   useParams,
   useSearchParams,
 } from "react-router-dom";
-import { Modal } from "../../components/Modal/Modal";
 import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import GoBackButton from "../../components/GoBackButton/GoBackButton";

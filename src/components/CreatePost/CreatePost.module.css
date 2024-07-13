@@ -1,3 +1,15 @@
+.loader {
+  position: absolute;
+  top: 240px;
+  left: -1%;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 30vh;
+}
+
 .symbols {
   display: flex;
   justify-content: space-between;

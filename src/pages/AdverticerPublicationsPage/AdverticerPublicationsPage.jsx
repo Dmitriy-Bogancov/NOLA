@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   getAllAdverticerPostApi,
   getAllPostApi,
@@ -14,6 +14,7 @@ import GoBackButton from "../../components/GoBackButton/GoBackButton";
 import back from "../../assets/images/back.jpg";
 import css from "./AdverticerPublicationsPage.module.css";
 import { PostsAdverticerMenu } from "../../components/PostsAdverticerMenu/PostsAdverticerMenu";
+import { LoaderSpiner } from "../../services/loaderSpinner/LoaderSpinner";
 
 const AdverticerPublicationsPage = () => {
   const { token, setToken } = useCustomContext();
@@ -34,8 +35,10 @@ const AdverticerPublicationsPage = () => {
   const [showPost, setShowPost] = useState(false);
   const [postActiveId, setPostActiveId] = useState("");
   const [showMenu, setShowMenu] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const getData = (async () => {
       try {
         //  await getAllAdverticerPostApi || getAccountApi
@@ -43,6 +46,8 @@ const AdverticerPublicationsPage = () => {
         setPost(data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     })();
   }, [token]);
@@ -118,6 +123,11 @@ const AdverticerPublicationsPage = () => {
     <div className={css.container}>
       {console.log(post)}
       <ToastContainer />
+      {loading && (
+        <div className="loader">
+          <LoaderSpiner />
+        </div>
+      )}
       <ul className={css.card}>
         {!showPost &&
           post?.map(({ id, title, description, banners }) => (
@@ -144,46 +154,52 @@ const AdverticerPublicationsPage = () => {
           ))}
 
         {isModal && (
-          <Modal handleToggleModal={handleToggleModal}>
+          <Modal handleToggleModal={handleToggleModal} childrenEl="true">
             {isActive.archived && (
               <>
-                <p>{isMessage}</p>
+                <p className={css.modal_title}>{isMessage}</p>
                 <button
                   type="button"
+                  className={css.modal_btn}
                   onClick={() => handlePostArchivation(postActiveId)}
                 >
-                  Yes
+                  Confirm
                 </button>
               </>
             )}
 
             {isActive.stopped && (
               <>
-                <p>{isMessage}</p>
+                <p className={css.modal_title}>{isMessage}</p>
                 <button
                   type="button"
+                  className={css.modal_btn}
                   onClick={() => handlePostStopping(postActiveId)}
                 >
-                  Yes
+                  Confirm
                 </button>
               </>
             )}
 
             {isActive.launchAgain && (
               <>
-                <p>{isMessage}</p>
+                <p className={css.modal_title}>{isMessage}</p>
                 <button
                   type="button"
+                  className={css.modal_btn}
                   onClick={() => handlePostLaunchAgain(postActiveId)}
                 >
-                  Yes
+                  Confirm
                 </button>
               </>
             )}
 
-            <button type="button" onClick={handleToggleModal}>
-              No
-            </button>
+            <p
+              className={`${css.modal_text} dark:text-white`}
+              onClick={handleToggleModal}
+            >
+              Cancel
+            </p>
           </Modal>
         )}
       </ul>
@@ -198,6 +214,7 @@ const AdverticerPublicationsPage = () => {
                   imgWidth="50px"
                   imgHeight="50px"
                   onClick={handleBack}
+                  // title="Return to the feed"
                 />
 
                 <p className={css.return}>Return to the feed</p>

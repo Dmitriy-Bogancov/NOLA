@@ -55,6 +55,10 @@
   margin-left: auto;
 }
 
+.iconDark svg path{
+  fill: #ffffff
+}
+
 .container {
   display: flex;
   flex-direction: column;
