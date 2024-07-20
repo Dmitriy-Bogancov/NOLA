@@ -27,7 +27,10 @@ const schema = yup.object().shape({
     .string()
     .required("Confirm Password is required")
     .min(8, "Confirm Password must be at least 8 characters")
-    .oneOf([yup.ref("password"), null], "Passwords must match"),
+        .oneOf([yup.ref("password"), null], "Passwords must match"),
+    entityName: yup
+        .string()
+        .required("Name is required"),
 });
 
 const RegistrationForm = () => {
@@ -38,6 +41,7 @@ const RegistrationForm = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    entityName:""
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -120,7 +124,7 @@ const RegistrationForm = () => {
         try {
           await dispatch(registerThunk(formData)).unwrap();
           Toastify("Registration sucsessfull");
-          navigate("/main/accountAdverticer");
+          navigate("/main/accountAdverticer/adverticerEdit");
         } catch (error) {
           ToastError(error);
         }
@@ -232,7 +236,31 @@ const RegistrationForm = () => {
               {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
             </div>
           </div>
-        </div>
+              </div>
+
+              <div className={css.inputContainer}>
+                  {errors.entityName && <div className={css.errorText}>{errors.entityName}</div>}
+                  <input
+                      className={`${css.inputForm}  ${errors?.entityName?.length === 0 ? css.active : ""
+                          } dark:bg-black dark:border-white dark:text-white`}
+                      type="text"
+                      name="entityName"
+                      placeholder="Name"
+                      value={formData.entityName}
+                      onChange={handleInputChange}
+                      onBlur={() => handleBlur("email")}
+                      style={{
+                          borderColor: getBorderColor("email"),
+                          color: getBorderColor("email"),
+                      }}
+                  />
+
+                  {errors?.entityName?.length > 1 ? (
+                      <img src={error} alt="" className={css.img_error} />
+                  ) : (
+                      ""
+                  )}
+              </div>
 
         <p className={css.textInfo}>
           *By clicking the Register button, I agree to the

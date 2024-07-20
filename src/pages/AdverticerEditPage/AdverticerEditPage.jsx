@@ -22,7 +22,7 @@ import { AvatarUser } from "../../components/Avatar/Avatar";
 
 
 const schema = yup.object().shape({
-  name: yup.string().min(1).required("Name is required"),
+  entityName: yup.string().min(1).required("Name is required"),
   description: yup.string().min(50).required("Description is required"),
 });
 
@@ -47,8 +47,8 @@ const AdverticerEditPage = () => {
     return (
       JSON.parse(localStorage.getItem("account")) ?? {
         photo: "",
-        name: "",
         description: "",
+        entityName:"",
       }
     );
   });
@@ -65,7 +65,7 @@ const AdverticerEditPage = () => {
         url.length === 0 ||
         name.length === 0 ||
         errors?.description?.length > 0 ||
-        errors?.name?.length > 0
+        errors?.entityName?.length > 0
       ) {
         setValidForm(false);
         return;
@@ -80,10 +80,18 @@ const AdverticerEditPage = () => {
       try {
         await getAccountApi(token)
           .then((response) => {
-            return response.json();
+            return response.data;
           })
           .then((data) => {
-            // setAccount(...data);
+              // setAccount(...data);
+              if (account?.image.indexOf("http") > 0) {
+                  account.image = account.image;
+                  data.image = data.image;
+              }
+              else {
+                  account.image = "data:image/jpg;base64," + account.image;
+                  data.image = "data:image/jpg;base64," + data.image;
+              }
             localStorage.setItem("account", JSON.stringify(data));
             return data;
           });
@@ -140,7 +148,7 @@ const AdverticerEditPage = () => {
     });
   };
 
-  const handleForm = (e) => {
+    const handleForm = (e) => {
     const { name, value } = e.target;
     setAccount((prev) => ({
       ...prev,
@@ -182,7 +190,7 @@ const AdverticerEditPage = () => {
   };
 
   const handlerBackBtn = () => {
-    if (account?.description?.length > 50 && account?.name?.length > 0) {
+    if (account?.description?.length > 50 && account?.entityName?.length > 0) {
       navigation("/main/accountAdverticer");
     } else {
       setIsModal((prev) => !prev);
@@ -210,8 +218,9 @@ const AdverticerEditPage = () => {
           if (account.id) {
             try {
               await patchAccoutApi(token, account.id, {
-                name: account.name,
-                description: account.description,
+                //name: account.name,
+                  description: account.description,
+                entityName: account.entityName
               })
                 .then((response) => {
                   return response.json();
@@ -227,8 +236,9 @@ const AdverticerEditPage = () => {
             return;
           }
 
-          try {
-            await postAccoutApi(token, account);
+            try {
+                console.log(account);
+            await postAccoutApi(account);
           } catch (error) {
             console.log(error);
           }
@@ -263,23 +273,23 @@ const AdverticerEditPage = () => {
         </div>
 
         <form className={css.form_container} onSubmit={handleSubmit}>
-          <AvatarUser setAccount={setAccount} account={account}/>
+        <AvatarUser setAccount={setAccount} account={account} image={account?.image} />
           <div className={css.form}>
             <label className={`${css.post_description} dark:text-white`}>
               Name*
               <input
-                name="name"
+                name="entityName"
                 type="text"
                 placeholder="Agency \ Brand \ Service"
-                value={account?.name}
-                onBlur={() => handleBlur("name")}
+                defaultValue={account?.entityName}
+                onBlur={() => handleBlur("entityName")}
                 style={{
-                  borderColor: getBorderColor("name"),
+                  borderColor: getBorderColor("entityName"),
                 }}
                 className={`primary_text_style ${
                   css.input
                 } dark:text-white dark:bg-black dark:border-white
-                ${errors?.name?.length > 0 ? css.error_placeholder : ""}`}
+                ${errors?.entityName?.length > 0 ? css.error_placeholder : ""}`}
                 onChange={handleForm}
               />
             </label>
@@ -290,7 +300,7 @@ const AdverticerEditPage = () => {
                   <input
                     value={url}
                     name="links"
-                    placeholder="url"
+                          placeholder="url"
                     className={`secondary_text_style ${
                     css.post_container
                     }   dark:bg-black dark:text-white 
@@ -377,7 +387,7 @@ const AdverticerEditPage = () => {
 
           <div className={css.btn_container}>
             {errors?.description?.length > 0 ||
-            errors?.name?.length > 0 ||
+            errors?.entityName?.length > 0 ||
             !validForm ? (
               <div className={css.attention_container}>
                 <img src={attention} alt="attention" />
@@ -393,7 +403,7 @@ const AdverticerEditPage = () => {
               type="submit"
               disabled={
                 account?.description?.length > 49 &&
-                account?.name?.length > 0 &&
+                //account?.entityName?.length > 0 &&
                 validForm
                   ? false
                   : true
