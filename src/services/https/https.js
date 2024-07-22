@@ -10,12 +10,12 @@ export const getAccountApi = async () => {
 
 // =======
 export const postAccoutApi = async (body) => {
-  const { data } = await instance.post("https://.../account", body);
+    const { data } = await instance.put(`/Account`, body);
   return data;
 };
 
 export const patchAccoutApi = async (id, { ...body }) => {
-  const { data } = await instance.put(`https://.../account/${id}`, body);
+  const { data } = await instance.put(`/Account`, body);
   return data;
 };
 // =======

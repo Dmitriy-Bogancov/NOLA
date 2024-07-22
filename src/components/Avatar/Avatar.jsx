@@ -21,7 +21,9 @@ export const AvatarUser = ({ setAccount, account }) => {
   const [update, setUpdate] = useState(false);
   const [src, setSrc] = useState(null);
   const [modal, setModal] = useState(false);
-    const [image, setImage] = useState(false);
+    const [image, setImage] = useState(() => {
+        return JSON.parse(localStorage.getItem("account"))?.image ?? "";
+    });
 
   // const cld = new Cloudinary({
   //   cloud: {
@@ -35,10 +37,11 @@ export const AvatarUser = ({ setAccount, account }) => {
   useEffect(() => {
     setAccount((prev) => ({
       ...account,
-      photo: photo,
+        photo: photo,
+        image: image
     }));
     // eslint-disable-next-line
-  }, [photo]);
+  }, [photo,image]);
 
   // const handleAddPhoto = async (e) => {
   //   const filesOne = e.target.files[0];
@@ -88,7 +91,8 @@ export const AvatarUser = ({ setAccount, account }) => {
     try {
       setUpdate(true);
       const data = await postImg(formData);
-      setPhoto(data?.data?.url);
+        setPhoto(data?.data?.url);
+        setImage(data?.data?.url);
     } catch (error) {
       ToastError(error.message);
     } finally {
@@ -138,7 +142,7 @@ export const AvatarUser = ({ setAccount, account }) => {
         )}
 
         <img
-          src={!src ? photo : src}
+          src={!src ? account?.image : src}
           alt=""
           className={`${css.src_container} dark:border-white `}
           onClick={handleAvatar}
