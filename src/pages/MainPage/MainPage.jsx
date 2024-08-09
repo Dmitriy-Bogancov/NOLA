@@ -1,3 +1,5 @@
+import css from "./MainPage.module.css";
+import { ReactComponent as ArrowsUp } from "../../assets/icons/arrows-up.svg";
 import { useEffect, useState } from "react";
 import { Toastify } from "../../services/Toastify/Toastify";
 import { ToastError } from "../../services/ToastError/ToastError";
@@ -5,16 +7,22 @@ import { ToastContainer } from "react-toastify";
 import { Posts } from "../../components/Posts/Posts";
 import { getAllPostApi } from "../../services/https/https";
 import { LoaderSpiner } from "../../services/loaderSpinner/LoaderSpinner";
+import { useCustomContext } from "../../services/Context/Context";
 
 const LOKAL_KEY = "savedPost";
 
 const MainPage = () => {
+  const { theme, setTheme } = useCustomContext();
   const [posts, setPost] = useState(() => {
-    return JSON.parse(localStorage.getItem(LOKAL_KEY)) ?? "";
+    return JSON.parse(localStorage.getItem(LOKAL_KEY)) ?? [];
   });
 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const [savedPost, setSavedPost] = useState(() => {
+    return JSON.parse(localStorage.getItem("savedPostId")) ?? [];
+  });
 
   useEffect(() => {
     setLoading(true);
@@ -37,8 +45,19 @@ const MainPage = () => {
 
   const handleSavePost = (savedId) => {
     const savedPost = data.filter(({ id }) => id === savedId);
+    const savedValid = posts?.find((post) => post.id === savedId);
+
+    setSavedPost((prev) => {
+      if (prev.includes(savedId) && !savedValid) {
+        return prev.filter((postId) => postId !== savedId);
+      } else {
+        localStorage.setItem("savedPostId", JSON.stringify([...prev, savedId]));
+        return [...prev, savedId];
+      }
+    });
+
     if (posts) {
-      const savedValid = posts.find((post) => post.id === savedId);
+      // const savedValid = posts.find((post) => post.id === savedId);
       if (savedValid) {
         ToastError("This post has already been saved");
         return;
@@ -69,7 +88,14 @@ const MainPage = () => {
         </button>
       </NavLink> */}
 
-      <p>All courses ({data.length})</p>
+      <div
+        className={`${css.logo_container} ${
+          theme === "dark" ? css.iconDark : ""
+        }`}
+      >
+        <p className={css.logo}>NOLA</p>
+        <ArrowsUp />
+      </div>
       {loading && (
         <div className="loader">
           <LoaderSpiner />
@@ -84,6 +110,7 @@ const MainPage = () => {
             title={title}
             id={id}
             handleSavePost={handleSavePost}
+            savedPost={savedPost}
           />
         ))}
       </ul>

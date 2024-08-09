@@ -20,7 +20,6 @@ import { nanoid } from "nanoid";
 import { ToastContainer } from "react-toastify";
 import { AvatarUser } from "../../components/Avatar/Avatar";
 
-
 const schema = yup.object().shape({
   entityName: yup.string().min(1).required("Name is required"),
   description: yup.string().min(50).required("Description is required"),
@@ -34,6 +33,7 @@ const AdverticerEditPage = () => {
   const [errors, setErrors] = useState({});
   const [validForm, setValidForm] = useState(false);
   const [isModal, setIsModal] = useState(false);
+  const [isAvatar, setIsAvatar] = useState(false);
 
   const [links, setLinks] = useState(() => {
     return (
@@ -48,14 +48,13 @@ const AdverticerEditPage = () => {
       JSON.parse(localStorage.getItem("account")) ?? {
         photo: "",
         description: "",
-        entityName:"",
+        entityName: "",
       }
     );
   });
 
   const [symbolspostDescriptionCount, setSymbolspostDescriptionCount] =
     useState(account?.description?.length || 0);
-
 
   useEffect(() => {
     errors;
@@ -78,26 +77,33 @@ const AdverticerEditPage = () => {
   useEffect(() => {
     const getData = (async () => {
       try {
-        await getAccountApi(token)
+        // const data = await getAccountApi()
+        console.log(data);
+        await getAccountApi()
           .then((response) => {
             return response.data;
           })
           .then((data) => {
-              // setAccount(...data);
-              if (account?.image.indexOf("http") > 0) {
-                  account.image = account.image;
-                  data.image = data.image;
-              }
-              else {
-                  account.image = "data:image/jpg;base64," + account.image;
-                  data.image = "data:image/jpg;base64," + data.image;
-              }
-            localStorage.setItem("account", JSON.stringify(data));
-            return data;
+            console.log(data);
+            //  setAccount(...data);
+            if (account?.image.indexOf("http") > 0) {
+              // eslint-disable-next-line no-self-assign
+              account.image = account.image;
+              // eslint-disable-next-line no-self-assign
+              data.image = data.image;
+            } else {
+              account.image = "data:image/jpg;base64," + account.image;
+              data.image = "data:image/jpg;base64," + data.image;
+            }
+            // localStorage.setItem("account", JSON.stringify(data));
+            // return data;
           });
+
         setData(data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setIsAvatar(true);
       }
     })();
   }, [account, data, token]);
@@ -148,7 +154,7 @@ const AdverticerEditPage = () => {
     });
   };
 
-    const handleForm = (e) => {
+  const handleForm = (e) => {
     const { name, value } = e.target;
     setAccount((prev) => ({
       ...prev,
@@ -214,37 +220,51 @@ const AdverticerEditPage = () => {
       .validate(account, { abortEarly: false })
       .then(async () => {
         console.log("Form submitted with data:", account);
-        try {
-          if (account.id) {
-            try {
-              await patchAccoutApi(token, account.id, {
-                //name: account.name,
-                  description: account.description,
-                entityName: account.entityName
-              })
-                .then((response) => {
-                  return response.json();
-                })
-                .then((data) => {
-                  // setData(data);
-                  setAccount(data);
-                  return data;
-                });
-            } catch (error) {
-              console.log(error);
-            }
-            return;
-          }
 
-            try {
-                console.log(account);
-            await postAccoutApi(account);
-          } catch (error) {
-            console.log(error);
-          }
+        try {
+          const data = await postAccoutApi(account);
+          setAccount(data);
+          console.log(data);
         } catch (error) {
+          console.log(error);
           ToastError(error);
         }
+
+        // try {
+        //   // if (account.id) {
+
+        //     try {
+        //       await patchAccoutApi(
+        //       //   {
+        //       //   //name: account.name,
+        //       //     description: account.description,
+        //       //   entityName: account.entityName
+        //         // }
+        //         account
+        //       )
+        //         .then((response) => {
+        //           return response.json();
+        //         })
+        //         .then((data) => {
+        //           // setData(data);
+        //           setAccount(data);
+        //           return data;
+        //         });
+        //     } catch (error) {
+        //       console.log(error);
+        //     }
+        //     return;
+        //   // }
+
+        //   //   try {
+        //   //       console.log(account);
+        //   //   await postAccoutApi(account);
+        //   // } catch (error) {
+        //   //   console.log(error);
+        //   // }
+        // } catch (error) {
+        //   ToastError(error);
+        // }
       })
 
       .catch((validationErrors) => {
@@ -258,6 +278,9 @@ const AdverticerEditPage = () => {
 
   const el = links?.find((item) => item.id === links[links.length - 1].id);
 
+  useEffect(() => {
+    console.log("AdverticerEditPage");
+  }, []);
   return (
     <>
       <ToastContainer />
@@ -273,7 +296,14 @@ const AdverticerEditPage = () => {
         </div>
 
         <form className={css.form_container} onSubmit={handleSubmit}>
-        <AvatarUser setAccount={setAccount} account={account} image={account?.image} />
+          {isAvatar && (
+            <AvatarUser
+              setAccount={setAccount}
+              account={account}
+              image={account?.image}
+            />
+          )}
+
           <div className={css.form}>
             <label className={`${css.post_description} dark:text-white`}>
               Name*
@@ -300,21 +330,18 @@ const AdverticerEditPage = () => {
                   <input
                     value={url}
                     name="links"
-                          placeholder="url"
+                    placeholder="url"
                     className={`secondary_text_style ${
-                    css.post_container
+                      css.post_container
                     }   dark:bg-black dark:text-white 
                    ${
-                     account?.links?.length > 0 && url.length === 0 
-                      ? ` ${css.error_placeholder} ${css.error_links} dark:border-red`
-                     : `dark:border-white`
-                       
+                     account?.links?.length > 0 && url.length === 0
+                       ? ` ${css.error_placeholder} ${css.error_links} dark:border-red`
+                       : `dark:border-white`
                    }
 
                  
-                `
- 
-                    }
+                `}
                     onChange={(e) => handleLinkChange(id, e.target.value, name)}
                   />
                   <input
@@ -325,15 +352,13 @@ const AdverticerEditPage = () => {
                     onBlur={() => handleBlur("links")}
                     className={`secondary_text_style dark:bg-black 
                        dark:text-white 
-                    ${
-                      css.post_container
-                    }   
+                    ${css.post_container}   
                     ${
                       account?.links?.length > 0 && name.length === 0
-                      ? `${css.error_placeholder} ${css.error_links} 
+                        ? `${css.error_placeholder} ${css.error_links} 
              
                       dark:border-red`
-                        :  `dark:border-white`
+                        : `dark:border-white`
                     }
                 `}
                   />
@@ -412,15 +437,15 @@ const AdverticerEditPage = () => {
           </div>
         </form>
         {isModal && (
-          <Modal handleToggleModal={handleToggleModal}
-          confirm={handlerContinue}
-          cancel={handlerLater}
-          title="Your profile is incomplete!"
+          <Modal
+            handleToggleModal={handleToggleModal}
+            confirm={handlerContinue}
+            cancel={handlerLater}
+            title="Your profile is incomplete!"
             description="You won’t be able to publish announcements until you complete the profile"
-            btn_text_confirm="Continue entering data" 
-             btn_text_cancel="Continue later"
-          >
-          </Modal>
+            btn_text_confirm="Continue entering data"
+            btn_text_cancel="Continue later"
+          ></Modal>
         )}
       </div>
     </>

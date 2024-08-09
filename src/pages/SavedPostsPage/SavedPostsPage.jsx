@@ -10,12 +10,16 @@ import { useCustomContext } from "../../services/Context/Context";
 const LOKAL_KEY = "savedPost";
 
 const SavedPostsPage = () => {
-  const location = useLocation()
+  const location = useLocation();
   const { theme, setTheme } = useCustomContext();
   const [isModal, setIsModal] = useState(false);
   const [isDeletePost, setDeletePost] = useState("");
   const [posts, setPosts] = useState(() => {
     return JSON.parse(localStorage.getItem(LOKAL_KEY));
+  });
+
+  const [savedPostId, setSavedPostId] = useState(() => {
+    return JSON.parse(localStorage.getItem("savedPostId")) ?? [];
   });
 
   const handleToggleModal = (message) => {
@@ -26,8 +30,14 @@ const SavedPostsPage = () => {
   const handleDeletePost = (postId) => {
     const savedPost = posts.filter((post) => post.id !== postId);
 
-    setPosts(savedPost);
+    const deleteostId = posts.filter((post) => post.id === postId);
+    const [deleteId] = deleteostId.map(({ id }) => id);
+    const deletePostId = savedPostId.filter((el) => el !== deleteId);
 
+    setPosts(savedPost);
+    setSavedPostId(deletePostId);
+
+    localStorage.setItem("savedPostId", JSON.stringify(deletePostId));
     localStorage.setItem(LOKAL_KEY, JSON.stringify(savedPost));
 
     Toastify("Post has been deleted");
@@ -43,7 +53,7 @@ const SavedPostsPage = () => {
         <ul className={css.list}>
           {posts.map((post) => (
             <li key={post.id} className={css.item}>
-              <NavLink to={`/main/${post.id}`} state={{from: location}}>
+              <NavLink to={`/main/${post.id}`} state={{ from: location }}>
                 <img src={post.banners} alt="" className={css.img} />
               </NavLink>
               <div className={css.item_footer}>
@@ -57,16 +67,16 @@ const SavedPostsPage = () => {
 
                 <button
                   type="button"
-                  className={`${css.item_btn} ${theme === "dark"
-                  ? css.iconDark : ""}`}
+                  className={`${css.item_btn} ${
+                    theme === "dark" ? css.iconDark : ""
+                  }`}
                   onClick={
                     () => handleToggleModal(post.id)
                     // onClick={() => handleDeletePost(post.id)
                   }
                 >
-                  <Save_Icon/>
-                  {/* <img src={saved_icon} alt="saved_icon" /> */}
-                </button>
+                  <Save_Icon />
+                 </button>
               </div>
             </li>
           ))}
@@ -83,7 +93,12 @@ const SavedPostsPage = () => {
       )}
 
       {isModal && (
-        <Modal handleToggleModal={handleToggleModal} title="Are you sure you want to delete?" confirm={() => handleDeletePost(isDeletePost)} cancel={handleToggleModal} />
+        <Modal
+          handleToggleModal={handleToggleModal}
+          title="Are you sure you want to delete?"
+          confirm={() => handleDeletePost(isDeletePost)}
+          cancel={handleToggleModal}
+        />
       )}
     </div>
   );

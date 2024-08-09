@@ -12,6 +12,7 @@ import { ToastError } from "../../services/ToastError/ToastError";
 import Avatar from "react-avatar-edit";
 import { postImg } from "../../services/cloudinary/cloudinary";
 import { useCustomContext } from "../../services/Context/Context";
+import { LoaderSpiner } from "../../services/loaderSpinner/LoaderSpinner";
 
 export const AvatarUser = ({ setAccount, account }) => {
   const { theme, setTheme } = useCustomContext();
@@ -21,27 +22,31 @@ export const AvatarUser = ({ setAccount, account }) => {
   const [update, setUpdate] = useState(false);
   const [src, setSrc] = useState(null);
   const [modal, setModal] = useState(false);
-    const [image, setImage] = useState(() => {
-        return JSON.parse(localStorage.getItem("account"))?.image ?? "";
-    });
-
+  const [image, setImage] = useState(() => {
+    return JSON.parse(localStorage.getItem("account"))?.image ?? "";
+  });
+  useEffect(() => {
+    console.log("avatat");
+  }, []);
   // const cld = new Cloudinary({
   //   cloud: {
   //     cloudName: "dpsjhatpy",
   //   },
   // });
 
-  const upload_presets = "j0hj8hjd";
-  const api_key = "984292171139147";
+  // eslint-disable-next-line no-undef
+  const upload_presets = process.env.REACT_APP_UPLOAD_PRESETS;
+  // eslint-disable-next-line no-undef
+  const api_key = process.env.REACT_APP_API_KEY;
 
   useEffect(() => {
     setAccount((prev) => ({
       ...account,
-        photo: photo,
-        image: image
+      photo: photo,
+      image: image,
     }));
     // eslint-disable-next-line
-  }, [photo,image]);
+  }, [photo, image]);
 
   // const handleAddPhoto = async (e) => {
   //   const filesOne = e.target.files[0];
@@ -91,8 +96,8 @@ export const AvatarUser = ({ setAccount, account }) => {
     try {
       setUpdate(true);
       const data = await postImg(formData);
-        setPhoto(data?.data?.url);
-        setImage(data?.data?.url);
+      setPhoto(data?.data?.url);
+      setImage(data?.data?.url);
     } catch (error) {
       ToastError(error.message);
     } finally {
@@ -101,7 +106,7 @@ export const AvatarUser = ({ setAccount, account }) => {
   };
 
   const onCrop = async (i) => {
-    setImage(true)
+    setImage(true);
     setSrc(i);
   };
 
@@ -109,14 +114,18 @@ export const AvatarUser = ({ setAccount, account }) => {
     const { target, currentTarget } = e;
     if (target === currentTarget) {
       setSrc(photo ? photo : null);
-      setImage(false)
+      setImage(false);
       setModal((prev) => !prev);
     }
   };
 
   return (
     <>
-      {update && <p>Photo downloаding</p>}
+      {update && (
+        <div className={css.loader}>
+          <LoaderSpiner />
+        </div>
+      )}
       <div className={css.photo_container}>
         {modal && (
           <div className={css.backdrop} onClick={handleAvatar}>
@@ -148,10 +157,15 @@ export const AvatarUser = ({ setAccount, account }) => {
           onClick={handleAvatar}
         />
         {!photo ? (
-          <div className={`${css.icon} ${image ? css.invisible : ""}`} onClick={handleAvatar}>
+          <div
+            className={`${css.icon} ${image ? css.invisible : ""}`}
+            onClick={handleAvatar}
+          >
             <Icon_Image />
-          </div> 
-        ) : "" }
+          </div>
+        ) : (
+          ""
+        )}
 
         {/* <label>
           <div className={css.photo_containner}>

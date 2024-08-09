@@ -45,7 +45,7 @@
 .img {
   aspect-ratio: 1;
   width: 100%;
-  object-fit: cover;
+  /* object-fit: cover; */
 }
 
 .modal_title {
