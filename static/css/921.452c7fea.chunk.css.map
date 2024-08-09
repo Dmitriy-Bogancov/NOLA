@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/921.452c7fea.chunk.css","mappings":"AAAA,4BAIE,wBAA0B,CAH1B,aAAc,CAEd,YAAa,CADb,WAGF","sources":["pages/PostDetailsPage/PostDetailsPage.module.css"],"sourcesContent":[".img {\r\n  display: block;\r\n  width: 100px;\r\n  height: 100px;\r\n  background-color: darkgray;\r\n}\r\n"],"names":[],"sourceRoot":""}
