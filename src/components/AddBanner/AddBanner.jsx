@@ -43,9 +43,6 @@ export const AddBanner = ({ setPost, post }) => {
     );
   });
 
-  // const upload_presets = "j0hj8hjd";
-  // const api_key = "984292171139147";
-
   // eslint-disable-next-line no-undef
   const upload_presets = process.env.REACT_APP_UPLOAD_PRESETS;
   // eslint-disable-next-line no-undef

@@ -4,7 +4,7 @@ import { instance } from "../axios";
 
 // ----------Account---------
 export const getAccountApi = async () => {
-  const data = await instance.get("/Account", {});
+  const data = await instance.get("/Account");
   return data;
 };
 
@@ -14,7 +14,7 @@ export const postAccoutApi = async (body) => {
   return data;
 };
 
-export const patchAccoutApi = async (id, { ...body }) => {
+export const patchAccoutApi = async ({ ...body }) => {
   const { data } = await instance.put(`/Account`, body);
   return data;
 };

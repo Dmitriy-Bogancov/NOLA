@@ -1,6 +1,43 @@
+.top_container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.back_arrow {
+  margin-top: -15px;
+  margin-left: -15px;
+}
+
+.return {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  font-family: Manrope;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 48px;
+  letter-spacing: var(--primary-letter);
+}
+
+.post_container {
+  position: relative;
+  position: relative;
+  flex-basis: calc((100% - 30px) / 2);
+}
+
 .img {
-  display: block;
-  width: 100px;
-  height: 100px;
-  background-color: darkgray;
+  aspect-ratio: 1;
+  width: 100%;
+  border-radius: 20px;
+}
+
+.save_btn {
+  position: absolute;
+  bottom: 112px;
+  right: 0;
+  background-color: transparent;
+  border-color: transparent;
 }
