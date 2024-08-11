@@ -1,6 +1,28 @@
+.main_container {
+  margin-top: -14px;
+}
+
 .logo_container {
   display: flex;
   justify-content: space-between;
+  padding: 20px 0;
+}
+
+.logo_container_active {
+  position: sticky;
+  top: -1px;
+  background-color: #ffffff;
+  margin-right: -1px;
+  margin-left: -1px;
+}
+
+.logo_container_active_dark {
+  position: sticky;
+  top: -1px;
+  background-color: rgb(28 26 26);
+
+  margin-right: -1px;
+  margin-left: -1px;
 }
 
 .logo {

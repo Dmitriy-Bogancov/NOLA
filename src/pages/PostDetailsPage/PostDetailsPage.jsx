@@ -2,7 +2,6 @@ import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import css from "./PostDetailsPage.module.css";
 import { ReactComponent as Icon_Back } from "../../assets/icons/arrow_left.svg";
 import { ReactComponent as Save_Icon } from "../../assets/icons/save.svg";
-import { ReactComponent as SaveActive_Icon } from "../../assets/icons/saved_icon.svg";
 import { useEffect, useRef, useState } from "react";
 import { getPostIdApi } from "../../services/https/https";
 import { ToastError } from "../../services/ToastError/ToastError";
@@ -36,6 +35,10 @@ const PostDetailsPage = () => {
   }, [savedPost]);
 
   useEffect(() => {
+    localStorage.setItem("savedPostId", JSON.stringify(savedPostId));
+  }, [savedPostId]);
+
+  useEffect(() => {
     setLoading(true);
     const fetchData = (async () => {
       try {
@@ -64,7 +67,15 @@ const PostDetailsPage = () => {
 
   const handleSavePostClick = (savedId) => {
     if (savedPostId.includes(post.id)) {
-      ToastError("This post has already been saved");
+      const deletePost = savedPost.filter((post) => post.id !== savedId);
+
+      const deletePostId = savedPostId.filter((el) => el !== savedId);
+
+      setSavedPost(deletePost);
+
+      setSavedPostId(deletePostId);
+
+      ToastError("Post has been deleted");
       return;
     }
     setSavedPostId((prev) => {
@@ -117,10 +128,16 @@ const PostDetailsPage = () => {
             onClick={() => handleSavePostClick(post.id)}
             className={css.save_btn}
           >
-            {savedPostId.includes(post.id) ? (
-              <SaveActive_Icon />
+            {!savedPostId.includes(post.id) ? (
+              <div className={theme === "dark" ? css.iconDark : ""}>
+                <Save_Icon />
+              </div>
             ) : (
-              <Save_Icon />
+              <div
+                className={theme === "dark" ? css.iconSaveDark : css.iconSave}
+              >
+                <Save_Icon />
+              </div>
             )}
           </button>
         </div>
