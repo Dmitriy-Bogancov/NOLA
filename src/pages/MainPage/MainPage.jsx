@@ -13,6 +13,8 @@ const LOKAL_KEY = "savedPost";
 
 const MainPage = () => {
   const { theme, setTheme } = useCustomContext();
+  const [isScrollTop, setIsScrollTop] = useState(true);
+  const [lastScrollTop, setLastScrollTop] = useState(0);
   const [posts, setPost] = useState(() => {
     return JSON.parse(localStorage.getItem(LOKAL_KEY)) ?? [];
   });
@@ -20,7 +22,7 @@ const MainPage = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const [savedPost, setSavedPost] = useState(() => {
+  const [savedPostId, setSavedPostId] = useState(() => {
     return JSON.parse(localStorage.getItem("savedPostId")) ?? [];
   });
 
@@ -43,23 +45,57 @@ const MainPage = () => {
     localStorage.setItem(LOKAL_KEY, JSON.stringify(posts));
   }, [posts]);
 
+  useEffect(() => {
+    localStorage.setItem("savedPostId", JSON.stringify(savedPostId));
+  }, [savedPostId]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollTop = document.documentElement.scrollTop;
+
+      if (scrollTop < lastScrollTop) {
+        setIsScrollTop(true);
+      } else {
+        setIsScrollTop(false);
+      }
+      setLastScrollTop(scrollTop <= 0 ? 0 : scrollTop);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollTop]);
+
   const handleSavePost = (savedId) => {
     const savedPost = data.filter(({ id }) => id === savedId);
     const savedValid = posts?.find((post) => post.id === savedId);
 
-    setSavedPost((prev) => {
-      if (prev.includes(savedId) && !savedValid) {
-        return prev.filter((postId) => postId !== savedId);
-      } else {
-        localStorage.setItem("savedPostId", JSON.stringify([...prev, savedId]));
-        return [...prev, savedId];
-      }
-    });
+    if (!savedValid) {
+      setSavedPostId((prev) => {
+        if (prev.includes(savedId) && !savedValid) {
+          return prev.filter((postId) => postId !== savedId);
+        } else {
+          localStorage.setItem(
+            "savedPostId",
+            JSON.stringify([...prev, savedId])
+          );
+          return [...prev, savedId];
+        }
+      });
+    }
 
     if (posts) {
       // const savedValid = posts.find((post) => post.id === savedId);
+
       if (savedValid) {
-        ToastError("This post has already been saved");
+        const deletePost = posts.filter((post) => post.id !== savedValid.id);
+
+        const deletePostId = savedPostId.filter((el) => el !== savedValid.id);
+
+        setPost(deletePost);
+
+        setSavedPostId(deletePostId);
+        ToastError("Post has been deleted");
         return;
       }
       Toastify("Post successfully saved");
@@ -77,7 +113,7 @@ const MainPage = () => {
   // };
 
   return (
-    <div>
+    <div className={css.main_container}>
       <ToastContainer />
       {/* <NavLink
         // to="setting"
@@ -91,6 +127,8 @@ const MainPage = () => {
       <div
         className={`${css.logo_container} ${
           theme === "dark" ? css.iconDark : ""
+        } ${isScrollTop ? css.logo_container_active : ""} ${
+          isScrollTop && theme === "dark" ? css.logo_container_active_dark : ""
         }`}
       >
         <p className={css.logo}>NOLA</p>
@@ -110,7 +148,7 @@ const MainPage = () => {
             title={title}
             id={id}
             handleSavePost={handleSavePost}
-            savedPost={savedPost}
+            savedPost={savedPostId}
           />
         ))}
       </ul>

@@ -41,3 +41,23 @@
   background-color: transparent;
   border-color: transparent;
 }
+
+.iconSaveDark svg {
+  fill: #ffffff;
+}
+
+.iconSaveDark svg path {
+  fill: #ffffff;
+}
+
+.iconSave svg {
+  fill: #595454;
+}
+
+.iconSave svg path {
+  stroke: #595454;
+}
+
+.iconDark svg path {
+  stroke: #ffffff;
+}
