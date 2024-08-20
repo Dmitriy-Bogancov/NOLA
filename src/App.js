@@ -84,6 +84,9 @@ const SettingAdverticerPage = lazy(() =>
 const ChangePasswordPage = lazy(() =>
   import("./pages/ChangePasswordPage/ChangePasswordPage")
 );
+const ChangeEmailPage = lazy(() => 
+  import("./pages/ChangeEmailPage/ChangeEmailPage")
+)
 const DraftsPage = lazy(() => import("./pages/DraftsPage/DraftsPage"));
 const EditDraftsPage = lazy(() => import("./pages/EditDraftsPage/EditDraftsPage"))
 
@@ -274,6 +277,16 @@ function App() {
               element={
                 <PrivateRoute
                   component={<ChangePasswordPage />}
+                  redirectTo="/main/authorization"
+                />
+              }
+            />
+
+            <Route
+              path="/main/settingAdverticer/changeEmail"
+              element={
+                <PrivateRoute
+                  component={<ChangeEmailPage />}
                   redirectTo="/main/authorization"
                 />
               }
