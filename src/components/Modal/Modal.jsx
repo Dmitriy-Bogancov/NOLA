@@ -6,6 +6,7 @@ export const Modal = ({
   cancel,
   title,
   description,
+  info,
   handleToggleModal,
   btn_text_confirm = "Confirm",
   btn_text_cancel = "Cancel",
@@ -29,7 +30,7 @@ export const Modal = ({
             <>
               <h2 className={css.modal_title}>{title}</h2>
               <p className={css.modal_descr}>{description}</p>
-
+              {info ? <p className={css.modal_descr}>{info}</p> : ""}
               <button type="button" className={css.modal_btn} onClick={confirm}>
                 {btn_text_confirm}
               </button>
@@ -55,6 +56,7 @@ Modal.propTypes = {
   confirm: PropTypes.func,
   cancel: PropTypes.func,
   title: PropTypes.string,
+  info: PropTypes.string,
   description: PropTypes.string,
   btn_text_confirm: PropTypes.string,
   btn_text_cancel: PropTypes.string,

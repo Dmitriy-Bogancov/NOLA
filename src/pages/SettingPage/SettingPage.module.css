@@ -41,6 +41,18 @@
   display: block;
 }
 
+.btn {
+  background-color: var(--primary-bg);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 38px;
+  border-color: transparent;
+  padding: 0 10px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
 .icon {
   margin-top: 5px;
 }

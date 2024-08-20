@@ -130,10 +130,12 @@ const LoginForm = () => {
           <input
             className={`${css.inputForm}  ${
               errors?.email?.length === 0 ? css.active : ""
-            } dark:bg-black dark:border-white dark:text-white`}
+            }
+             ${errors?.email?.length > 0 ? css.errorPlaceholder : ""}
+             dark:bg-black dark:border-white dark:text-white`}
             type="email"
             name="email"
-            placeholder="Username or Email"
+            placeholder="Email"
             value={formData.email}
             onChange={handleInputChange}
             onBlur={() => handleBlur("email")}
@@ -155,7 +157,9 @@ const LoginForm = () => {
             <input
               className={`${css.inputForm} ${css.passwordInput}  ${
                 errors?.password?.length === 0 ? css.active : ""
-              } dark:bg-black dark:border-white dark:text-white`}
+              }
+              ${errors?.password?.length > 0 ? css.errorPlaceholder : ""}
+               dark:bg-black dark:border-white dark:text-white`}
               type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
@@ -173,7 +177,7 @@ const LoginForm = () => {
               }`}
               onClick={handleTogglePassword}
             >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
+              {!showPassword ? <FaEyeSlash /> : <FaEye />}
             </div>
           </div>
         </div>

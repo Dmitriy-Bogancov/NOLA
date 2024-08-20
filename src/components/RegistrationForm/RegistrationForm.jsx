@@ -14,6 +14,10 @@ import error from "../../assets/icons/circle-exclamation-mark.svg";
 const schema = yup.object().shape({
   email: yup
     .string()
+    .matches(
+      /^[a-zA-Z0-9._%+-]+@(gmail\.com|ukr\.net|meta\.ua)$/,
+      "Please enter valid characters"
+    )
     .matches(/^[^\s]*$/, "Please enter valid characters")
     .matches(/^[^а-яА-ЯіІїЇєЄ]*$/, "Please enter valid characters")
     .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Please enter a valid email address")
@@ -27,10 +31,8 @@ const schema = yup.object().shape({
     .string()
     .required("Confirm Password is required")
     .min(8, "Confirm Password must be at least 8 characters")
-        .oneOf([yup.ref("password"), null], "Passwords must match"),
-    entityName: yup
-        .string()
-        .required("Name is required"),
+    .oneOf([yup.ref("password"), null], "Passwords must match"),
+  entityName: yup.string().required("Name is required"),
 });
 
 const RegistrationForm = () => {
@@ -41,7 +43,7 @@ const RegistrationForm = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    entityName:""
+    entityName: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -62,12 +64,8 @@ const RegistrationForm = () => {
   };
 
   useEffect(() => {
-    const validEmail = [".com", ".net", ".ua"];
-
     if (
-      validEmail.find((el) => formData?.email?.includes(el)) &&
-      formData?.password?.length > 7 &&
-      formData?.confirmPassword?.length > 7 &&
+      formData.confirmPassword === formData.password &&
       errors?.email?.length === 0 &&
       errors?.password?.length === 0 &&
       errors?.confirmPassword?.length === 0
@@ -81,9 +79,8 @@ const RegistrationForm = () => {
     errors?.confirmPassword?.length,
     errors?.email?.length,
     errors?.password?.length,
-    formData?.confirmPassword?.length,
-    formData?.email,
-    formData?.password?.length,
+    formData.confirmPassword,
+    formData.password,
   ]);
 
   const handleTogglePassword = (field) => {
@@ -154,7 +151,9 @@ const RegistrationForm = () => {
           <input
             className={`${css.inputForm}  ${
               errors?.email?.length === 0 ? css.active : ""
-            } dark:bg-black dark:border-white dark:text-white`}
+            }
+            ${errors?.email?.length > 0 ? css.errorPlaceholder : ""}
+             dark:bg-black dark:border-white dark:text-white`}
             type="email"
             name="email"
             placeholder="Email"
@@ -182,7 +181,9 @@ const RegistrationForm = () => {
             <input
               className={`${css.inputForm} ${css.passwordInput}  ${
                 errors?.password?.length === 0 ? css.active : ""
-              } dark:bg-black dark:border-white dark:text-white`}
+              }
+              ${errors?.password?.length > 0 ? css.errorPlaceholder : ""}
+               dark:bg-black dark:border-white dark:text-white`}
               type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
@@ -201,7 +202,7 @@ const RegistrationForm = () => {
               }`}
               onClick={() => handleTogglePassword("password")}
             >
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
+              {!showPassword ? <FaEyeSlash /> : <FaEye />}
             </div>
           </div>
         </div>
@@ -214,7 +215,9 @@ const RegistrationForm = () => {
             <input
               className={`${css.inputForm} ${css.passwordInput}  ${
                 errors?.confirmPassword?.length === 0 ? css.active : ""
-              } dark:bg-black dark:border-white dark:text-white`}
+              }
+              ${errors?.confirmPassword?.length > 0 ? css.errorPlaceholder : ""}
+              dark:bg-black dark:border-white dark:text-white`}
               type={showConfirmPassword ? "text" : "password"}
               name="confirmPassword"
               placeholder="Confirm Password"
@@ -233,34 +236,41 @@ const RegistrationForm = () => {
               }`}
               onClick={() => handleTogglePassword("confirmPassword")}
             >
-              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+              {!showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
             </div>
           </div>
-              </div>
+        </div>
 
-              <div className={css.inputContainer}>
-                  {errors.entityName && <div className={css.errorText}>{errors.entityName}</div>}
-                  <input
-                      className={`${css.inputForm}  ${errors?.entityName?.length === 0 ? css.active : ""
-                          } dark:bg-black dark:border-white dark:text-white`}
-                      type="text"
-                      name="entityName"
-                      placeholder="Name"
-                      value={formData.entityName}
-                      onChange={handleInputChange}
-                      onBlur={() => handleBlur("email")}
-                      style={{
-                          borderColor: getBorderColor("email"),
-                          color: getBorderColor("email"),
-                      }}
-                  />
+        <div className={css.inputContainer}>
+          {errors.entityName && (
+            <div className={css.errorText}>{errors.entityName}</div>
+          )}
+          <input
+            className={`${css.inputForm}  ${
+              errors?.entityName?.length === 0 ? css.active : ""
+            }
+              ${
+                errors?.entityName?.length > 0 ? css.errorPlaceholder : ""
+              }           
+              dark:bg-black dark:border-white dark:text-white`}
+            type="text"
+            name="entityName"
+            placeholder="Name"
+            value={formData.entityName}
+            onChange={handleInputChange}
+            onBlur={() => handleBlur("entityName")}
+            style={{
+              borderColor: getBorderColor("entityName"),
+              color: getBorderColor("entityName"),
+            }}
+          />
 
-                  {errors?.entityName?.length > 1 ? (
-                      <img src={error} alt="" className={css.img_error} />
-                  ) : (
-                      ""
-                  )}
-              </div>
+          {errors?.entityName?.length > 1 ? (
+            <img src={error} alt="" className={css.img_error} />
+          ) : (
+            ""
+          )}
+        </div>
 
         <p className={css.textInfo}>
           *By clicking the Register button, I agree to the

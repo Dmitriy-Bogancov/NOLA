@@ -57,14 +57,15 @@ const SavedPostsPage = () => {
                 <img src={post.banners} alt="" className={css.img} />
               </NavLink>
               <div className={css.item_footer}>
-                <div>
-                  <img src="" alt="" className={css.logo_icon} />
-                </div>
+                <NavLink to="/:advertiserId" className={css.item_footer}>
+                  <div>
+                    <img src="" alt="" className={css.logo_icon} />
+                  </div>
 
-                <p className={`${css.item_description} dark:text-white`}>
-                  {post.title}
-                </p>
-
+                  <p className={`${css.item_description} dark:text-white`}>
+                    {post.title}
+                  </p>
+                </NavLink>
                 <button
                   type="button"
                   className={`${css.item_btn} ${
@@ -76,7 +77,7 @@ const SavedPostsPage = () => {
                   }
                 >
                   <Save_Icon />
-                 </button>
+                </button>
               </div>
             </li>
           ))}

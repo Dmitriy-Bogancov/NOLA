@@ -1,5 +1,4 @@
 import css from "./MainPage.module.css";
-import { ReactComponent as ArrowsUp } from "../../assets/icons/arrows-up.svg";
 import { useEffect, useState } from "react";
 import { Toastify } from "../../services/Toastify/Toastify";
 import { ToastError } from "../../services/ToastError/ToastError";
@@ -132,7 +131,6 @@ const MainPage = () => {
         }`}
       >
         <p className={css.logo}>NOLA</p>
-        <ArrowsUp />
       </div>
       {loading && (
         <div className="loader">
