@@ -39,7 +39,7 @@ export const Advertiser = ({ data }) => {
         <Icon_Links />
 
         <p className={theme === "dark" ? css.linksDark : css.links}>
-          Our links
+          Links
         </p>
       </div>
 

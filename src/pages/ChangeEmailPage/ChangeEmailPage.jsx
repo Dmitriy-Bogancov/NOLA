@@ -169,7 +169,7 @@ export const ChangeEmailPage = () => {
           <div className={css.change_info_container}>
             <h2 className={css.change_title}>Change your email</h2>
             <p className={`${css.change_info} dark:text-white`}>
-              The request to confirm the change of email <br />
+              A request to confirm your email change <br />
               will be sent to your primary email address
             </p>
           </div>

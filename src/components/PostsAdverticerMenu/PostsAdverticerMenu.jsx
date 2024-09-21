@@ -1,96 +1,50 @@
 import PropTypes from "prop-types";
 import css from "./PostsAdverticerMenu.module.css";
-import { NavLink } from "react-router-dom";
-import { useState } from "react";
 
 export const PostsAdverticerMenu = ({
-  setShowMenuActive = true,
-  getPost,
   id,
-  isPostStopped,
   postMenuActive,
-  handlePostArchivationMessage,
-  handlePostStoppingMessage,
-  handlePostLaunchAgainMessage,
-  handleRecoverePostMessage,
-  handleDeletePostMessage,
-  menuActive,
+  children,
+  isModal = false,
+  menuList,
+  setMenuList,
 }) => {
+  const handleOpenBackdrop = () => {
+    setMenuList(true);
+  };
+
+  const handleCloseBackdrop = (e) => {
+    const { target, currentTarget } = e;
+
+    if (target === currentTarget) {
+      setMenuList(false);
+    }
+  };
+
   return (
-    <>
-      <div className={css.post_menu}>
+    <div>
+      <div className={css.post_menu} onClick={() => postMenuActive(id)}>
         <p>213</p>
         <p>7</p>
-
-        <div
-          className={menuActive ? css.container_menu : ""}
-          onClick={() => postMenuActive(id)}
-        >
+        <p onClick={handleOpenBackdrop} className={css.more_menu}>
           ***
-          {setShowMenuActive && (
-            <div className={`${css.select} `}>
-              <NavLink to={`/main/addPost/${id}`}>
-                <button>Edit</button>
-              </NavLink>
-              <p>
-                <button type="button" onClick={handlePostArchivationMessage}>
-                  Archivation
-                </button>
-              </p>
-              <p>
-                <button
-                  type="button"
-                  disabled={isPostStopped}
-                  onClick={handlePostStoppingMessage}
-                >
-                  Stopping
-                </button>
-              </p>
-
-              <p>
-                <button
-                  type="button"
-                  disabled={!isPostStopped}
-                  onClick={handlePostLaunchAgainMessage}
-                >
-                  To launch post again
-                </button>
-              </p>
-            </div>
-          )}
-          {!setShowMenuActive && (
-            <>
-              <div className={`${css.select} `}>
-                <NavLink to={`/main/addPost/${id}`}>
-                  <button>Edit</button>
-                </NavLink>
-                <p>
-                  <button onClick={handleRecoverePostMessage}>
-                    Recovere post
-                  </button>
-                </p>
-                <p>
-                  <button onClick={handleDeletePostMessage}>Delete</button>
-                </p>
-              </div>
-            </>
-          )}
-        </div>
+        </p>
       </div>
-    </>
+
+      {menuList && !isModal && (
+        <div className={css.backdrop} onClick={handleCloseBackdrop}>
+          <div className={`${css.container} dark:bg-darkGray`}>{children}</div>
+        </div>
+      )}
+    </div>
   );
 };
 
 PostsAdverticerMenu.propTypes = {
-  setShowMenuActive: PropTypes.bool,
-  getPost: PropTypes.array,
   id: PropTypes.string,
   postMenuActive: PropTypes.func,
-  handlePostArchivationMessage: PropTypes.func,
-  handlePostStoppingMessage: PropTypes.func,
-  handlePostLaunchAgainMessage: PropTypes.func,
-  isPostStopped: PropTypes.bool,
-  handleDeletePostMessage: PropTypes.func,
-  handleRecoverePostMessage: PropTypes.func,
-  menuActive: PropTypes.bool,
+  children: PropTypes.node,
+  isModal: PropTypes.bool,
+  menuList: PropTypes.bool,
+  setMenuList: PropTypes.func,
 };

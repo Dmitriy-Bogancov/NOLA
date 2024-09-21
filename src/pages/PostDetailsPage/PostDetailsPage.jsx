@@ -10,6 +10,7 @@ import { useCustomContext } from "../../services/Context/Context";
 import { LoaderSpiner } from "../../services/loaderSpinner/LoaderSpinner";
 import { PostsAdverticer } from "../../components/PostsAdverticer/PostsAdverticer";
 import { Toastify } from "../../services/Toastify/Toastify";
+import { Banners } from "../../components/Banners/Banners";
 
 const LOKAL_KEY = "savedPost";
 
@@ -115,7 +116,9 @@ const PostDetailsPage = () => {
 
       {post && (
         <div key={post.id} className={css.post_container}>
-          <img src={post.banners} alt="" className={css.img} />
+
+          {/* <Banners banner={post.banners} /> */}
+          <img src={post.banners} alt="banner" className={css.img} />
 
           <PostsAdverticer
             title={post.title}

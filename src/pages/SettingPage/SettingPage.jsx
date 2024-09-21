@@ -129,12 +129,18 @@ const SettingPage = () => {
         </li>
         {token ? (
           <li>
-            <NavLink to="/main/settingAdverticer/changePassword" className={css.btn_password}>
-              <button type="button" className={css.btn}>Change password</button>
+            <NavLink
+              to="/main/settingAdverticer/changePassword"
+              className={`${css.btn_password} dark:text-white`}
+            >
+              Change password
             </NavLink>
 
-          <NavLink to="/main/settingAdverticer/changeEmail" className={css.btn_password}>
-              <button type="button" className={css.btn}>Change email</button>
+            <NavLink
+              to="/main/settingAdverticer/changeEmail"
+              className={`${css.btn_password} dark:text-white`}
+            >
+              Change email
             </NavLink>
           </li>
         ) : (
