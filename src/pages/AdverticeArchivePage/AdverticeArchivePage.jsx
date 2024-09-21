@@ -11,10 +11,18 @@ import { ToastError } from "../../services/ToastError/ToastError";
 import GoBackButton from "../../components/GoBackButton/GoBackButton";
 import back from "../../assets/images/back.jpg";
 import { LoaderSpiner } from "../../services/loaderSpinner/LoaderSpinner";
+import { Link } from "react-router-dom";
+import { useCustomContext } from "../../services/Context/Context";
+
+import { ReactComponent as Icon_Edit_Post } from "../../assets/icons/edit_post.svg";
+import relaunchPost from "../../assets/icons/relaunch_post.svg";
+import deletePost from "../../assets/icons/delete_post.svg";
 
 const AdverticeArchivePage = () => {
+  const { theme, setTheme } = useCustomContext();
   const [post, setPost] = useState([]);
   const [isModal, setIsModal] = useState(false);
+  const [menuList, setMenuList] = useState(false);
   const [isMessage, setIsMessage] = useState(false);
   const [isActive, setIsActive] = useState({
     recovere: false,
@@ -46,6 +54,7 @@ const AdverticeArchivePage = () => {
 
   const handleToggleModal = (message) => {
     setIsModal((prev) => !prev);
+    setMenuList(false);
     setIsMessage(message);
   };
 
@@ -55,11 +64,13 @@ const AdverticeArchivePage = () => {
   };
 
   const handleRecoverePostMessage = () => {
-    handleToggleModal("Are you sure you want to recovery?");
+    handleToggleModal("Are you sure you want to relaunch the post?");
     setIsActive({ recovere: true, deleted: false });
   };
 
   const handleDeletePost = async (id) => {
+    console.log("handleDeletePost", id);
+
     try {
       // await deletePostApi(id);
       Toastify("Archived post has been deleted");
@@ -72,6 +83,8 @@ const AdverticeArchivePage = () => {
   };
 
   const handleRecoverePost = (id) => {
+    console.log("handleRecoverePost", id);
+
     setPost(post.filter(() => post.id !== id));
     handleToggleModal();
     Toastify("Archived post has been recovered");
@@ -105,14 +118,40 @@ const AdverticeArchivePage = () => {
                 onClick={() => handlePost(id)}
               />
               <h2 className={css.title}>{title}</h2>
+
               <PostsAdverticerMenu
-                menuActive={menuActive}
-                setShowMenuActive={false}
                 postMenuActive={postMenuActive}
                 id={id}
-                handleRecoverePostMessage={handleRecoverePostMessage}
-                handleDeletePostMessage={handleDeletePostMessage}
-              />
+                menuList={menuList}
+                setMenuList={setMenuList}
+                isModal={isModal}
+              >
+                <ul className={css.list}>
+                  <li>
+                    <Link
+                      to={`/main/addPost/${id}`}
+                      className={`${css.item}  ${
+                        theme === "dark" ? css.iconDark : ""
+                      }`}
+                    >
+                      <Icon_Edit_Post />
+                      <span className={`${css.list_title} dark:text-white`}>
+                        Edit the post
+                      </span>
+                    </Link>
+                  </li>
+
+                  <li className={css.item} onClick={handleRecoverePostMessage}>
+                    <img src={relaunchPost} alt="relaunch post" />
+                    <p className={css.list_title}>Relaunch the post</p>
+                  </li>
+
+                  <li className={css.item} onClick={handleDeletePostMessage}>
+                    <img src={deletePost} alt="delete post" />
+                    <p className={css.list_title}>Delete</p>
+                  </li>
+                </ul>
+              </PostsAdverticerMenu>
             </li>
           ))}
       </ul>

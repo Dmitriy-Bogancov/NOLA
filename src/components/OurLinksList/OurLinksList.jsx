@@ -4,6 +4,8 @@ import { ReactComponent as Icon_Links } from "../../assets/icons/links.svg";
 import { ReactComponent as Icon_Facebook } from "../../assets/icons/facebook_icon.svg";
 import { ReactComponent as Icon_Instagram } from "../../assets/icons/instagram_icon.svg";
 import { ReactComponent as Icon_Telegram } from "../../assets/icons/telegram_icon.svg";
+import { ReactComponent as Icon_TikTok } from "../../assets/icons/tikTok.svg";
+
 
 export const OurLinksList = ({ data, setOurLinksList }) => {
   const handleCloseBackdrop = (e) => {
@@ -14,7 +16,7 @@ export const OurLinksList = ({ data, setOurLinksList }) => {
   };
   return (
     <div className={css.links_backdrop} onClick={handleCloseBackdrop}>
-      <div className={`${css.links_container} dark:bg-gray`}>
+      <div className={`${css.links_container} dark:bg-darkGray`}>
         <ul className={css.list}>
           {/* {data?.map(({ links }) => { */}
           <li key="" className={css.link_item}>
@@ -48,6 +50,13 @@ export const OurLinksList = ({ data, setOurLinksList }) => {
             <div className={css.link_item_container}>
               <p className={css.title}>Telegram</p>
               <p className={css.description}>https://course.com/</p>
+            </div>
+          </li>
+           <li className={css.link_item}>
+            <Icon_TikTok/>
+            <div className={css.link_item_container}>
+              <p className={css.title}>TikTok</p>
+              <p className={css.description}>https://tiktok.com/</p>
             </div>
           </li>
           {/* })} */}

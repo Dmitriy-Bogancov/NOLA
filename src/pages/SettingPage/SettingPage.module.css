@@ -39,6 +39,11 @@
 
 .btn_password {
   display: block;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 48px;
+  letter-spacing: var(--primary-letter);
+  color: #292929;
 }
 
 .btn {

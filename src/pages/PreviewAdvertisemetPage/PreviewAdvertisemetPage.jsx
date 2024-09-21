@@ -10,6 +10,9 @@ import "swiper/css/navigation";
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 import { PostsAdverticer } from "../../components/PostsAdverticer/PostsAdverticer";
 import { MessagePostOnModeration } from "../../components/MessagePostOnModeration/MessagePostOnModeration";
+import { Banners } from "../../components/Banners/Banners";
+
+
 
 const PreviewAdvertisemetPage = ({ setPreview }) => {
   const navigate = useNavigate();
@@ -51,6 +54,8 @@ const PreviewAdvertisemetPage = ({ setPreview }) => {
         <div className={css.preview_container}>
           <div className={css.previewMain}>
             <p className={css.title}>Advertisement preview</p>
+
+            {/* {data && <Banners banner={data} />} */}
 
             {data &&
               [data]?.map(({ banners }) => (
@@ -103,7 +108,7 @@ const PreviewAdvertisemetPage = ({ setPreview }) => {
                         <img src={banners[2]} alt="" className={css.img} />
                       </SwiperSlide>
                     )}
-                    {/* // ))} */}
+           
                     <div className="slider-controler">
                       <div
                         className="swiper-button-prev slider-arrow"

@@ -51,7 +51,7 @@ export const Modal = ({
 
 Modal.propTypes = {
   children: PropTypes.node,
-  childrenEl: PropTypes.bool,
+  childrenEl: PropTypes.string,
   handleToggleModal: PropTypes.func.isRequired,
   confirm: PropTypes.func,
   cancel: PropTypes.func,

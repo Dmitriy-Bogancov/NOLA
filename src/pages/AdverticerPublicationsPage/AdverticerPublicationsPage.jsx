@@ -4,7 +4,7 @@ import {
   getAllPostApi,
 } from "../../services/https/https";
 import { useCustomContext } from "../../services/Context/Context";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Modal } from "../../components/Modal/Modal";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,9 +16,18 @@ import css from "./AdverticerPublicationsPage.module.css";
 import { PostsAdverticerMenu } from "../../components/PostsAdverticerMenu/PostsAdverticerMenu";
 import { LoaderSpiner } from "../../services/loaderSpinner/LoaderSpinner";
 
+import editPost from "../../assets/icons/edit_post.svg";
+import pausePost from "../../assets/icons/pause_post.svg";
+import relaunchPost from "../../assets/icons/relaunch_post.svg";
+import archivePost from "../../assets/icons/archive_post.svg";
+import { ReactComponent as Icon_Edit_Post } from "../../assets/icons/edit_post.svg";
+
 const AdverticerPublicationsPage = () => {
   const { token, setToken } = useCustomContext();
+  const { theme, setTheme } = useCustomContext();
   const [post, setPost] = useState([]);
+  const [menuList, setMenuList] = useState(false);
+
   const [deletePost, setDeletePost] = useState(false);
   const [isModal, setIsModal] = useState(false);
   const [isMessage, setIsMessage] = useState(false);
@@ -30,7 +39,7 @@ const AdverticerPublicationsPage = () => {
   });
   const [menuActive, setMenuActive] = useState(false);
 
-  const [isPostStopped, setIsPostStopped] = useState(false);
+  const [isPostStopped, setIsPostStopped] = useState("");
 
   const [showPost, setShowPost] = useState(false);
   const [postActiveId, setPostActiveId] = useState("");
@@ -58,11 +67,12 @@ const AdverticerPublicationsPage = () => {
 
   const handleToggleModal = (message) => {
     setIsModal((prev) => !prev);
+    setMenuList(false);
     setIsMessage(message);
   };
 
   const handlePostArchivationMessage = () => {
-    handleToggleModal("Are you sure you want to archive?");
+    handleToggleModal("Are you sure you want to archive the post?");
     setIsActive({
       archived: true,
       stopped: false,
@@ -72,7 +82,7 @@ const AdverticerPublicationsPage = () => {
   };
 
   const handlePostStoppingMessage = () => {
-    handleToggleModal("Are you sure you want to stop?");
+    handleToggleModal("Are you sure you want to pause the post?");
     setIsActive({
       archived: false,
       stopped: true,
@@ -82,7 +92,7 @@ const AdverticerPublicationsPage = () => {
   };
 
   const handlePostLaunchAgainMessage = () => {
-    handleToggleModal("Are you sure you want to launch aagin?");
+    handleToggleModal("Are you sure you want to relaunch the post?");
     setIsActive({
       archived: false,
       stopped: false,
@@ -92,31 +102,35 @@ const AdverticerPublicationsPage = () => {
   };
 
   const handlePostArchivation = (id) => {
+    console.log("handlePostArchivation", id);
+
     setPost(post.filter((item) => item.id !== id));
     handleToggleModal();
     Toastify("Curent post has been archived!");
   };
 
   const handlePostStopping = (id) => {
-    setPost(post.filter((item) => item.id === id));
+    console.log(" handlePostStopping", id);
+    // const stoppedPost = post.filter((item) => item.id === id)
+    // setPost(post.filter((item) => item.id === id));
     handleToggleModal();
-    setIsPostStopped(true);
+    setIsPostStopped(id);
+    // setIsPostStopped(true);
     Toastify("Current post stopping!");
   };
 
   const handlePostLaunchAgain = (id) => {
-    setPost(post.filter((item) => item.id === id));
+    console.log("handlePostLaunchAgain", id);
+
+    // setPost(post.filter((item) => item.id === id));
     handleToggleModal();
-    setIsPostStopped(false);
+    // setIsPostStopped(false);
+    setIsPostStopped("");
     Toastify("Post has been launched");
   };
   const postMenuActive = (id) => {
     setMenuActive((prev) => !prev);
     setPostActiveId(id);
-  };
-
-  const handlePost = (id) => {
-    setShowPost(post.filter((item) => item.id === id));
   };
 
   return (
@@ -135,21 +149,62 @@ const AdverticerPublicationsPage = () => {
               <img
                 src={banners}
                 alt=""
-                className={css.img}
-                onClick={() => handlePost(id)}
+                className={`${css.img}  ${
+                  isPostStopped === id ? css.stoppedPost : ""
+                }`}
               />
               <h2 className={css.title}>{title}</h2>
 
               <PostsAdverticerMenu
-                getPost={post}
                 id={id}
-                menuActive={menuActive}
                 postMenuActive={postMenuActive}
-                handlePostArchivationMessage={handlePostArchivationMessage}
-                handlePostStoppingMessage={handlePostStoppingMessage}
-                handlePostLaunchAgainMessage={handlePostLaunchAgainMessage}
-                isPostStopped={isPostStopped}
-              />
+                menuList={menuList}
+                setMenuList={setMenuList}
+                isModal={isModal}
+              >
+                <ul className={css.list}>
+                  <li>
+                    <Link
+                      to={`/main/addPost/${id}`}
+                      className={`${css.item}  ${
+                        theme === "dark" ? css.iconDark : ""
+                      }`}
+                    >
+                      <Icon_Edit_Post />
+                      {/* <img src={editPost} alt="edit post" /> */}
+                      <span className={`${css.list_title} dark:text-white`}>
+                        Edit the post
+                      </span>
+                    </Link>
+                  </li>
+
+                  {!isActive.stopped ? (
+                    <li
+                      className={`${css.item} `}
+                      onClick={handlePostStoppingMessage}
+                    >
+                      <img src={pausePost} alt="pause post" />
+                      <p className={css.list_title}>Pause the post</p>
+                    </li>
+                  ) : (
+                    <li
+                      className={css.item}
+                      onClick={handlePostLaunchAgainMessage}
+                    >
+                      <img src={relaunchPost} alt="relaunch post" />
+                      <p className={css.list_title}>Relaunch the post</p>
+                    </li>
+                  )}
+
+                  <li
+                    className={css.item}
+                    onClick={handlePostArchivationMessage}
+                  >
+                    <img src={archivePost} alt="archive post" />
+                    <p className={css.list_title}>Archive the post</p>
+                  </li>
+                </ul>
+              </PostsAdverticerMenu>
             </li>
           ))}
 
