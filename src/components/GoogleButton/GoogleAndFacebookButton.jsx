@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { FaFacebook } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
-import FacebookLogin from "react-facebook-login";
+import FacebookLogin from "@greatsumini/react-facebook-login";
 import { useNavigate } from 'react-router-dom'; 
 import css from "./GoogleAndFacebookButton.module.css";
 import {  useGoogleLogin } from "@react-oauth/google";
