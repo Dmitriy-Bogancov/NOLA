@@ -1,7 +1,8 @@
 import axios from "axios";
 
 export const instance = axios.create({
-  baseURL: "https://nola-be.azurewebsites.net/api",
+   baseURL: "https://nola-dev.onrender.com/api",
+  // baseURL: "https://nola-be.azurewebsites.net/api",
 });
 
 export const token = {

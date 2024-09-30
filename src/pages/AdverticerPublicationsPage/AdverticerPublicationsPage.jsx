@@ -133,6 +133,10 @@ const AdverticerPublicationsPage = () => {
     setPostActiveId(id);
   };
 
+  const handlePost = (id) => {
+    setShowPost(post.filter((item) => item.id === id));
+  };
+
   return (
     <div className={css.container}>
       {console.log(post)}
@@ -152,6 +156,7 @@ const AdverticerPublicationsPage = () => {
                 className={`${css.img}  ${
                   isPostStopped === id ? css.stoppedPost : ""
                 }`}
+                onClick={() => handlePost(id)}
               />
               <h2 className={css.title}>{title}</h2>
 
@@ -163,7 +168,7 @@ const AdverticerPublicationsPage = () => {
                 isModal={isModal}
               >
                 <ul className={css.list}>
-                  <li>
+                  <li className={`${css.item} `}>
                     <Link
                       to={`/main/addPost/${id}`}
                       className={`${css.item}  ${

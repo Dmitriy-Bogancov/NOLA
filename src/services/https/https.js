@@ -1,42 +1,55 @@
 import axios from "axios";
 import { instance } from "../axios";
-// 1234567A-z
+
+// ----------Token---------
+export const postRefreshToken = async (body) => {
+  const data = await instance.post("/auth/refresh-token", body);
+
+  return data;
+};
+
+export const postlogOut = async () => {
+  const data = await instance.post("/auth/logout");
+
+  return data;
+};
 
 // ----------Account---------
 export const getAccountApi = async () => {
-  const data = await instance.get("/Account");
+  const data = await instance.get("/accounts");
   return data;
 };
 
 // =======
 export const postAccoutApi = async (body) => {
-    const { data } = await instance.put(`/Account`, body);
+  const { data } = await instance.put(`/accounts`, body);
   return data;
 };
 
-export const patchAccoutApi = async ({ ...body }) => {
-  const { data } = await instance.put(`/Account`, body);
+export const putAccoutApi = async ({ ...body }) => {
+  console.log(body);
+  const { data } = await instance.put(`/accounts`, body);
   return data;
 };
 // =======
 
 // -----------POSTS-------------
 export const getAllPostApi = async () => {
-  return await instance.get("/Advertisements");
+  return await instance.get("/advertisements");
 };
 
 export const getPostIdApi = async (id) => {
-  return await instance.get(`/Advertisements/${id}`);
+  return await instance.get(`/advertisements/${id}`);
 };
 
 export const postPostApi = async (post) => {
-  const { data } = await instance.post(`/Advertisements`, post);
+  const { data } = await instance.post(`/advertisements`, post);
   return data;
 };
 
 export const patchPostApi = async (id, body) => {
   try {
-    const { data } = await instance.put(`/Advertisements/${id}`, body);
+    const { data } = await instance.put(`/advertisements/${id}`, body);
     return data;
   } catch (error) {
     console.log(error);
@@ -44,7 +57,7 @@ export const patchPostApi = async (id, body) => {
 };
 
 export const deletePostApi = async (id) => {
-  const { data } = await instance.delete(`/Advertisements/${id}`);
+  const { data } = await instance.delete(`/advertisements/${id}`);
   return data;
 };
 
@@ -98,23 +111,20 @@ export const deleteDraftsPostId = async (id) => {
 // ---------RecoverPassword-------
 
 export const postForgotPassword = async (email) => {
-      const { data } = await instance.post(
+  const { data } = await instance.post(
     `/Account/forgot-password?email=${email}`
   );
   return data;
 };
 
-export const postResetPassword = async (
-  body
-) => {
-   const data = await instance.post(`/Account/reset-password`, body);
-     return data;
-
+export const postResetPassword = async (body) => {
+  const data = await instance.post(`/Account/reset-password`, body);
+  return data;
 };
 
 export const getResetPassword = async (email, token) => {
-    const data = await instance.get(`/Account/reset-password?${email}&${token}`);
-    return data;
+  const data = await instance.get(`/Account/reset-password?${email}&${token}`);
+  return data;
 };
 
 // -----------POST-------------
