@@ -47,7 +47,7 @@ const GoogleAndFacebookButton = () => {
           onFailure={handleFacebookFailure}
           icon={<FaFacebook className={css.icon}/>} 
           textButton="Continue with Facebook"
-          cssClass={`${css.buttonForm} dark:bg-black dark:border-white dark:text-white`}
+          className={`${css.buttonForm} dark:bg-black dark:border-white dark:text-white`}
         />
       </div>
   );

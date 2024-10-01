@@ -7,7 +7,7 @@ import * as yup from "yup";
 import { ToastContainer } from "react-toastify";
 import { ToastError } from "../../services/ToastError/ToastError";
 import { useDispatch } from "react-redux";
-import { registerThunk } from "../../redux/auth/authThunk";
+import { loginThunk, registerThunk } from "../../redux/auth/authThunk";
 import { Toastify } from "../../services/Toastify/Toastify";
 import error from "../../assets/icons/circle-exclamation-mark.svg";
 
@@ -26,11 +26,18 @@ const schema = yup.object().shape({
     .string()
     .required("Password is required")
     .matches(RegExp('[!@#$%^&*(),.?":{}|<>]'), "Special symbols is required")
-    .min(8, "Password must be at least 8 characters"),
+    .matches(/^(?=.*[a-z])/, " Must Contain One Lowercase Character")
+    .matches(/^(?=.*[A-Z])/, "  Must Contain One Uppercase Character")
+    .min(8, "Password must be at least 8 characters")
+    .max(16, "The password must be no more than 16 characters."),
   confirmPassword: yup
     .string()
     .required("Confirm Password is required")
+    .matches(RegExp('[!@#$%^&*(),.?":{}|<>]'), "Special symbols is required")
+    .matches(/^(?=.*[a-z])/, " Must Contain One Lowercase Character")
+    .matches(/^(?=.*[A-Z])/, "  Must Contain One Uppercase Character")
     .min(8, "Confirm Password must be at least 8 characters")
+    .max(16, "The password must be no more than 16 characters.")
     .oneOf([yup.ref("password"), null], "Passwords must match"),
   entityName: yup.string().required("Name is required"),
 });
@@ -68,7 +75,8 @@ const RegistrationForm = () => {
       formData.confirmPassword === formData.password &&
       errors?.email?.length === 0 &&
       errors?.password?.length === 0 &&
-      errors?.confirmPassword?.length === 0
+      errors?.confirmPassword?.length === 0 &&
+      errors?.entityName?.length === 0
     ) {
       setValidForm(true);
       return;
@@ -78,6 +86,7 @@ const RegistrationForm = () => {
   }, [
     errors?.confirmPassword?.length,
     errors?.email?.length,
+    errors?.entityName?.length,
     errors?.password?.length,
     formData.confirmPassword,
     formData.password,
@@ -129,6 +138,7 @@ const RegistrationForm = () => {
           email: "",
           password: "",
           confirmPassword: "",
+          entityName: "",
         });
         setErrors({});
         setValidForm(false);

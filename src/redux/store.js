@@ -12,19 +12,19 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import addPostSlice from "./addPostLink/addPostSlice";
+// import addPostSlice from "./addPostLink/addPostSlice";
 
 const persistConfig = {
   key: "auth",
   storage,
-  whitelist: ["token"],
+  whitelist: ["token", "refreshToken"],
 };
 
 
 export const store = configureStore({
   reducer: {
     auth: persistReducer(persistConfig, authSlice),
-    addLink: addPostSlice
+    // addLink: addPostSlice
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

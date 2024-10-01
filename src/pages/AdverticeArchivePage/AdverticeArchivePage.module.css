@@ -59,7 +59,9 @@
 .item {
   display: flex;
   align-items: center;
+  width: 160px;
   margin-top: 16px;
+  cursor: pointer;
 }
 
 .list_title {

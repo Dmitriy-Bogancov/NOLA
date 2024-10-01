@@ -8,7 +8,7 @@ import Button from "../../components/Button";
 import { useEffect, useState } from "react";
 import {
   getAccountApi,
-  patchAccoutApi,
+  putAccoutApi,
   postAccoutApi,
 } from "../../services/https/https";
 import * as yup from "yup";
@@ -77,29 +77,29 @@ const AdverticerEditPage = () => {
   useEffect(() => {
     const getData = (async () => {
       try {
-        // const data = await getAccountApi()
+        const data = await getAccountApi();
         console.log(data);
-        await getAccountApi()
-          .then((response) => {
-            return response.data;
-          })
-          .then((data) => {
-            console.log(data);
-            //  setAccount(...data);
-            if (account?.image.indexOf("http") > 0) {
-              // eslint-disable-next-line no-self-assign
-              account.image = account.image;
-              // eslint-disable-next-line no-self-assign
-              data.image = data.image;
-            } else {
-              account.image = "data:image/jpg;base64," + account.image;
-              data.image = "data:image/jpg;base64," + data.image;
-            }
-            // localStorage.setItem("account", JSON.stringify(data));
-            // return data;
-          });
+        // await getAccountApi()
+        //   .then((response) => {
+        //     return response.data;
+        //   })
+        //   .then((data) => {
+        //     console.log(data);
+        //     //  setAccount(...data);
+        //     if (account?.image.indexOf("http") > 0) {
+        //       // eslint-disable-next-line no-self-assign
+        //       account.image = account.image;
+        //       // eslint-disable-next-line no-self-assign
+        //       data.image = data.image;
+        //     } else {
+        //       account.image = "data:image/jpg;base64," + account.image;
+        //       data.image = "data:image/jpg;base64," + data.image;
+        //     }
+        //     // localStorage.setItem("account", JSON.stringify(data));
+        //     // return data;
+        //   });
 
-        setData(data);
+        // setData(data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -221,14 +221,14 @@ const AdverticerEditPage = () => {
       .then(async () => {
         console.log("Form submitted with data:", account);
 
-        try {
-          const data = await postAccoutApi(account);
-          setAccount(data);
-          console.log(data);
-        } catch (error) {
-          console.log(error);
-          ToastError(error);
-        }
+        // try {
+        //   const data = await postAccoutApi(account);
+        //   setAccount(data);
+        //   console.log(data);
+        // } catch (error) {
+        //   console.log(error);
+        //   ToastError(error);
+        // }
 
         // try {
         //   // if (account.id) {
@@ -265,6 +265,13 @@ const AdverticerEditPage = () => {
         // } catch (error) {
         //   ToastError(error);
         // }
+
+        try {
+          const data = await putAccoutApi(account);
+          console.log(data);
+        } catch (error) {
+          console.log(error);
+        }
       })
 
       .catch((validationErrors) => {

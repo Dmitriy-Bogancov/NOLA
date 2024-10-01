@@ -22,7 +22,7 @@ export const PostsAdverticerMenu = ({
   };
 
   return (
-    <div>
+    <div className={css.test}>
       <div className={css.post_menu} onClick={() => postMenuActive(id)}>
         <p>213</p>
         <p>7</p>

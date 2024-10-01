@@ -13,10 +13,12 @@ import { ReactComponent as Icon_Log_in } from "../../assets/icons/arrow-log-in.s
 import { useAuth } from "../../services/hooks/useAuth";
 import { useCustomContext } from "../../services/Context/Context";
 import { useDispatch } from "react-redux";
-import { logoutAction } from "../../redux/auth/authSlice.js";
+// import { logoutAction } from "../../redux/auth/authSlice.js";
 import { ToastError } from "../../services/ToastError/ToastError.js";
 import { ToastContainer } from "react-toastify";
 import { Modal } from "../../components/Modal/Modal";
+import { logOutThunk } from "../../redux/auth/authThunk.js";
+import { Toastify } from "../../services/Toastify/Toastify.js";
 
 const SettingPage = () => {
   const { theme, setTheme } = useCustomContext();
@@ -32,21 +34,23 @@ const SettingPage = () => {
     setIsModal((prev) => !prev);
   };
 
-  const handleSettingButton = () => {
-    if (pathname === "/main") {
-      navigate("/main");
+  // const handleSettingButton = () => {
+  //   if (pathname === "/main") {
+  //     navigate("/main");
 
-      return;
-    }
+  //     return;
+  //   }
 
-    navigate("/main/accountAdverticer");
-  };
+  //   navigate("/main/accountAdverticer");
+  // };
 
   const handleLogOut = () => {
     try {
-      dispatch(logoutAction());
+      // dispatch(logoutAction());
+      dispatch(logOutThunk())
       navigate("/main");
-    } catch (error) {
+      Toastify("Logged out successfully.");
+    } catch (error) {     
       ToastError("Error! Try later");
     } finally {
       setIsModal((prev) => !prev);
@@ -56,7 +60,9 @@ const SettingPage = () => {
   return (
     <div className={css.setting_container}>
       <ToastContainer />
-      <div className={css.top_container} onClick={handleSettingButton}>
+      <div className={css.top_container}
+        // onClick={handleSettingButton}
+      >
         <GoBackButton
           to=""
           imgWidth="50px"
