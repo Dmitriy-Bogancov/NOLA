@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunknola=self.webpackChunknola||[]).push([[131],{131:(e,s,n)=>{n.r(s),n.d(s,{default:()=>a});var r=n(184);const a=()=>(0,r.jsxs)("div",{children:[(0,r.jsx)("h2",{children:"Password recovery"}),(0,r.jsx)("p",{children:"Enter your username or email address and select Send Email"}),(0,r.jsx)("button",{children:"Send email"})]})}}]);
-//# sourceMappingURL=131.e216f16c.chunk.js.map
