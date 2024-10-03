@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate, useParams } from "react-router-dom";
 import { getPostApi, patchPostApi } from "../../services/https/https";
 import { ToastContainer } from "react-toastify";
-import { HandleFormConfig } from "../../components/HandleFormConfig/HandleFormConfig";
 import { ToastError } from "../../services/ToastError/ToastError";
 import { CreatePost } from "../../components/CreatePost/CreatePost";
 
@@ -61,12 +60,12 @@ const EditPostPage = () => {
     <div>
       EditPostPage
       <ToastContainer />
-      {formConfig && (
+      {/* {formConfig && (
         <HandleFormConfig
           message={"Current post has been edited"}
           navigatePage={"/main/accountAdverticer"}
         />
-      )}
+      )} */}
       <div>
         <form onSubmit={handleSubmitPost}>
           {/* post={data} setPost={setData} */}

@@ -9,33 +9,33 @@ export const loginThunk = createAsyncThunk(
   "login",
   async (user, { rejectWithValue }) => {
     try {
-      const { data } = await instance.post("/auth/login", user);
-      token.set(data.token);
+      const { data } = await instance.post("/auth/login", user);    
+      token.set(data.accessToken);
       return data;
     } catch (error) {
       if (error?.response?.status === 401) {
         return rejectWithValue("The password or email was entered incorrectly");
       } else {
-        return rejectWithValue(error?.response?.statusText || error.message);
+        return rejectWithValue(error?.response?.statusText || error.message || "Try again later.");
       }
     }
   }
 );
-
 export const registerThunk = createAsyncThunk(
   "register",
   async (user, { rejectWithValue }) => {
     try {
       const { data } = await instance.post("/accounts/register", user);
-      token.set(data.token);
+      token.set(data?.accessToken);
       return data;
-    } catch (error) {
+    } catch (error) {     
       return rejectWithValue(
-        error.response.data[0].description ||
+        error?.response?.data[0]?.description ||
           error?.response?.data?.errors?.Password ||
           error?.response?.data?.errors?.email ||
           error?.response?.statusText ||
-          error.message
+        error.message ||
+        "Try again later."
       );
     }
   }
@@ -58,11 +58,10 @@ export const refreshUserThunk = createAsyncThunk(
         accessToken: stateToken,
         refreshToken: refreshToken,
       });
-
+      token.set(data.accessToken);
       return data;
     } catch (error) {
-      ToastError("No valid token");
-      return isRejectedWithValue(error.message);
+      return isRejectedWithValue("No valid token");
     }
   }
 );
@@ -72,6 +71,6 @@ export const logOutThunk = createAsyncThunk("logOut", async (_, thunkAPI) => {
     await postlogOut();
     token.unset();
   } catch (error) {
-    return isRejectedWithValue(error.message);
+    return isRejectedWithValue(error.message || "Try again later.");
   }
 });

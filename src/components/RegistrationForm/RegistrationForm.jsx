@@ -7,7 +7,7 @@ import * as yup from "yup";
 import { ToastContainer } from "react-toastify";
 import { ToastError } from "../../services/ToastError/ToastError";
 import { useDispatch } from "react-redux";
-import { loginThunk, registerThunk } from "../../redux/auth/authThunk";
+import { registerThunk } from "../../redux/auth/authThunk";
 import { Toastify } from "../../services/Toastify/Toastify";
 import error from "../../assets/icons/circle-exclamation-mark.svg";
 
@@ -25,7 +25,7 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .required("Password is required")
-    .matches(RegExp('[!@#$%^&*(),.?":{}|<>]'), "Special symbols is required")
+    .matches(RegExp('[!@#$%^&*(),.?":{}|<>+=-]'), "Special symbols is required")
     .matches(/^(?=.*[a-z])/, " Must Contain One Lowercase Character")
     .matches(/^(?=.*[A-Z])/, "  Must Contain One Uppercase Character")
     .min(8, "Password must be at least 8 characters")
@@ -33,7 +33,7 @@ const schema = yup.object().shape({
   confirmPassword: yup
     .string()
     .required("Confirm Password is required")
-    .matches(RegExp('[!@#$%^&*(),.?":{}|<>]'), "Special symbols is required")
+    .matches(RegExp('[!@#$%^&*(),.?":{}|<>+=-]'), "Special symbols is required")
     .matches(/^(?=.*[a-z])/, " Must Contain One Lowercase Character")
     .matches(/^(?=.*[A-Z])/, "  Must Contain One Uppercase Character")
     .min(8, "Confirm Password must be at least 8 characters")

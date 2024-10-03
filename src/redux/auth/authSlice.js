@@ -24,7 +24,7 @@ export const authSlice = createSlice({
     builder.addCase(loginThunk.fulfilled, (state, action) => {
       state.user = action.payload;
       state.isLoggedIn = true;
-      state.token = action.payload.token;
+      state.token = action.payload.accessToken;
       state.refreshToken = action.payload.refreshToken;
     });
     builder.addCase(registerThunk.fulfilled, (state, action) => {

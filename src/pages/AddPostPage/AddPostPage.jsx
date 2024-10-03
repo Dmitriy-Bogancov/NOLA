@@ -6,7 +6,6 @@ import { ToastContainer } from "react-toastify";
 import { nanoid } from "nanoid";
 import css from "./AddPostPage.module.css";
 import { ToastError } from "../../services/ToastError/ToastError";
-import { HandleFormConfig } from "../../components/HandleFormConfig/HandleFormConfig";
 import { MessagePostOnModeration } from "../../components/MessagePostOnModeration/MessagePostOnModeration";
 import GoBackButton from "../../components/GoBackButton/GoBackButton";
 import { Modal } from "../../components/Modal/Modal";
@@ -105,12 +104,12 @@ const AddPostPage = ({ postEdit, setPostEdit, draftsEdit, setDraftsEdit }) => {
       {!postSuccessfullyAdded && (
         <>
           <ToastContainer />
-          {formConfig && (
+          {/* {formConfig && (
             <HandleFormConfig
               message={"Sucsessfull add a new advertisement"}
               navigatePage={"/main/accountAdverticer"}
             />
-          )}
+          )} */}
           <div className={css.top_container} onClick={handleBack}>
             <GoBackButton
               to=""

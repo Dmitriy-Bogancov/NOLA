@@ -78,9 +78,6 @@ const EditPostPage = lazy(() => import("./pages/EditPostPage/EditPostPage"));
 const PreviewAdvertisemetPage = lazy(() =>
   import("./pages/PreviewAdvertisemetPage/PreviewAdvertisemetPage")
 );
-const SettingAdverticerPage = lazy(() =>
-  import("./pages/SettingAdverticerPage/SettingAdverticerPage")
-);
 const ChangePasswordPage = lazy(() =>
   import("./pages/ChangePasswordPage/ChangePasswordPage")
 );
