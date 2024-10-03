@@ -15,7 +15,7 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .required("Password is required")
-    .matches(RegExp('[!@#$%^&*(),.?":{}|<>]'), "Special symbols is required")
+    .matches(RegExp('[!@#$%^&*(),.?":{}|<>+=-]'), "Special symbols is required")
     .min(8, "Password must be at least 8 characters"),
   confirmPassword: yup
     .string()
